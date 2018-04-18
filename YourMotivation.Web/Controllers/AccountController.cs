@@ -45,7 +45,7 @@ namespace YourMotivation.Web.Controllers
       return View();
     }
 
-    // [Authorize]
+    [Authorize]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Logout()
