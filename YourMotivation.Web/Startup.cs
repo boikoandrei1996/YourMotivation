@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Globalization;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using YourMotivation.Web.Data;
 using YourMotivation.Web.Models;
 using YourMotivation.Web.Services;
@@ -26,17 +25,42 @@ namespace YourMotivation.Web
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-      services.AddDbContext<ApplicationDbContext>(options =>
+      services
+        .AddDbContext<ApplicationDbContext>(options =>
           options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-      services.AddIdentity<ApplicationUser, IdentityRole>()
-          .AddEntityFrameworkStores<ApplicationDbContext>()
-          .AddDefaultTokenProviders();
+      services
+        .AddIdentity<ApplicationUser, IdentityRole>(config =>
+        {
+          config.SignIn.RequireConfirmedEmail = true;
+        })
+        .AddEntityFrameworkStores<ApplicationDbContext>()
+        .AddDefaultTokenProviders();
+
+      // Add the localization services to the services container.
+      services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+      services
+        .AddMvc()
+        .AddViewLocalization()
+        .AddDataAnnotationsLocalization();
 
       // Add application services.
       services.AddTransient<IEmailSender, EmailSender>();
 
-      services.AddMvc();
+      // Configure supported cultures and localization options
+      services.Configure<RequestLocalizationOptions>(options =>
+      {
+        var supportedCultures = new[]
+        {
+          new CultureInfo("en"),
+          new CultureInfo("ru")
+        };
+
+        options.DefaultRequestCulture = new RequestCulture(supportedCultures[0]);
+        options.SupportedCultures = supportedCultures;
+        options.SupportedUICultures = supportedCultures;
+      });
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +77,9 @@ namespace YourMotivation.Web
         app.UseExceptionHandler("/Home/Error");
       }
 
+      app.UseRequestLocalization(
+        app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>().Value);
+
       app.UseStaticFiles();
 
       app.UseAuthentication();
@@ -60,8 +87,8 @@ namespace YourMotivation.Web
       app.UseMvc(routes =>
       {
         routes.MapRoute(
-                  name: "default",
-                  template: "{controller=Home}/{action=Index}/{id?}");
+          name: "default",
+          template: "{controller=Home}/{action=Index}/{id?}");
       });
     }
   }

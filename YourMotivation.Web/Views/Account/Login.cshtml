@@ -13,7 +13,7 @@
 <div class="row">
   <div class="col-md-4">
     <section>
-      <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+      <form asp-route-returnurl="@ViewBag.ReturnUrl" method="post">
         <h4>Use a local account to log in.</h4>
         <hr />
         <div asp-validation-summary="All" class="text-danger"></div>
@@ -43,7 +43,7 @@
             <a asp-action="ForgotPassword">Forgot your password?</a>
           </p>
           <p>
-            <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Register as a new user?</a>
+            <a asp-action="Register" asp-route-returnurl="@ViewBag.ReturnUrl">Register as a new user?</a>
           </p>
         </div>
       </form>
@@ -66,7 +66,7 @@
         }
         else
         {
-          <form asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
+          <form asp-action="ExternalLogin" asp-route-returnurl="@ViewBag.ReturnUrl" method="post" class="form-horizontal">
             <div>
               <p>
                 @foreach (var provider in loginProviders)
