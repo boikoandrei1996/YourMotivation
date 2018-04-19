@@ -16,12 +16,22 @@ namespace YourMotivation.Web.Services
 
     public AuthMessageSenderOptions Options { get; }
 
-    public Task SendEmailAsync(string email, string subject, string message)
+    public async Task<bool> SendEmailAsync(string email, string subject, string message)
     {
-      return this.Execute(Options.SendGridKey, email, subject, message);
+      var response = await this.ExecuteAsync(Options.SendGridKey, email, subject, message);
+
+      if (response.StatusCode == System.Net.HttpStatusCode.OK || 
+        response.StatusCode == System.Net.HttpStatusCode.Accepted)
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
     }
 
-    public Task Execute(string apiKey, string email, string subject, string message)
+    public Task<Response> ExecuteAsync(string apiKey, string email, string subject, string message)
     {
       var client = new SendGridClient(apiKey);
 

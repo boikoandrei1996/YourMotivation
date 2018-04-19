@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using YourMotivation.Web.Models;
@@ -20,30 +21,26 @@ namespace YourMotivation.Web.Controllers
     private readonly IEmailSender _emailSender;
     private readonly ILogger _logger;
     private readonly IStringLocalizer<AccountController> _localizer;
+    private readonly IHtmlLocalizer<EmailSender> _emailLocalizer;
 
     public AccountController(
         UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
         IEmailSender emailSender,
         ILogger<AccountController> logger,
-        IStringLocalizer<AccountController> localizer)
+        IStringLocalizer<AccountController> localizer,
+        IHtmlLocalizer<EmailSender> emailLocalizer)
     {
       _userManager = userManager;
       _signInManager = signInManager;
       _emailSender = emailSender;
       _logger = logger;
       _localizer = localizer;
+      _emailLocalizer = emailLocalizer;
     }
 
     [TempData]
     public string ErrorMessage { get; set; }
-
-    [Authorize]
-    [HttpGet]
-    public IActionResult AccessDenied()
-    {
-      return View();
-    }
 
     [Authorize]
     [HttpPost]
@@ -118,9 +115,9 @@ namespace YourMotivation.Web.Controllers
 
           var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
           var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
-          await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+          var isSuccess = await _emailSender.SendEmailConfirmationAsync(_emailLocalizer, model.Email, callbackUrl);
 
-          return RedirectToLocal(returnUrl);
+          return RedirectToLocal(returnUrl, Url.Action(nameof(AccountController.Login), "Account"));
         }
 
         this.AddErrors(result);
@@ -173,7 +170,7 @@ namespace YourMotivation.Web.Controllers
         // visit https://go.microsoft.com/fwlink/?LinkID=532713
         var code = await _userManager.GeneratePasswordResetTokenAsync(user);
         var callbackUrl = Url.ResetPasswordCallbackLink(user.Id, code, Request.Scheme);
-        await _emailSender.SendEmailResetPasswordAsync(model.Email, callbackUrl);
+        var isSuccess = await _emailSender.SendEmailResetPasswordAsync(_emailLocalizer, model.Email, callbackUrl);
 
         return RedirectToAction(nameof(ForgotPasswordConfirmation));
       }
@@ -242,11 +239,15 @@ namespace YourMotivation.Web.Controllers
       }
     }
 
-    private IActionResult RedirectToLocal(string returnUrl)
+    private IActionResult RedirectToLocal(string returnUrl, string defaultUrl = null)
     {
       if (Url.IsLocalUrl(returnUrl))
       {
         return Redirect(returnUrl);
+      }
+      else if (defaultUrl != null && Url.IsLocalUrl(defaultUrl))
+      {
+        return Redirect(defaultUrl);
       }
       else
       {
