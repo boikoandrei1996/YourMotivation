@@ -117,15 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="About" xml:space="preserve">
-    <value>О нас</value>
-  </data>
-  <data name="Contact" xml:space="preserve">
-    <value>Контакты</value>
-  </data>
-  <data name="Home Page" xml:space="preserve">
-    <value>Домашняя страница</value>
-  </data>
   <data name="Your application description page." xml:space="preserve">
     <value>Страница с описанием вашего приложения.</value>
   </data>

@@ -19,14 +19,11 @@ namespace YourMotivation.Web.Controllers
 
     public IActionResult Index()
     {
-      ViewBag.Title = _localizer.GetString("Home Page");
-      
       return View();
     }
 
     public IActionResult About()
     {
-      ViewBag.Title = _localizer.GetString("About");
       ViewBag.Message = _localizer.GetString("Your application description page.");
 
       return View();
@@ -34,7 +31,6 @@ namespace YourMotivation.Web.Controllers
 
     public IActionResult Contact()
     {
-      ViewBag.Title = _localizer.GetString("Contact");
       ViewBag.Message = _localizer.GetString("Your contact page.");
 
       return View();
