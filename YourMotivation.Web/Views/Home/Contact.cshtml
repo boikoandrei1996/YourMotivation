@@ -1,6 +1,7 @@
-﻿@{
-  ViewBag.Title = "Contact";
-}
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+
 <h2>@ViewBag.Title</h2>
 <h3>@ViewBag.Message</h3>
 
@@ -12,6 +13,6 @@
 </address>
 
 <address>
-  <strong>Support:</strong> <a href="mailto:Support@example.com">Support@example.com</a><br />
-  <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
+  <strong>@Localizer.GetString("Support"):</strong> <a href="mailto:Support@example.com">Support@example.com</a><br />
+  <strong>@Localizer.GetString("Marketing"):</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
 </address>

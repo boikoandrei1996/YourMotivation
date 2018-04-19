@@ -1,6 +1,7 @@
-﻿@{
-  ViewBag.Title = "About";
-}
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+
 <h2>@ViewBag.Title</h2>
 <h3>@ViewBag.Message</h3>
 
