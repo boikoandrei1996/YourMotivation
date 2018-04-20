@@ -7,5 +7,6 @@
     public const string EmailAddressInvalid = "InvalidEmailAddress";
     public const string StringLengthRestriction = "StringLengthRestriction";
     public const string ComparePasswordInvalid = "ConfirmPasswordRestriction";
+    public const string PhoneInvalid = "PhoneInvalid";
   }
 }
