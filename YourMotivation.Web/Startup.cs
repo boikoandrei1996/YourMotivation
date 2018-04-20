@@ -43,7 +43,12 @@ namespace YourMotivation.Web
       services
         .AddMvc()
         .AddViewLocalization()
-        .AddDataAnnotationsLocalization();
+        .AddDataAnnotationsLocalization(options =>
+          options.DataAnnotationLocalizerProvider = (type, factory) => 
+          {
+            return factory.Create(typeof(ValidationMessages));
+          }
+        );
 
       // Add application services.
       services.AddTransient<IEmailSender, EmailSender>();

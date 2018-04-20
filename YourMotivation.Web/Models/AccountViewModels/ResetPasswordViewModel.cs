@@ -4,18 +4,20 @@ namespace YourMotivation.Web.Models.AccountViewModels
 {
   public class ResetPasswordViewModel
   {
-    [Required]
-    [EmailAddress]
+    [Required(ErrorMessage = ValidationMessages.RequiredEmail)]
+    [EmailAddress(ErrorMessage = ValidationMessages.EmailAddressInvalid)]
+    [Display(Name = "Email")]
     public string Email { get; set; }
 
-    [Required]
-    [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+    [Required(ErrorMessage = ValidationMessages.RequiredPassword)]
+    [StringLength(100, ErrorMessage = ValidationMessages.StringLengthRestriction, MinimumLength = 6)]
     [DataType(DataType.Password)]
+    [Display(Name = "Password")]
     public string Password { get; set; }
 
     [DataType(DataType.Password)]
+    [Compare("Password", ErrorMessage = ValidationMessages.ComparePasswordInvalid)]
     [Display(Name = "Confirm password")]
-    [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
     public string ConfirmPassword { get; set; }
 
     public string Code { get; set; }
