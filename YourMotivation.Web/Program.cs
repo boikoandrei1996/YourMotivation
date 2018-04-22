@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using YourMotivation.Web.Extensions;
 
 namespace YourMotivation.Web
 {
@@ -7,11 +8,14 @@ namespace YourMotivation.Web
   {
     public static void Main(string[] args)
     {
-      BuildWebHost(args).Run();
+      BuildWebHost(args)
+        .SeedData()
+        .Run();
     }
 
-    public static IWebHost BuildWebHost(string[] args) =>
-      WebHost.CreateDefaultBuilder(args)
+    public static IWebHost BuildWebHost(string[] args) => 
+      WebHost
+        .CreateDefaultBuilder(args)
         .UseStartup<Startup>()
         .Build();
   }

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using YourMotivation.Web.Models;
+using ORM.Models;
 using YourMotivation.Web.Models.ManageViewModels;
 
 namespace YourMotivation.Web.Controllers

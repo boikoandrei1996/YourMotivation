@@ -1,13 +1,16 @@
 ﻿using System.Globalization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using YourMotivation.Web.Data;
+using ORM;
+using ORM.Models;
 using YourMotivation.Web.Models;
 using YourMotivation.Web.Services;
 
@@ -68,10 +71,18 @@ namespace YourMotivation.Web
       });
 
       services.Configure<AuthMessageSenderOptions>(Configuration);
+
+      services.AddElm(options =>
+      {
+        options.Path = new PathString("/elmah");
+        options.Filter = (name, level) => level >= LogLevel.Error;
+      });
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+    public void Configure(
+      IApplicationBuilder app, 
+      IHostingEnvironment env)
     {
       if (env.IsDevelopment())
       {
@@ -97,6 +108,9 @@ namespace YourMotivation.Web
           name: "default",
           template: "{controller=Home}/{action=Index}/{id?}");
       });
+
+      app.UseElmPage(); // Shows the logs at the specified path
+      app.UseElmCapture(); // Adds the ElmLoggerProvider
     }
   }
 }

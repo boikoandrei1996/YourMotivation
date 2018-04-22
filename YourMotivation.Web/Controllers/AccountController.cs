@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using YourMotivation.Web.Models;
+using ORM.Models;
 using YourMotivation.Web.Models.AccountViewModels;
 using YourMotivation.Web.Services;
 
