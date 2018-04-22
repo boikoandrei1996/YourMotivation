@@ -8,9 +8,7 @@ namespace YourMotivation.Web.Models.ManageViewModels
     public string Username { get; set; }
 
     public bool IsEmailConfirmed { get; set; }
-
-    [Required(ErrorMessage = ValidationMessages.RequiredEmail)]
-    [EmailAddress(ErrorMessage = ValidationMessages.EmailAddressInvalid)]
+    
     [Display(Name = "Email")]
     public string Email { get; set; }
 

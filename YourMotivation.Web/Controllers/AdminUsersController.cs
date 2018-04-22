@@ -5,6 +5,7 @@ using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using ORM.Models;
 using YourMotivation.Web.Extensions;
+using YourMotivation.Web.Models.AdminUsersViewModels;
 
 namespace YourMotivation.Web.Controllers
 {
@@ -37,24 +38,13 @@ namespace YourMotivation.Web.Controllers
       var page = await _userManager.GetUserPageAsync(
         pageIndex ?? 1, 3, searchByUsername, sortColumn, orderBy ?? false);
 
+      page.StatusMessage = this.StatusMessage;
+
       ViewBag.SortColumnParam = sortColumn;
       ViewBag.OrderByParm = orderBy ?? false;
       ViewBag.CurrentFilter = searchByUsername;
-      page.StatusMessage = this.StatusMessage;
 
       return View(page);
-    }
-
-    // GET: Admin/Users/Details/5
-    public async Task<IActionResult> Details(string id)
-    {
-      var applicationUser = await this.FindByIdAsync(id);
-      if (applicationUser == null)
-      {
-        return NotFound();
-      }
-
-      return View(applicationUser);
     }
 
     // GET: Admin/Users/Delete/5
@@ -66,7 +56,9 @@ namespace YourMotivation.Web.Controllers
         return NotFound();
       }
 
-      return View(applicationUser);
+      var role = await _userManager.GetUserRolesAsync(applicationUser);
+
+      return View(AdminUserViewModel.Map(applicationUser, role));
     }
 
     // POST: Admin/Delete/5
@@ -90,15 +82,13 @@ namespace YourMotivation.Web.Controllers
       else if (result.Succeeded)
       {
         _logger.LogInformation($"User '{applicationUser.Email}' has been deleted.");
-        StatusMessage = _localizer["User '{0}' has been deleted.", applicationUser.Email];
+        StatusMessage = _localizer["Success: User '{0}' has been deleted.", applicationUser.Email];
       }
       else
       {
         _logger.LogError($"Can not delete user: '{applicationUser.Email}'.");
         _logger.LogError(nameof(DeleteConfirmed), result.Errors);
         StatusMessage = _localizer["Error: Can not delete user: '{0}'.", applicationUser.Email];
-
-        return RedirectToAction(nameof(Delete), new { id });
       }
 
       return RedirectToAction(nameof(All));
