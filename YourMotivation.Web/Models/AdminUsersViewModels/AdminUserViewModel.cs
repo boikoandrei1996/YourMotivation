@@ -26,6 +26,8 @@ namespace YourMotivation.Web.Models.AdminUsersViewModels
     [Display(Name = "CreatedDate")]
     public DateTime CreatedDate { get; set; }
 
+    public string StatusMessage { get; set; }
+
     public static AdminUserViewModel Map(ApplicationUser user, string role)
     {
       return new AdminUserViewModel

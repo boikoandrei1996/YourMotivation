@@ -19,7 +19,10 @@
       @Localizer["Find by username"]:
       <input type="text" name="searchByUsername" value="@ViewBag.CurrentFilter" />
       <input type="submit" value="@Localizer["Search"]" class="btn btn-default" />
-      <a asp-action="All">@Localizer["Back to full list"]</a>
+      @if (!string.IsNullOrEmpty(ViewBag.CurrentFilter))
+      {
+        <a asp-action="All">@Localizer["Back to full list"]</a>
+      }
     </p>
   </div>
 </form>
@@ -83,8 +86,7 @@
           @Html.DisplayFor(modelItem => item.PhoneNumber)
         </td>
         <td>
-          <a asp-action="Edit" asp-route-id="@item.Id">@Localizer["Change role"]</a> |
-          <a asp-action="Delete" asp-route-id="@item.Id">@Localizer["Delete"]</a>
+          <a asp-action="Manage" asp-route-id="@item.Id">@Localizer["Manage"]</a>
         </td>
       </tr>
     }
@@ -99,7 +101,7 @@
        asp-route-searchByUsername="@ViewBag.CurrentFilter"
        asp-route-sortColumn="@ViewBag.SortColumnParam"
        asp-route-orderBy="@ViewBag.OrderByParm">
-       @Localizer["Previous"]
+      @Localizer["Previous"]
     </a>
 
     @foreach (var pageNumber in Enumerable.Range(1, Model.TotalPages))

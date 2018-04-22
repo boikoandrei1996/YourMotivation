@@ -52,7 +52,7 @@ namespace YourMotivation.Web.Extensions
       return result;
     }
 
-    public static async Task<string> GetUserRolesAsync<T>(this UserManager<T> userManager, T user)
+    public static async Task<string> GetUserRoleAsync<T>(this UserManager<T> userManager, T user)
       where T : class
     {
       var roles = await userManager.GetRolesAsync(user);
@@ -76,7 +76,7 @@ namespace YourMotivation.Web.Extensions
       var users = new List<AdminUserViewModel>();
       foreach (var user in userManager.Users)
       {
-        var role = await userManager.GetUserRolesAsync(user);
+        var role = await userManager.GetUserRoleAsync(user);
         users.Add(AdminUserViewModel.Map(user, role));
       }
 

@@ -129,11 +129,11 @@
   <data name="Delete" xml:space="preserve">
     <value>Удалить</value>
   </data>
-  <data name="Details" xml:space="preserve">
-    <value>Подробнее</value>
-  </data>
   <data name="Find by username" xml:space="preserve">
     <value>Поиск по имени пользователя</value>
+  </data>
+  <data name="Manage" xml:space="preserve">
+    <value>Управление</value>
   </data>
   <data name="Next" xml:space="preserve">
     <value>Вперёд</value>

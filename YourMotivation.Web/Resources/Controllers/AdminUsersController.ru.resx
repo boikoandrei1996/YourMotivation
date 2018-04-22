@@ -117,13 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Error: Can not add role '{0}' for user '{1}'." xml:space="preserve">
+    <value>Ошибка: Не удалось добавить роль '{0}' для пользователя '{1}'.</value>
+  </data>
   <data name="Error: Can not delete user: '{0}'." xml:space="preserve">
     <value>Ошибка: Не удалось удалить пользователя: '{0}'.</value>
   </data>
   <data name="Error: Internal server error." xml:space="preserve">
     <value>Ошибка: Внутренняя ошибка сервера.</value>
   </data>
+  <data name="Success: Role has been updated." xml:space="preserve">
+    <value>Успешно: Роль была обновлена.</value>
+  </data>
   <data name="Success: User '{0}' has been deleted." xml:space="preserve">
     <value>Успешно: Пользователь '{0}' был удалён.</value>
+  </data>
+  <data name="Warning: User '{0}' has already role '{1}'." xml:space="preserve">
+    <value>Внимание: Пользователь '{0}' уже имеет роль '{1}'.</value>
   </data>
 </root>

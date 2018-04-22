@@ -123,6 +123,12 @@
   <data name="Delete" xml:space="preserve">
     <value>Удалить</value>
   </data>
+  <data name="Role" xml:space="preserve">
+    <value>Роль</value>
+  </data>
+  <data name="Save new role" xml:space="preserve">
+    <value>Сохранить новую роль</value>
+  </data>
   <data name="User details" xml:space="preserve">
     <value>Информация о пользователе</value>
   </data>

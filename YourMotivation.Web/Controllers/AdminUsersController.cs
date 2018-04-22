@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
@@ -15,12 +16,12 @@ namespace YourMotivation.Web.Controllers
   {
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly ILogger _logger;
-    private readonly IStringLocalizer<AccountController> _localizer;
+    private readonly IStringLocalizer<AdminUsersController> _localizer;
 
     public AdminUsersController(
       UserManager<ApplicationUser> userManager,
-      ILogger<AccountController> logger,
-      IStringLocalizer<AccountController> localizer)
+      ILogger<AdminUsersController> logger,
+      IStringLocalizer<AdminUsersController> localizer)
     {
       _userManager = userManager;
       _logger = logger;
@@ -47,8 +48,8 @@ namespace YourMotivation.Web.Controllers
       return View(page);
     }
 
-    // GET: Admin/Users/Delete/5
-    public async Task<IActionResult> Delete(string id)
+    // GET: Admin/Users/Manage/5
+    public async Task<IActionResult> Manage(string id)
     {
       var applicationUser = await this.FindByIdAsync(id);
       if (applicationUser == null)
@@ -56,12 +57,15 @@ namespace YourMotivation.Web.Controllers
         return NotFound();
       }
 
-      var role = await _userManager.GetUserRolesAsync(applicationUser);
+      var role = await _userManager.GetUserRoleAsync(applicationUser);
 
-      return View(AdminUserViewModel.Map(applicationUser, role));
+      var model = AdminUserViewModel.Map(applicationUser, role);
+      model.StatusMessage = this.StatusMessage;
+
+      return View(model);
     }
 
-    // POST: Admin/Delete/5
+    // POST: Admin/Users/Delete/5
     [HttpPost]
     [ActionName("Delete")]
     [ValidateAntiForgeryToken]
@@ -94,7 +98,53 @@ namespace YourMotivation.Web.Controllers
       return RedirectToAction(nameof(All));
     }
 
-    //AddRole
+    // POST: Admin/Users/SetRole/5
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> SetRole(string id, string newRole)
+    {
+      var applicationUser = await this.FindByIdAsync(id);
+      if (applicationUser == null)
+      {
+        return NotFound();
+      }
+
+      if (!RoleNames.GetAllRoles().Contains(newRole))
+      {
+        return RedirectToAction(nameof(Manage), new { id });
+      }
+
+      var oldRole = await _userManager.GetUserRoleAsync(applicationUser);
+
+      if (string.Equals(oldRole, newRole, System.StringComparison.OrdinalIgnoreCase))
+      {
+        this.StatusMessage = _localizer["Warning: User '{0}' has already role '{1}'.", applicationUser.UserName, newRole];
+        return RedirectToAction(nameof(Manage), new { id });
+      }
+
+      var result = await _userManager.AddToRoleAsync(applicationUser, newRole);
+      if (result.Succeeded)
+      {
+        result = await _userManager.RemoveFromRoleAsync(applicationUser, oldRole);
+        if (result.Succeeded)
+        {
+          this.StatusMessage = _localizer["Success: Role has been updated."];
+          return RedirectToAction(nameof(Manage), new { id });
+        }
+        else
+        {
+          _logger.LogError($"Can not remove role '{oldRole}' for user '{applicationUser.UserName}'.", result.Errors);
+        }
+      }
+      else
+      {
+        _logger.LogError($"Can not add role '{newRole}' for user '{applicationUser.UserName}'.", result.Errors);
+      }
+
+      this.StatusMessage = _localizer["Error: Can not add role '{0}' for user '{1}'.", newRole, applicationUser.UserName];
+
+      return RedirectToAction(nameof(Manage), new { id });
+    }
 
     private async Task<ApplicationUser> FindByIdAsync(string id)
     {

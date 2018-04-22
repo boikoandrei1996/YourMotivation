@@ -120,6 +120,9 @@
   <data name="About" xml:space="preserve">
     <value>О нас</value>
   </data>
+  <data name="Admin page" xml:space="preserve">
+    <value>Страница администратора</value>
+  </data>
   <data name="Contact" xml:space="preserve">
     <value>Контакты</value>
   </data>

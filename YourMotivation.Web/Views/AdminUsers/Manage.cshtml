@@ -1,12 +1,20 @@
 ﻿@using YourMotivation.Web.Models.AdminUsersViewModels;
+@using ORM.Models;
+
 @model AdminUserViewModel
 
 @{
-  ViewBag.Title = Localizer["Delete"];
+  ViewBag.Title = Localizer["Manage"];
+
+  var roleItems = RoleNames.GetAllRoles()
+    .Select(role => new SelectListItem { Value = role, Text = role })
+    .ToList();
 }
 
 <h2>@Localizer["User details"]:</h2>
 <hr />
+
+@Html.Partial("_StatusMessage",  Model.StatusMessage)
 
 <div>
   <dl class="dl-horizontal">
@@ -49,14 +57,27 @@
   </dl>
   <hr />
 
+  <form asp-action="SetRole">
+    <input type="hidden" asp-for="Id" />
+    <dl class="dl-horizontal">
+      <dt>
+        <label asp-for="@Model.Role">@Localizer["Role"]:</label>
+        <select name="newRole" asp-for="@Model.Role" asp-items="roleItems"></select>
+      </dt>
+      <dd>
+        <input type="submit" value="@Localizer["Save new role"]" class="btn btn-warning" />
+      </dd>
+    </dl>
+  </form>
+
   <form asp-action="Delete">
     <input type="hidden" asp-for="Id" />
     <dl class="dl-horizontal">
       <dt>
-        <input type="submit" value="@Localizer["Delete"]" class="btn btn-warning" />
+        <a asp-action="All" class="btn btn-info">@Localizer["Back to List"]</a>
       </dt>
       <dd>
-        <a asp-action="All" class="btn btn-info">@Localizer["Back to List"]</a>
+        <input type="submit" value="@Localizer["Delete"]" class="btn btn-danger" />
       </dd>
     </dl>
   </form>
