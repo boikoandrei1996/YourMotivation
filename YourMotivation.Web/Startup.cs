@@ -72,11 +72,11 @@ namespace YourMotivation.Web
 
       services.Configure<AuthMessageSenderOptions>(Configuration);
 
-      services.AddElm(options =>
+      /*services.AddElm(options =>
       {
         options.Path = new PathString("/elmah");
         options.Filter = (name, level) => level >= LogLevel.Error;
-      });
+      });*/
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -109,8 +109,8 @@ namespace YourMotivation.Web
           template: "{controller=Home}/{action=Index}/{id?}");
       });
 
-      app.UseElmPage(); // Shows the logs at the specified path
-      app.UseElmCapture(); // Adds the ElmLoggerProvider
+      // app.UseElmPage(); // Shows the logs at the specified path
+      // app.UseElmCapture(); // Adds the ElmLoggerProvider
     }
   }
 }

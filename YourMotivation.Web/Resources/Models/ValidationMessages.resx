@@ -126,11 +126,17 @@
   <data name="ConfirmPasswordRestriction" xml:space="preserve">
     <value>The password and confirmation password do not match.</value>
   </data>
+  <data name="CreatedDate" xml:space="preserve">
+    <value>Created date</value>
+  </data>
   <data name="Current password" xml:space="preserve">
     <value>Current password</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
+  </data>
+  <data name="EmailConfirmed" xml:space="preserve">
+    <value>Email confirmed</value>
   </data>
   <data name="EmailRequired" xml:space="preserve">
     <value>The Email field is required.</value>
@@ -147,14 +153,17 @@
   <data name="PasswordRequired" xml:space="preserve">
     <value>The Password field is required.</value>
   </data>
-  <data name="Phone number" xml:space="preserve">
-    <value>Phone number</value>
-  </data>
   <data name="PhoneInvalid" xml:space="preserve">
     <value>The phone field is not a valid phone number.</value>
   </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>Phone number</value>
+  </data>
   <data name="Remember me?" xml:space="preserve">
     <value>Remember me?</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Role</value>
   </data>
   <data name="StringLengthRestriction" xml:space="preserve">
     <value>The {0} must be at least {2} and at max {1} characters long.</value>

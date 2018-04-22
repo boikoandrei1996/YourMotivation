@@ -126,11 +126,17 @@
   <data name="ConfirmPasswordRestriction" xml:space="preserve">
     <value>Поле пароль и повторите пароль не совпадают.</value>
   </data>
+  <data name="CreatedDate" xml:space="preserve">
+    <value>Дата создания</value>
+  </data>
   <data name="Current password" xml:space="preserve">
     <value>Текущий пароль</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>Емейл</value>
+  </data>
+  <data name="EmailConfirmed" xml:space="preserve">
+    <value>Пароль подтверждён</value>
   </data>
   <data name="EmailRequired" xml:space="preserve">
     <value>Поле емейл является обязательным.</value>
@@ -147,14 +153,17 @@
   <data name="PasswordRequired" xml:space="preserve">
     <value>Поле пароль является обязательным.</value>
   </data>
-  <data name="Phone number" xml:space="preserve">
-    <value>Номер телефона</value>
-  </data>
   <data name="PhoneInvalid" xml:space="preserve">
     <value>Поле номер телефона не является валидным номером.</value>
   </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>Номер телефона</value>
+  </data>
   <data name="Remember me?" xml:space="preserve">
     <value>Запомнить меня?</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Роль</value>
   </data>
   <data name="StringLengthRestriction" xml:space="preserve">
     <value>{0} должен быть не меньше {2} и не больше {1} символов длиной.</value>

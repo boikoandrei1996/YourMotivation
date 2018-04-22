@@ -1,0 +1,128 @@
+﻿@using YourMotivation.Web.Models.AdminUsersViewModels;
+@using YourMotivation.Web.Models;
+@model Page<AdminUserViewModel>
+
+@{
+  ViewBag.Title = Localizer["All users"];
+
+  var prevClassDisabled = Model.CurrentPage > 1 ? string.Empty : "disabled";
+  var nextClassDisabled = Model.CurrentPage < Model.TotalPages ? string.Empty : "disabled";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@Html.Partial("_StatusMessage", Model.StatusMessage)
+
+<form asp-action="All" method="get">
+  <div class="form-actions no-color">
+    <p>
+      @Localizer["Find by username"]:
+      <input type="text" name="searchByUsername" value="@ViewBag.CurrentFilter" />
+      <input type="submit" value="@Localizer["Search"]" class="btn btn-default" />
+      <a asp-action="All">@Localizer["Back to full list"]</a>
+    </p>
+  </div>
+</form>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>
+        <a asp-action="All"
+           asp-route-pageIndex="@Model.CurrentPage"
+           asp-route-searchByUsername="@ViewBag.CurrentFilter"
+           asp-route-sortColumn="@SortColumnOptions.Username"
+           asp-route-orderBy="@(!ViewBag.OrderByParm)">
+          @Html.DisplayNameFor(model => model.Default.Username)
+        </a>
+      </th>
+      <th>
+        @Html.DisplayNameFor(model => model.Default.Email)
+      </th>
+      <th>
+        @Html.DisplayNameFor(model => model.Default.EmailConfirmed)
+      </th>
+      <th>
+        @Html.DisplayNameFor(model => model.Default.Role)
+      </th>
+      <th>
+        <a asp-action="All"
+           asp-route-pageIndex="@Model.CurrentPage"
+           asp-route-searchByUsername="@ViewBag.CurrentFilter"
+           asp-route-sortColumn="@SortColumnOptions.CreatedDate"
+           asp-route-orderBy="@(!ViewBag.OrderByParm)">
+          @Html.DisplayNameFor(model => model.Default.CreatedDate)
+        </a>
+      </th>
+      <th>
+        @Html.DisplayNameFor(model => model.Default.PhoneNumber)
+      </th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var item in Model.Records)
+    {
+      <tr>
+        <td>
+          @Html.DisplayFor(modelItem => item.Username)
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.EmailConfirmed)
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.Role)
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.CreatedDate)
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.PhoneNumber)
+        </td>
+        <td>
+          <a asp-action="Details" asp-route-id="@item.Id">@Localizer["Details"]</a> |
+          <a asp-action="Edit" asp-route-id="@item.Id">@Localizer["Change role"]</a> |
+          <a asp-action="Delete" asp-route-id="@item.Id">@Localizer["Delete"]</a>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+<div class="row">
+  <div class="col-md-3"></div>
+  <div class="col-md-6" style="text-align: center;">
+    <a asp-action="All" class="btn btn-default @prevClassDisabled"
+       asp-route-pageIndex="@(Model.CurrentPage - 1)"
+       asp-route-searchByUsername="@ViewBag.CurrentFilter"
+       asp-route-sortColumn="@ViewBag.SortColumnParam"
+       asp-route-orderBy="@ViewBag.OrderByParm">
+       @Localizer["Previous"]
+    </a>
+
+    @foreach (var pageNumber in Enumerable.Range(1, Model.TotalPages))
+    {
+      string isActive = pageNumber == Model.CurrentPage ? "active" : string.Empty;
+
+      <a asp-action="All" class="btn btn-primary @isActive"
+         asp-route-pageIndex="@pageNumber"
+         asp-route-searchByUsername="@ViewBag.CurrentFilter"
+         asp-route-sortColumn="@ViewBag.SortColumnParam"
+         asp-route-orderBy="@ViewBag.OrderByParm">
+        @pageNumber
+      </a>
+    }
+
+    <a asp-action="All" class="btn btn-default @nextClassDisabled"
+       asp-route-pageIndex="@(Model.CurrentPage + 1)"
+       asp-route-searchByUsername="@ViewBag.CurrentFilter"
+       asp-route-sortColumn="@ViewBag.SortColumnParam"
+       asp-route-orderBy="@ViewBag.OrderByParm">
+      @Localizer["Next"]
+    </a>
+  </div>
+  <div class="col-md-3"></div>
+</div>

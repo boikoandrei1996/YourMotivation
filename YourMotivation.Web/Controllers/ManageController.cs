@@ -64,16 +64,6 @@ namespace YourMotivation.Web.Controllers
       var user = await _userManager.GetUserAsync(User);
       this.CheckUserIfNull(user);
 
-      if (model.Email != user.Email)
-      {
-        var setEmailResult = await _userManager.SetEmailAsync(user, model.Email);
-        if (!setEmailResult.Succeeded)
-        {
-          throw new ApplicationException(
-            _localizer["Unexpected error occurred setting email for user with ID '{0}'.", user.Id]);
-        }
-      }
-
       if (model.PhoneNumber != user.PhoneNumber)
       {
         var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, model.PhoneNumber);

@@ -15,7 +15,7 @@ namespace YourMotivation.Web.Models.ManageViewModels
     public string Email { get; set; }
 
     [Phone(ErrorMessage = ValidationMessages.PhoneInvalid)]
-    [Display(Name = "Phone number")]
+    [Display(Name = "PhoneNumber")]
     public string PhoneNumber { get; set; }
 
     public string StatusMessage { get; set; }

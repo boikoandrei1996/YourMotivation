@@ -124,6 +124,7 @@ namespace ORM.DataSeed
       {
         model.User.UserName = model.User.Email;
         model.User.EmailConfirmed = true;
+        model.User.CreatedDate = DateTime.UtcNow;
       }
 
       return userModels;

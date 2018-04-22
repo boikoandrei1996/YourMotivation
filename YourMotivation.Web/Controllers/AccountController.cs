@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using ORM.Models;
+using YourMotivation.Web.Extensions;
 using YourMotivation.Web.Models.AccountViewModels;
 using YourMotivation.Web.Services;
 
@@ -38,9 +39,6 @@ namespace YourMotivation.Web.Controllers
       _localizer = localizer;
       _emailLocalizer = emailLocalizer;
     }
-
-    [TempData]
-    public string ErrorMessage { get; set; }
 
     [Authorize]
     [HttpPost]
@@ -82,7 +80,7 @@ namespace YourMotivation.Web.Controllers
 
           return RedirectToLocal(returnUrl);
         }
-         
+
         ModelState.AddModelError(string.Empty, _localizer.GetString("Invalid login attempt."));
       }
 
@@ -106,8 +104,13 @@ namespace YourMotivation.Web.Controllers
 
       if (ModelState.IsValid)
       {
-        var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-        var result = await _userManager.CreateAsync(user, model.Password);
+        var user = new ApplicationUser
+        {
+          UserName = model.Email,
+          Email = model.Email,
+          CreatedDate = DateTime.UtcNow
+        };
+        var result = await _userManager.CreateUserAsync(user, model.Password);
 
         if (result.Succeeded)
         {
@@ -166,8 +169,6 @@ namespace YourMotivation.Web.Controllers
           return RedirectToAction(nameof(ForgotPasswordConfirmation));
         }
 
-        // For more information on how to enable account confirmation and password reset please
-        // visit https://go.microsoft.com/fwlink/?LinkID=532713
         var code = await _userManager.GeneratePasswordResetTokenAsync(user);
         var callbackUrl = Url.ResetPasswordCallbackLink(user.Id, code, Request.Scheme);
         var isSuccess = await _emailSender.SendEmailResetPasswordAsync(_emailLocalizer, model.Email, callbackUrl);
@@ -175,7 +176,7 @@ namespace YourMotivation.Web.Controllers
         return RedirectToAction(nameof(ForgotPasswordConfirmation));
       }
 
-      // If we got this far, something failed, redisplay form
+      // Something failed, redisplay form
       return View(model);
     }
 
@@ -195,7 +196,7 @@ namespace YourMotivation.Web.Controllers
       }
 
       var model = new ResetPasswordViewModel { Code = code };
-      
+
       return View(model);
     }
 
