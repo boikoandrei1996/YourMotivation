@@ -31,24 +31,24 @@ namespace YourMotivation.Web.Controllers
     [TempData]
     public string StatusMessage { get; set; }
 
-    // GET: Admin/Users/All
+    [HttpGet]
     public async Task<IActionResult> All(
       int? pageIndex, string searchByUsername,
       string sortColumn, bool? orderBy)
     {
       var page = await _userManager.GetUserPageAsync(
-        pageIndex ?? 1, 3, searchByUsername, sortColumn, orderBy ?? false);
+        pageIndex ?? 1, 2, searchByUsername, sortColumn, orderBy ?? false);
 
       page.StatusMessage = this.StatusMessage;
 
       ViewBag.SortColumnParam = sortColumn;
-      ViewBag.OrderByParm = orderBy ?? false;
+      ViewBag.OrderByParam = orderBy;
       ViewBag.CurrentFilter = searchByUsername;
 
       return View(page);
     }
 
-    // GET: Admin/Users/Manage/5
+    [HttpGet]
     public async Task<IActionResult> Manage(string id)
     {
       var applicationUser = await this.FindByIdAsync(id);
@@ -58,14 +58,12 @@ namespace YourMotivation.Web.Controllers
       }
 
       var role = await _userManager.GetUserRoleAsync(applicationUser);
-
       var model = AdminUserViewModel.Map(applicationUser, role);
       model.StatusMessage = this.StatusMessage;
 
       return View(model);
     }
-
-    // POST: Admin/Users/Delete/5
+    
     [HttpPost]
     [ActionName("Delete")]
     [ValidateAntiForgeryToken]
@@ -77,29 +75,29 @@ namespace YourMotivation.Web.Controllers
         return NotFound();
       }
 
-      IdentityResult result = await _userManager.DeleteUserAsync(applicationUser);
+      var result = await _userManager.DeleteUserAsync(applicationUser);
       if (result == null)
       {
         _logger.LogError(nameof(DeleteConfirmed), applicationUser.Email);
-        StatusMessage = _localizer["Error: Internal server error."];
+        this.StatusMessage = _localizer["Error: Internal server error."];
       }
       else if (result.Succeeded)
       {
         _logger.LogInformation($"User '{applicationUser.Email}' has been deleted.");
-        StatusMessage = _localizer["Success: User '{0}' has been deleted.", applicationUser.Email];
+        this.StatusMessage = _localizer["Success: User '{0}' has been deleted.", applicationUser.Email];
       }
       else
       {
         _logger.LogError($"Can not delete user: '{applicationUser.Email}'.");
         _logger.LogError(nameof(DeleteConfirmed), result.Errors);
-        StatusMessage = _localizer["Error: Can not delete user: '{0}'.", applicationUser.Email];
+        this.StatusMessage = _localizer["Error: Can not delete user: '{0}'.", applicationUser.Email];
       }
 
       return RedirectToAction(nameof(All));
     }
-
-    // POST: Admin/Users/SetRole/5
+    
     [HttpPost]
+    [ActionName("SetRole")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> SetRole(string id, string newRole)
     {
@@ -115,10 +113,10 @@ namespace YourMotivation.Web.Controllers
       }
 
       var oldRole = await _userManager.GetUserRoleAsync(applicationUser);
-
       if (string.Equals(oldRole, newRole, System.StringComparison.OrdinalIgnoreCase))
       {
-        this.StatusMessage = _localizer["Warning: User '{0}' has already role '{1}'.", applicationUser.UserName, newRole];
+        this.StatusMessage = 
+          _localizer["Warning: User '{0}' has already role '{1}'.", applicationUser.UserName, newRole];
         return RedirectToAction(nameof(Manage), new { id });
       }
 
@@ -141,7 +139,8 @@ namespace YourMotivation.Web.Controllers
         _logger.LogError($"Can not add role '{newRole}' for user '{applicationUser.UserName}'.", result.Errors);
       }
 
-      this.StatusMessage = _localizer["Error: Can not add role '{0}' for user '{1}'.", newRole, applicationUser.UserName];
+      this.StatusMessage = 
+        _localizer["Error: Can not add role '{0}' for user '{1}'.", newRole, applicationUser.UserName];
 
       return RedirectToAction(nameof(Manage), new { id });
     }

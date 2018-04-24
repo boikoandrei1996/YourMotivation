@@ -40,16 +40,7 @@ namespace YourMotivation.Web.Controllers
       var user = await _userManager.GetUserAsync(User);
       this.CheckUserIfNull(user);
 
-      var model = new IndexViewModel
-      {
-        Username = user.UserName,
-        Email = user.Email,
-        PhoneNumber = user.PhoneNumber,
-        IsEmailConfirmed = user.EmailConfirmed,
-        StatusMessage = StatusMessage
-      };
-
-      return View(model);
+      return View(IndexViewModel.Map(user, this.StatusMessage));
     }
 
     [HttpPost]
@@ -66,15 +57,15 @@ namespace YourMotivation.Web.Controllers
 
       if (model.PhoneNumber != user.PhoneNumber)
       {
-        var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, model.PhoneNumber);
-        if (!setPhoneResult.Succeeded)
+        var result = await _userManager.SetPhoneNumberAsync(user, model.PhoneNumber);
+        if (!result.Succeeded)
         {
-          throw new ApplicationException(
-            _localizer["Unexpected error occurred setting phone number for user with ID '{0}'.", user.Id]);
+          this.AddErrors(result);
+          return View(model);
         }
       }
 
-      StatusMessage = _localizer["Your profile has been updated."];
+      this.StatusMessage = _localizer["Your profile has been updated."];
 
       return RedirectToAction(nameof(Index));
     }
@@ -85,7 +76,7 @@ namespace YourMotivation.Web.Controllers
       var user = await _userManager.GetUserAsync(User);
       this.CheckUserIfNull(user);
 
-      var model = new ChangePasswordViewModel { StatusMessage = StatusMessage };
+      var model = new ChangePasswordViewModel { StatusMessage = this.StatusMessage };
 
       return View(model);
     }
@@ -102,20 +93,16 @@ namespace YourMotivation.Web.Controllers
       var user = await _userManager.GetUserAsync(User);
       this.CheckUserIfNull(user);
 
-      var changePasswordResult = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
-      if (changePasswordResult.Succeeded)
+      var result = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+      if (!result.Succeeded)
       {
-        _logger.LogInformation("User changed their password successfully.");
-      }
-      else
-      {
-        this.AddErrors(changePasswordResult);
+        this.AddErrors(result);
         return View(model);
       }
 
       await _signInManager.SignInAsync(user, isPersistent: false);
 
-      StatusMessage = _localizer["Your password has been changed."];
+      this.StatusMessage = _localizer["Your password has been changed."];
 
       return RedirectToAction(nameof(ChangePassword));
     }

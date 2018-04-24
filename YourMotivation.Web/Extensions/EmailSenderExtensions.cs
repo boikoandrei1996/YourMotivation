@@ -15,7 +15,7 @@ namespace YourMotivation.Web.Services
       return emailSender.SendEmailAsync(
         email,
         localizer["Confirm your email"].Value,
-        localizer.GetString("Please confirm your account by clicking this link: <a href='{0}'>link</a>", HtmlEncoder.Default.Encode(link)));
+        localizer["Please confirm your account by clicking this link: <a href='{0}'>link</a>", HtmlEncoder.Default.Encode(link)].Value);
     }
 
     public static Task<bool> SendEmailResetPasswordAsync(
@@ -27,7 +27,7 @@ namespace YourMotivation.Web.Services
       return emailSender.SendEmailAsync(
         email,
         localizer["Reset Password"].Value,
-        localizer.GetString("Please reset your password by clicking here: <a href='{0}'>link</a>", HtmlEncoder.Default.Encode(link)));
+        localizer["Please reset your password by clicking here: <a href='{0}'>link</a>", HtmlEncoder.Default.Encode(link)].Value);
     }
   }
 }

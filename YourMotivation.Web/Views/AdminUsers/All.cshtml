@@ -1,12 +1,9 @@
 ﻿@using YourMotivation.Web.Models.AdminUsersViewModels;
 @using YourMotivation.Web.Models;
-@model Page<AdminUserViewModel>
 
+@model Page<AdminUserViewModel>
 @{
   ViewBag.Title = Localizer["All users"];
-
-  var prevClassDisabled = Model.CurrentPage > 1 ? string.Empty : "disabled";
-  var nextClassDisabled = Model.CurrentPage < Model.TotalPages ? string.Empty : "disabled";
 }
 
 <h2>@ViewBag.Title</h2>
@@ -35,7 +32,7 @@
            asp-route-pageIndex="@Model.CurrentPage"
            asp-route-searchByUsername="@ViewBag.CurrentFilter"
            asp-route-sortColumn="@SortColumnOptions.Username"
-           asp-route-orderBy="@(!ViewBag.OrderByParm)">
+           asp-route-orderBy="@(!(ViewBag.OrderByParam ?? false))">
           @Html.DisplayNameFor(model => model.Default.Username)
         </a>
       </th>
@@ -53,7 +50,7 @@
            asp-route-pageIndex="@Model.CurrentPage"
            asp-route-searchByUsername="@ViewBag.CurrentFilter"
            asp-route-sortColumn="@SortColumnOptions.CreatedDate"
-           asp-route-orderBy="@(!ViewBag.OrderByParm)">
+           asp-route-orderBy="@(!(ViewBag.OrderByParam ?? false))">
           @Html.DisplayNameFor(model => model.Default.CreatedDate)
         </a>
       </th>
@@ -93,14 +90,23 @@
   </tbody>
 </table>
 
+@{
+  var prevClassDisabled = Model.CurrentPage > 1 ? string.Empty : "disabled";
+  var nextClassDisabled = Model.CurrentPage < Model.TotalPages ? string.Empty : "disabled";
+  var controllerName = "AdminUsers";
+  var actionName = "All";
+}
+
 <div class="row">
   <div class="col-md-3"></div>
   <div class="col-md-6" style="text-align: center;">
-    <a asp-action="All" class="btn btn-default @prevClassDisabled"
-       asp-route-pageIndex="@(Model.CurrentPage - 1)"
-       asp-route-searchByUsername="@ViewBag.CurrentFilter"
-       asp-route-sortColumn="@ViewBag.SortColumnParam"
-       asp-route-orderBy="@ViewBag.OrderByParm">
+    <a class="btn btn-default @prevClassDisabled"
+       asp-controller=@controllerName
+       asp-action=@actionName
+       asp-route-pageIndex=@(Model.CurrentPage - 1)
+       asp-route-searchByUsername=@ViewBag.CurrentFilter
+       asp-route-sortColumn=@ViewBag.SortColumnParam
+       asp-route-orderBy=@ViewBag.OrderByParam>
       @Localizer["Previous"]
     </a>
 
@@ -108,20 +114,24 @@
     {
       string isActive = pageNumber == Model.CurrentPage ? "active" : string.Empty;
 
-      <a asp-action="All" class="btn btn-primary @isActive"
-         asp-route-pageIndex="@pageNumber"
-         asp-route-searchByUsername="@ViewBag.CurrentFilter"
-         asp-route-sortColumn="@ViewBag.SortColumnParam"
-         asp-route-orderBy="@ViewBag.OrderByParm">
+      <a class="btn btn-primary @isActive"
+         asp-controller=@controllerName
+         asp-action=@actionName
+         asp-route-pageIndex=@pageNumber
+         asp-route-searchByUsername=@ViewBag.CurrentFilter
+         asp-route-sortColumn=@ViewBag.SortColumnParam
+         asp-route-orderBy=@ViewBag.OrderByParam>
         @pageNumber
       </a>
     }
 
-    <a asp-action="All" class="btn btn-default @nextClassDisabled"
-       asp-route-pageIndex="@(Model.CurrentPage + 1)"
-       asp-route-searchByUsername="@ViewBag.CurrentFilter"
-       asp-route-sortColumn="@ViewBag.SortColumnParam"
-       asp-route-orderBy="@ViewBag.OrderByParm">
+    <a class="btn btn-default @nextClassDisabled"
+       asp-controller=@controllerName
+       asp-action=@actionName
+       asp-route-pageIndex=@(Model.CurrentPage + 1)
+       asp-route-searchByUsername=@ViewBag.CurrentFilter
+       asp-route-sortColumn=@ViewBag.SortColumnParam
+       asp-route-orderBy=@ViewBag.OrderByParam>
       @Localizer["Next"]
     </a>
   </div>

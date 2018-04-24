@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using ORM.Models;
 
 namespace YourMotivation.Web.Models.AccountViewModels
 {
@@ -19,5 +21,15 @@ namespace YourMotivation.Web.Models.AccountViewModels
     [Compare("Password", ErrorMessage = ValidationMessages.ComparePasswordInvalid)]
     [Display(Name = "Confirm password")]
     public string ConfirmPassword { get; set; }
+
+    public static ApplicationUser Map(RegisterViewModel model)
+    {
+      return new ApplicationUser
+      {
+        UserName = model.Email,
+        Email = model.Email,
+        CreatedDate = DateTime.UtcNow
+      };
+    }
   }
 }

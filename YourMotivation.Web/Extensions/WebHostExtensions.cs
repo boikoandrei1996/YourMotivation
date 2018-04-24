@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using ORM;
 using ORM.Models;
-using YourMotivation.Web.Controllers;
 
 namespace YourMotivation.Web.Extensions
 {

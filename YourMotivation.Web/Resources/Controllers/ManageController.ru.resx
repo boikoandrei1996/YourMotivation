@@ -120,17 +120,8 @@
   <data name="Unable to load user with ID '{0}'." xml:space="preserve">
     <value>Не удалось загрузить пользователя с ключом '{0}'.</value>
   </data>
-  <data name="Unexpected error occurred setting email for user with ID '{0}'." xml:space="preserve">
-    <value>Неожидаемая ошибка во время установки емейла для пользователя с ключом '{0}'.</value>
-  </data>
-  <data name="Unexpected error occurred setting phone number for user with ID '{0}'." xml:space="preserve">
-    <value>Неожидаемая ошибка во время установки телефона для пользователя с ключом '{0}'.</value>
-  </data>
   <data name="Your password has been changed." xml:space="preserve">
     <value>Ваш пароль был обновлён.</value>
-  </data>
-  <data name="Your password has been set." xml:space="preserve">
-    <value>Ваш пароль был установлен.</value>
   </data>
   <data name="Your profile has been updated." xml:space="preserve">
     <value>Ваш профиль был обновлён.</value>

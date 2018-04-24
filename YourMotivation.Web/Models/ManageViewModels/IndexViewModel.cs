@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using ORM.Models;
 
 namespace YourMotivation.Web.Models.ManageViewModels
 {
@@ -17,5 +18,17 @@ namespace YourMotivation.Web.Models.ManageViewModels
     public string PhoneNumber { get; set; }
 
     public string StatusMessage { get; set; }
+
+    public static IndexViewModel Map(ApplicationUser user, string statusMessage)
+    {
+      return new IndexViewModel
+      {
+        Username = user.UserName,
+        Email = user.Email,
+        PhoneNumber = user.PhoneNumber,
+        IsEmailConfirmed = user.EmailConfirmed,
+        StatusMessage = statusMessage
+      };
+    }
   }
 }

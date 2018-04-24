@@ -69,23 +69,22 @@ namespace YourMotivation.Web.Controllers
     {
       ViewBag.ReturnUrl = returnUrl;
 
-      if (ModelState.IsValid)
+      if (!ModelState.IsValid)
       {
-        var result = await _signInManager.PasswordSignInAsync(
-          model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
-
-        if (result.Succeeded)
-        {
-          _logger.LogInformation($"User '{User.Identity.Name}' logged in.");
-
-          return RedirectToLocal(returnUrl);
-        }
-
-        ModelState.AddModelError(string.Empty, _localizer.GetString("Invalid login attempt."));
+        return View(model);
       }
 
-      // Something failed, redisplay form
-      return View(model);
+      var result = await _signInManager.PasswordSignInAsync(
+        model.Email, model.Password, model.RememberMe, false);
+      if (!result.Succeeded)
+      {
+        ModelState.AddModelError(string.Empty, _localizer.GetString("Invalid login attempt."));
+        return View(model);
+      }
+
+      _logger.LogInformation($"User '{User.Identity.Name}' logged in.");
+
+      return RedirectToLocal(returnUrl);
     }
 
     [HttpGet]
@@ -102,38 +101,35 @@ namespace YourMotivation.Web.Controllers
     {
       ViewBag.ReturnUrl = returnUrl;
 
-      if (ModelState.IsValid)
+      if (!ModelState.IsValid)
       {
-        var user = new ApplicationUser
-        {
-          UserName = model.Email,
-          Email = model.Email,
-          CreatedDate = DateTime.UtcNow
-        };
-        var result = await _userManager.CreateUserAsync(user, model.Password);
-
-        if (result.Succeeded)
-        {
-          _logger.LogInformation($"User '{user.UserName}' created a new account with password.");
-
-          var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-          var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
-          var isSuccess = await _emailSender.SendEmailConfirmationAsync(_emailLocalizer, model.Email, callbackUrl);
-
-          return RedirectToLocal(returnUrl, Url.Action(nameof(AccountController.Login), "Account"));
-        }
-
-        this.AddErrors(result);
+        return View(model);
       }
 
-      // Something failed, redisplay form
-      return View(model);
+      var user = RegisterViewModel.Map(model);
+
+      var result = await _userManager.CreateUserAsync(user, model.Password);
+      if (result.Succeeded)
+      {
+        _logger.LogInformation($"User '{user.UserName}' created a new account with password.");
+
+        var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+        var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
+        var isSuccess = await _emailSender.SendEmailConfirmationAsync(_emailLocalizer, model.Email, callbackUrl);
+
+        return RedirectToLocal(returnUrl, Url.Action(nameof(AccountController.Login), "Account"));
+      }
+      else
+      {
+        this.AddErrors(result);
+        return View(model);
+      }
     }
 
     [HttpGet]
     public async Task<IActionResult> ConfirmEmail(string userId, string code)
     {
-      if (userId == null || code == null)
+      if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(code))
       {
         return RedirectToAction(nameof(HomeController.Index), "Home");
       }
@@ -142,7 +138,7 @@ namespace YourMotivation.Web.Controllers
       if (user == null)
       {
         throw new ApplicationException(
-          _localizer.GetString("Unable to load user with ID '{0}'.", userId));
+          _localizer["Unable to load user with ID '{0}'.", userId]);
       }
 
       var result = await _userManager.ConfirmEmailAsync(user, code);
@@ -160,24 +156,22 @@ namespace YourMotivation.Web.Controllers
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
     {
-      if (ModelState.IsValid)
+      if (!ModelState.IsValid)
       {
-        var user = await _userManager.FindByEmailAsync(model.Email);
-
-        if (user == null || (await _userManager.IsEmailConfirmedAsync(user)) == false)
-        {
-          return RedirectToAction(nameof(ForgotPasswordConfirmation));
-        }
-
-        var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-        var callbackUrl = Url.ResetPasswordCallbackLink(user.Id, code, Request.Scheme);
-        var isSuccess = await _emailSender.SendEmailResetPasswordAsync(_emailLocalizer, model.Email, callbackUrl);
-
-        return RedirectToAction(nameof(ForgotPasswordConfirmation));
+        return View(model);
       }
 
-      // Something failed, redisplay form
-      return View(model);
+      var user = await _userManager.FindByEmailAsync(model.Email);
+      if (user == null || (await _userManager.IsEmailConfirmedAsync(user)) == false)
+      {
+        return RedirectToAction(nameof(ForgotPassword));
+      }
+
+      var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+      var callbackUrl = Url.ResetPasswordCallbackLink(user.Id, code, Request.Scheme);
+      var isSuccess = await _emailSender.SendEmailResetPasswordAsync(_emailLocalizer, model.Email, callbackUrl);
+
+      return RedirectToAction(nameof(ForgotPasswordConfirmation));
     }
 
     [HttpGet]
@@ -189,7 +183,7 @@ namespace YourMotivation.Web.Controllers
     [HttpGet]
     public IActionResult ResetPassword(string code = null)
     {
-      if (code == null)
+      if (string.IsNullOrEmpty(code))
       {
         throw new ApplicationException(
           _localizer.GetString("A code must be supplied for password reset."));
@@ -212,18 +206,17 @@ namespace YourMotivation.Web.Controllers
       var user = await _userManager.FindByEmailAsync(model.Email);
       if (user == null)
       {
-        return RedirectToAction(nameof(ResetPasswordConfirmation));
+        return RedirectToAction(nameof(ResetPassword));
       }
 
       var result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
-      if (result.Succeeded)
+      if (!result.Succeeded)
       {
-        return RedirectToAction(nameof(ResetPasswordConfirmation));
+        this.AddErrors(result);
+        return View();
       }
 
-      this.AddErrors(result);
-
-      return View();
+      return RedirectToAction(nameof(ResetPasswordConfirmation));
     }
 
     [HttpGet]
