@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using ORM.Models;
 using YourMotivation.Web.Extensions;
 using YourMotivation.Web.Models.AdminUsersViewModels;
+using YourMotivation.Web.Models.Pagination;
 
 namespace YourMotivation.Web.Controllers
 {
@@ -32,19 +33,13 @@ namespace YourMotivation.Web.Controllers
     public string StatusMessage { get; set; }
 
     [HttpGet]
-    public async Task<IActionResult> All(
-      int? pageIndex, string searchByUsername,
-      string sortColumn, bool? orderBy)
+    public async Task<IActionResult> All(int? pageIndex, string usernameFilter, SortState? sortOrder)
     {
-      var page = await _userManager.GetUserPageAsync(
-        pageIndex ?? 1, 2, searchByUsername, sortColumn, orderBy ?? false);
+      var page = 
+        await _userManager.GetUserPageAsync(pageIndex ?? 1, 2, usernameFilter, sortOrder ?? SortState.CreatedDateDesc);
 
       page.StatusMessage = this.StatusMessage;
-
-      ViewBag.SortColumnParam = sortColumn;
-      ViewBag.OrderByParam = orderBy;
-      ViewBag.CurrentFilter = searchByUsername;
-
+      
       return View(page);
     }
 

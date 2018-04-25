@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ORM.Models;
-using YourMotivation.Web.Models;
 using YourMotivation.Web.Models.AdminUsersViewModels;
+using YourMotivation.Web.Models.Pagination;
 
 namespace YourMotivation.Web.Extensions
 {
@@ -60,63 +60,58 @@ namespace YourMotivation.Web.Extensions
       return roles.SingleOrDefault();
     }
 
-    public static async Task<Page<AdminUserViewModel>> GetUserPageAsync<T>(
-      this UserManager<T> userManager, int index,
-      int pageSize, string username,
-      string sortColumn = null, bool orderBy = false)
-      where T : ApplicationUser
+    public static async Task<Page<AdminUserViewModel>> GetUserPageAsync(
+      this UserManager<ApplicationUser> userManager, int index,
+      int pageSize, string usernameFilter, SortState sortState)
     {
+      var query = userManager.Users.AsQueryable();
+
+      if (!string.IsNullOrWhiteSpace(usernameFilter))
+      {
+        query = query.Where(user => user.UserName.Contains(usernameFilter));
+      }
+
+      switch (sortState)
+      {
+        case SortState.UsernameAsc:
+          query = query.OrderBy(user => user.UserName);
+          break;
+        case SortState.UsernameDesc:
+          query = query.OrderByDescending(user => user.UserName);
+          break;
+        case SortState.CreatedDateAsc:
+          query = query.OrderBy(user => user.CreatedDate);
+          break;
+        case SortState.CreatedDateDesc:
+          query = query.OrderByDescending(user => user.CreatedDate);
+          break;
+      }
+
       var result = new Page<AdminUserViewModel>
       {
         CurrentPage = index,
-        PageSize = pageSize
+        PageSize = pageSize,
+        UsernameFilter = usernameFilter,
+        SortViewModel = new SortViewModel(sortState)
       };
 
-      // TODO: Optimization.
-      var users = new List<AdminUserViewModel>();
-      foreach (var user in userManager.Users)
-      {
-        var role = await userManager.GetUserRoleAsync(user);
-        users.Add(AdminUserViewModel.Map(user, role));
-      }
-
-      var query = users.AsQueryable();
-      if (!string.IsNullOrWhiteSpace(username))
-      {
-        query = query.Where(user => user.Username.Contains(username));
-      }
-
-      if (!string.IsNullOrWhiteSpace(sortColumn))
-      {
-        switch (sortColumn)
-        {
-          case SortColumnOptions.Username:
-            query = orderBy ? 
-              query.OrderBy(user => user.Username) : 
-              query.OrderByDescending(user => user.Username);
-            break;
-          case SortColumnOptions.CreatedDate:
-            query = orderBy ?
-              query.OrderBy(user => user.CreatedDate) :
-              query.OrderByDescending(user => user.CreatedDate);
-            break;
-        }
-      }
-      else
-      {
-        query = query.OrderByDescending(user => user.CreatedDate);
-      }
-
-      var count = await query.CountAsyncSafe();
-      result.TotalPages = count % pageSize == 0 ?
-        count / pageSize :
-        count / pageSize + 1;
+      var totalCount = await query.AsNoTracking().CountAsync();
+      result.TotalPages = totalCount % pageSize == 0 ?
+        totalCount / pageSize :
+        totalCount / pageSize + 1;
 
       query = query
         .Skip((index - 1) * pageSize)
         .Take(pageSize);
 
-      result.Records = await query.ToListAsyncSafe();
+      var users = new List<AdminUserViewModel>();
+      foreach (var user in await query.AsNoTracking().ToListAsync())
+      {
+        var role = await userManager.GetUserRoleAsync(user);
+        users.Add(AdminUserViewModel.Map(user, role));
+      }
+
+      result.Records = users;
 
       return result;
     }

@@ -1,5 +1,7 @@
 ﻿@using YourMotivation.Web.Models.AdminUsersViewModels;
-@using YourMotivation.Web.Models;
+@using YourMotivation.Web.Models.Pagination;
+
+@addTagHelper "*, YourMotivation.Web"
 
 @model Page<AdminUserViewModel>
 @{
@@ -14,9 +16,9 @@
   <div class="form-actions no-color">
     <p>
       @Localizer["Find by username"]:
-      <input type="text" name="searchByUsername" value="@ViewBag.CurrentFilter" />
+      <input type="text" name="usernameFilter" value="@Model.UsernameFilter" />
       <input type="submit" value="@Localizer["Search"]" class="btn btn-default" />
-      @if (!string.IsNullOrEmpty(ViewBag.CurrentFilter))
+      @if (!string.IsNullOrEmpty(Model.UsernameFilter))
       {
         <a asp-action="All">@Localizer["Back to full list"]</a>
       }
@@ -28,13 +30,9 @@
   <thead>
     <tr>
       <th>
-        <a asp-action="All"
-           asp-route-pageIndex="@Model.CurrentPage"
-           asp-route-searchByUsername="@ViewBag.CurrentFilter"
-           asp-route-sortColumn="@SortColumnOptions.Username"
-           asp-route-orderBy="@(!(ViewBag.OrderByParam ?? false))">
+        <sort-header action="All" page-model=@Model column=@SortColumnName.Username>
           @Html.DisplayNameFor(model => model.Default.Username)
-        </a>
+        </sort-header>
       </th>
       <th>
         @Html.DisplayNameFor(model => model.Default.Email)
@@ -46,13 +44,9 @@
         @Html.DisplayNameFor(model => model.Default.Role)
       </th>
       <th>
-        <a asp-action="All"
-           asp-route-pageIndex="@Model.CurrentPage"
-           asp-route-searchByUsername="@ViewBag.CurrentFilter"
-           asp-route-sortColumn="@SortColumnOptions.CreatedDate"
-           asp-route-orderBy="@(!(ViewBag.OrderByParam ?? false))">
+        <sort-header action="All" page-model=@Model column=@SortColumnName.CreatedDate>
           @Html.DisplayNameFor(model => model.Default.CreatedDate)
-        </a>
+        </sort-header>
       </th>
       <th>
         @Html.DisplayNameFor(model => model.Default.PhoneNumber)
@@ -104,9 +98,8 @@
        asp-controller=@controllerName
        asp-action=@actionName
        asp-route-pageIndex=@(Model.CurrentPage - 1)
-       asp-route-searchByUsername=@ViewBag.CurrentFilter
-       asp-route-sortColumn=@ViewBag.SortColumnParam
-       asp-route-orderBy=@ViewBag.OrderByParam>
+       asp-route-searchByUsername=@Model.UsernameFilter
+       asp-route-sortOrder=@Model.SortViewModel.CurrentState>
       @Localizer["Previous"]
     </a>
 
@@ -118,9 +111,8 @@
          asp-controller=@controllerName
          asp-action=@actionName
          asp-route-pageIndex=@pageNumber
-         asp-route-searchByUsername=@ViewBag.CurrentFilter
-         asp-route-sortColumn=@ViewBag.SortColumnParam
-         asp-route-orderBy=@ViewBag.OrderByParam>
+         asp-route-searchByUsername=@Model.UsernameFilter
+         asp-route-sortOrder=@Model.SortViewModel.CurrentState>
         @pageNumber
       </a>
     }
@@ -129,9 +121,8 @@
        asp-controller=@controllerName
        asp-action=@actionName
        asp-route-pageIndex=@(Model.CurrentPage + 1)
-       asp-route-searchByUsername=@ViewBag.CurrentFilter
-       asp-route-sortColumn=@ViewBag.SortColumnParam
-       asp-route-orderBy=@ViewBag.OrderByParam>
+       asp-route-searchByUsername=@Model.UsernameFilter
+       asp-route-sortOrder=@Model.SortViewModel.CurrentState>
       @Localizer["Next"]
     </a>
   </div>
