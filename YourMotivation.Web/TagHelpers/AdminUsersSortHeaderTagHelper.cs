@@ -3,23 +3,23 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
-using YourMotivation.Web.Models.AdminUsersViewModels;
 using YourMotivation.Web.Models.Pagination;
+using YourMotivation.Web.Models.Pagination.AdminUsers;
 
 namespace YourMotivation.Web.TagHelpers
 {
-  public class SortHeaderTagHelper : TagHelper
+  public class AdminUsersSortHeaderTagHelper : TagHelper
   {
     private IUrlHelperFactory _urlHelperFactory;
 
-    public SortHeaderTagHelper(IUrlHelperFactory helperFactory)
+    public AdminUsersSortHeaderTagHelper(IUrlHelperFactory helperFactory)
     {
       _urlHelperFactory = helperFactory;
     }
 
     public string Action { get; set; }
     public string Controller { get; set; }
-    public Page<AdminUserViewModel> PageModel { get; set; }
+    public AdminUsersPageViewModel PageModel { get; set; }
     public SortColumnName Column { get; set; }
 
     [ViewContext]

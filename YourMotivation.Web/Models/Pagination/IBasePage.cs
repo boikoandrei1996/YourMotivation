@@ -8,5 +8,7 @@ namespace YourMotivation.Web.Models.Pagination
     int CurrentPage { get; set; }
     int PageSize { get; set; }
     int TotalPages { get; set; }
+    bool HasPreviousPage { get; }
+    bool HasNextPage { get; }
   }
 }

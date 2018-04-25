@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using ORM.Models;
 using YourMotivation.Web.Models.AdminUsersViewModels;
 using YourMotivation.Web.Models.Pagination;
+using YourMotivation.Web.Models.Pagination.AdminUsers;
 
 namespace YourMotivation.Web.Extensions
 {
@@ -60,7 +61,7 @@ namespace YourMotivation.Web.Extensions
       return roles.SingleOrDefault();
     }
 
-    public static async Task<Page<AdminUserViewModel>> GetUserPageAsync(
+    public static async Task<AdminUsersPageViewModel> GetUserPageAsync(
       this UserManager<ApplicationUser> userManager, int index,
       int pageSize, string usernameFilter, SortState sortState)
     {
@@ -87,7 +88,7 @@ namespace YourMotivation.Web.Extensions
           break;
       }
 
-      var result = new Page<AdminUserViewModel>
+      var result = new AdminUsersPageViewModel
       {
         CurrentPage = index,
         PageSize = pageSize,
@@ -95,17 +96,15 @@ namespace YourMotivation.Web.Extensions
         SortViewModel = new SortViewModel(sortState)
       };
 
-      var totalCount = await query.AsNoTracking().CountAsync();
-      result.TotalPages = totalCount % pageSize == 0 ?
-        totalCount / pageSize :
-        totalCount / pageSize + 1;
+      var totalCount = await query.CountAsync();
+      result.TotalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
 
       query = query
         .Skip((index - 1) * pageSize)
         .Take(pageSize);
 
       var users = new List<AdminUserViewModel>();
-      foreach (var user in await query.AsNoTracking().ToListAsync())
+      foreach (var user in await query.ToListAsync())
       {
         var role = await userManager.GetUserRoleAsync(user);
         users.Add(AdminUserViewModel.Map(user, role));
