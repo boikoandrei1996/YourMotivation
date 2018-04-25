@@ -8,11 +8,11 @@ using YourMotivation.Web.Models.Pagination.AdminUsers;
 
 namespace YourMotivation.Web.TagHelpers
 {
-  public class AdminUsersSortHeaderTagHelper : TagHelper
+  public class SortHeaderTagHelper : TagHelper
   {
     private IUrlHelperFactory _urlHelperFactory;
 
-    public AdminUsersSortHeaderTagHelper(IUrlHelperFactory helperFactory)
+    public SortHeaderTagHelper(IUrlHelperFactory helperFactory)
     {
       _urlHelperFactory = helperFactory;
     }

@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using ORM.Models;
 
-namespace YourMotivation.Web.Models.AdminUsersViewModels
+namespace YourMotivation.Web.Models.AdminViewModels
 {
   public class AdminUserViewModel
   {

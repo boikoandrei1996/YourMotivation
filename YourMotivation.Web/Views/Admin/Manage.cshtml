@@ -1,4 +1,4 @@
-﻿@using YourMotivation.Web.Models.AdminUsersViewModels;
+﻿@using YourMotivation.Web.Models.AdminViewModels;
 @using ORM.Models;
 
 @model AdminUserViewModel
@@ -73,7 +73,7 @@
     <input type="hidden" asp-for="Id" />
     <dl class="dl-horizontal">
       <dt>
-        <a asp-action="All" class="btn btn-info">@Localizer["Back to List"]</a>
+        <a asp-action="Users" class="btn btn-info">@Localizer["Back to List"]</a>
       </dt>
       <dd>
         <input type="submit" value="@Localizer["Delete"]" class="btn btn-danger" />

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using YourMotivation.Web.Models.AdminUsersViewModels;
+using YourMotivation.Web.Models.AdminViewModels;
 
 namespace YourMotivation.Web.Models.Pagination.AdminUsers
 {

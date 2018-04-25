@@ -35,10 +35,10 @@
           <li><a asp-area="" asp-controller="Home" asp-action="Index">@Localizer["Home"]</a></li>
           <li><a asp-area="" asp-controller="Home" asp-action="About">@Localizer["About"]</a></li>
           <li><a asp-area="" asp-controller="Home" asp-action="Contact">@Localizer["Contact"]</a></li>
-          <li><a asp-area="" asp-controller="AdminUsers" asp-action="All">@Localizer["Admin page"]</a></li>
+          <li><a asp-area="" asp-controller="Admin" asp-action="Users">@Localizer["Admin"]</a></li>
           @*@if (User.IsInRole(RoleNames.Admin))
           {
-            <li><a asp-area="" asp-controller="AdminUsers" asp-action="All">@Localizer["Admin page"]</a></li>
+            <li><a asp-area="" asp-controller="Admin" asp-action="Users">@Localizer["Admin"]</a></li>
           }*@
         </ul>
         @await Html.PartialAsync("_LoginPartial")

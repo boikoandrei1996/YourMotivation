@@ -6,23 +6,23 @@ using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using ORM.Models;
 using YourMotivation.Web.Extensions;
-using YourMotivation.Web.Models.AdminUsersViewModels;
+using YourMotivation.Web.Models.AdminViewModels;
 using YourMotivation.Web.Models.Pagination;
 
 namespace YourMotivation.Web.Controllers
 {
-  [Route("Admin/Users/[action]")]
+  [Route("[controller]/[action]")]
   // [Authorize(Roles = RoleNames.Admin)]
-  public class AdminUsersController : Controller
+  public class AdminController : Controller
   {
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly ILogger _logger;
-    private readonly IStringLocalizer<AdminUsersController> _localizer;
+    private readonly IStringLocalizer<AdminController> _localizer;
 
-    public AdminUsersController(
+    public AdminController(
       UserManager<ApplicationUser> userManager,
-      ILogger<AdminUsersController> logger,
-      IStringLocalizer<AdminUsersController> localizer)
+      ILogger<AdminController> logger,
+      IStringLocalizer<AdminController> localizer)
     {
       _userManager = userManager;
       _logger = logger;
@@ -33,7 +33,7 @@ namespace YourMotivation.Web.Controllers
     public string StatusMessage { get; set; }
 
     [HttpGet]
-    public async Task<IActionResult> All(int? pageIndex, string usernameFilter, SortState? sortOrder)
+    public async Task<IActionResult> Users(int? pageIndex, string usernameFilter, SortState? sortOrder)
     {
       var page = 
         await _userManager.GetUserPageAsync(pageIndex ?? 1, 2, usernameFilter, sortOrder ?? SortState.CreatedDateDesc);
@@ -88,7 +88,7 @@ namespace YourMotivation.Web.Controllers
         this.StatusMessage = _localizer["Error: Can not delete user: '{0}'.", applicationUser.Email];
       }
 
-      return RedirectToAction(nameof(All));
+      return RedirectToAction(nameof(Users));
     }
     
     [HttpPost]

@@ -12,7 +12,7 @@
 
 @Html.Partial("_StatusMessage", Model.StatusMessage)
 
-<form asp-action="All" method="get">
+<form asp-action="Users" method="get">
   <div class="form-actions no-color">
     <p>
       @Localizer["Find by username"]:
@@ -20,7 +20,7 @@
       <input type="submit" value="@Localizer["Search"]" class="btn btn-default" />
       @if (!string.IsNullOrEmpty(Model.UsernameFilter))
       {
-        <a asp-action="All">@Localizer["Back to full list"]</a>
+        <a asp-action="Users">@Localizer["Back to full list"]</a>
       }
     </p>
   </div>
@@ -30,7 +30,7 @@
   <thead>
     <tr>
       <th>
-        <sort-header action="All" page-model=@Model column=@SortColumnName.Username>
+        <sort-header action="Users" page-model=@Model column=@SortColumnName.Username>
           @Html.DisplayNameFor(model => model.Default.Username)
         </sort-header>
       </th>
@@ -44,7 +44,7 @@
         @Html.DisplayNameFor(model => model.Default.Role)
       </th>
       <th>
-        <sort-header action="All" page-model=@Model column=@SortColumnName.CreatedDate>
+        <sort-header action="Users" page-model=@Model column=@SortColumnName.CreatedDate>
           @Html.DisplayNameFor(model => model.Default.CreatedDate)
         </sort-header>
       </th>
@@ -84,48 +84,5 @@
   </tbody>
 </table>
 
-@{
-  var prevClassDisabled = Model.HasPreviousPage ? string.Empty : "disabled";
-  var nextClassDisabled = Model.HasNextPage ? string.Empty : "disabled";
-  var controllerName = "AdminUsers";
-  var actionName = "All";
-}
+@Html.Partial("_Pagination", Model)
 
-<div class="row" style="text-align: center;">
-  <ul class="pagination">
-    <li class="@prevClassDisabled">
-      <a asp-controller=@controllerName
-         asp-action=@actionName
-         asp-route-pageIndex=@(Model.CurrentPage - 1)
-         asp-route-usernameFilter=@Model.UsernameFilter
-         asp-route-sortOrder=@Model.SortViewModel.CurrentState>
-        <i class="glyphicon glyphicon-chevron-left"></i>
-        @Localizer["Previous"]
-      </a>
-    </li>
-    @foreach (var pageNumber in Enumerable.Range(1, Model.TotalPages))
-    {
-      string isActive = pageNumber == Model.CurrentPage ? "active" : string.Empty;
-
-      <li class="@isActive">
-        <a asp-controller=@controllerName
-           asp-action=@actionName
-           asp-route-pageIndex=@pageNumber
-           asp-route-usernameFilter=@Model.UsernameFilter
-           asp-route-sortOrder=@Model.SortViewModel.CurrentState>
-          @pageNumber
-        </a>
-      </li>
-    }
-    <li class="@nextClassDisabled">
-      <a asp-controller=@controllerName
-         asp-action=@actionName
-         asp-route-pageIndex=@(Model.CurrentPage + 1)
-         asp-route-usernameFilter=@Model.UsernameFilter
-         asp-route-sortOrder=@Model.SortViewModel.CurrentState>
-        @Localizer["Next"]
-        <i class="glyphicon glyphicon-chevron-right"></i>
-      </a>
-    </li>
-  </ul>
-</div>

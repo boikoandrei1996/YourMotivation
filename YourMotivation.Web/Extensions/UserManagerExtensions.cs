@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ORM.Models;
-using YourMotivation.Web.Models.AdminUsersViewModels;
+using YourMotivation.Web.Models.AdminViewModels;
 using YourMotivation.Web.Models.Pagination;
 using YourMotivation.Web.Models.Pagination.AdminUsers;
 

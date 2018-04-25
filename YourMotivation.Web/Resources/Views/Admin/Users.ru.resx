@@ -117,19 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="About" xml:space="preserve">
-    <value>О нас</value>
+  <data name="All users" xml:space="preserve">
+    <value>Все пользователи</value>
   </data>
-  <data name="Admin" xml:space="preserve">
-    <value>Страница администратора</value>
+  <data name="Back to full list" xml:space="preserve">
+    <value>Вернуться к полному списку</value>
   </data>
-  <data name="Contact" xml:space="preserve">
-    <value>Контакты</value>
+  <data name="Change role" xml:space="preserve">
+    <value>Изменить роль</value>
   </data>
-  <data name="Home" xml:space="preserve">
-    <value>Домашняя страница</value>
+  <data name="Delete" xml:space="preserve">
+    <value>Удалить</value>
   </data>
-  <data name="Toggle navigation" xml:space="preserve">
-    <value>Переключить навигацию</value>
+  <data name="Find by username" xml:space="preserve">
+    <value>Поиск по имени пользователя</value>
+  </data>
+  <data name="Manage" xml:space="preserve">
+    <value>Управление</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Поиск</value>
   </data>
 </root>
