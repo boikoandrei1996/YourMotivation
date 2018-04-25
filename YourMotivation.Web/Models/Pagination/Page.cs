@@ -18,7 +18,6 @@ namespace YourMotivation.Web.Models.Pagination
     public SortViewModel SortViewModel { get; set; }
 
     public string UsernameFilter { get; set; }
-    public string RoleFilter { get; set; }
 
     public string StatusMessage { get; set; }
     public T Default { get { return new T(); } }
