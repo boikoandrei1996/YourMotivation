@@ -14,9 +14,6 @@ namespace YourMotivation.Web.Models.AdminViewModels
     [Display(Name = "Email")]
     public string Email { get; set; }
 
-    [Display(Name = "EmailConfirmed")]
-    public bool EmailConfirmed { get; set; }
-
     [Display(Name = "PhoneNumber")]
     public string PhoneNumber { get; set; }
 
@@ -35,7 +32,6 @@ namespace YourMotivation.Web.Models.AdminViewModels
         Id = user.Id,
         Username = user.UserName,
         Email = user.Email,
-        EmailConfirmed = user.EmailConfirmed,
         PhoneNumber = user.PhoneNumber,
         Role = role,
         CreatedDate = user.CreatedDate

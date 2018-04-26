@@ -33,3 +33,9 @@
     display: none;
   }
 }
+
+/* As <h2> margins */
+.username-filter-form {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}

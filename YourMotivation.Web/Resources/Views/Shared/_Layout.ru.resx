@@ -121,7 +121,7 @@
     <value>О нас</value>
   </data>
   <data name="Admin" xml:space="preserve">
-    <value>Страница администратора</value>
+    <value>Админ</value>
   </data>
   <data name="Contact" xml:space="preserve">
     <value>Контакты</value>

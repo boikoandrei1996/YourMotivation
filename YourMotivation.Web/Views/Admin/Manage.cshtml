@@ -30,12 +30,6 @@
       @Html.DisplayFor(model => model.Email)
     </dd>
     <dt>
-      @Html.DisplayNameFor(model => model.EmailConfirmed)
-    </dt>
-    <dd>
-      @Html.DisplayFor(model => model.EmailConfirmed)
-    </dd>
-    <dt>
       @Html.DisplayNameFor(model => model.Role)
     </dt>
     <dd>
@@ -56,12 +50,12 @@
   </dl>
   <hr />
 
-  <form asp-action="SetRole">
+  <form asp-action="SetRole" class="form-inline">
     <input type="hidden" asp-for="Id" />
     <dl class="dl-horizontal">
       <dt>
         <label asp-for="@Model.Role">@Localizer["Role"]:</label>
-        <select name="newRole" asp-for="@Model.Role" asp-items="roleItems"></select>
+        <select class="form-control" name="newRole" asp-for="@Model.Role" asp-items="roleItems"></select>
       </dt>
       <dd>
         <input type="submit" value="@Localizer["Save new role"]" class="btn btn-warning" />
