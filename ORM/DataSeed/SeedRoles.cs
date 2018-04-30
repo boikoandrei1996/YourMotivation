@@ -12,7 +12,7 @@ namespace ORM.DataSeed
   public static class SeedRoles
   {
     public static async Task SeedAsync(
-      RoleManager<IdentityRole> roleManager,
+      RoleManager<ApplicationRole> roleManager,
       ILogger logger)
     {
       if (await roleManager.Roles.AnyAsync())
@@ -32,8 +32,8 @@ namespace ORM.DataSeed
     }
 
     private static async Task CreateRoleAsync(
-      IdentityRole role,
-      RoleManager<IdentityRole> roleManager,
+      ApplicationRole role,
+      RoleManager<ApplicationRole> roleManager,
       ILogger logger)
     {
       try
@@ -52,13 +52,13 @@ namespace ORM.DataSeed
       }
     }
 
-    private static IList<IdentityRole> GetRoles()
+    private static IList<ApplicationRole> GetRoles()
     {
-      return new List<IdentityRole>
+      return new List<ApplicationRole>
       {
-        new IdentityRole { Name = RoleNames.Admin },
-        new IdentityRole { Name = RoleNames.Moderator },
-        new IdentityRole { Name = RoleNames.User }
+        new ApplicationRole { Name = ApplicationRole.Admin },
+        new ApplicationRole { Name = ApplicationRole.Moderator },
+        new ApplicationRole { Name = ApplicationRole.User }
       };
     }
   }

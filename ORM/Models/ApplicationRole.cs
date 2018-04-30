@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
 
 namespace ORM.Models
 {
-  public class RoleNames
+  public class ApplicationRole : IdentityRole<Guid>
   {
     public const string Admin = "Admin";
     public const string Moderator = "Moderator";

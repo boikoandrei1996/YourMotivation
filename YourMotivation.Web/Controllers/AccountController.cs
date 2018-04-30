@@ -114,7 +114,7 @@ namespace YourMotivation.Web.Controllers
         _logger.LogInformation($"User '{user.UserName}' created a new account with password.");
 
         var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-        var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
+        var callbackUrl = Url.EmailConfirmationLink(user.Id.ToString(), code, Request.Scheme);
         var isSuccess = await _emailSender.SendEmailConfirmationAsync(_emailLocalizer, model.Email, callbackUrl);
 
         return RedirectToLocal(returnUrl, Url.Action(nameof(AccountController.Login), "Account"));
@@ -168,7 +168,7 @@ namespace YourMotivation.Web.Controllers
       }
 
       var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-      var callbackUrl = Url.ResetPasswordCallbackLink(user.Id, code, Request.Scheme);
+      var callbackUrl = Url.ResetPasswordCallbackLink(user.Id.ToString(), code, Request.Scheme);
       var isSuccess = await _emailSender.SendEmailResetPasswordAsync(_emailLocalizer, model.Email, callbackUrl);
 
       return RedirectToAction(nameof(ForgotPasswordConfirmation));

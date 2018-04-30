@@ -44,7 +44,7 @@ namespace YourMotivation.Web.Extensions
         return result;
       }
 
-      result = await userManager.AddToRoleAsync(user, RoleNames.User);
+      result = await userManager.AddToRoleAsync(user, ApplicationRole.User);
       if (!result.Succeeded)
       {
         await userManager.DeleteAsync(user);
@@ -65,7 +65,7 @@ namespace YourMotivation.Web.Extensions
       this UserManager<ApplicationUser> userManager, int index,
       int pageSize, string usernameFilter, SortState sortState)
     {
-      var query = userManager.Users.AsQueryable();
+      var query = userManager.Users.AsNoTracking();
 
       if (!string.IsNullOrWhiteSpace(usernameFilter))
       {

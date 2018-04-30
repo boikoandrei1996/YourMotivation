@@ -29,7 +29,7 @@ namespace YourMotivation.Web.Models.AdminViewModels
     {
       return new AdminUserViewModel
       {
-        Id = user.Id,
+        Id = user.Id.ToString(),
         Username = user.UserName,
         Email = user.Email,
         PhoneNumber = user.PhoneNumber,

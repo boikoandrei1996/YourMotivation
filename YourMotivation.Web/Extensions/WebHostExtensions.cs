@@ -15,7 +15,7 @@ namespace YourMotivation.Web.Extensions
       {
         var logger = scope.ServiceProvider.GetService<ILogger<Startup>>();
         var userManager = scope.ServiceProvider.GetService<UserManager<ApplicationUser>>();
-        var roleManager = scope.ServiceProvider.GetService<RoleManager<IdentityRole>>();
+        var roleManager = scope.ServiceProvider.GetService<RoleManager<ApplicationRole>>();
 
         DataSeeder.SeedAsync(userManager, roleManager, logger).Wait();
       }

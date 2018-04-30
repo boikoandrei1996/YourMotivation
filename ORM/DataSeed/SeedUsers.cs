@@ -87,7 +87,7 @@ namespace ORM.DataSeed
           PhoneNumber = "375291234567"
         },
         adminPassword,
-        RoleNames.Admin),
+        ApplicationRole.Admin),
 
         ValueTuple.Create(new ApplicationUser
         {
@@ -95,7 +95,7 @@ namespace ORM.DataSeed
           PhoneNumber = "375291234567"
         },
         userPassword,
-        RoleNames.Moderator),
+        ApplicationRole.Moderator),
 
         ValueTuple.Create(new ApplicationUser
         {
@@ -103,21 +103,21 @@ namespace ORM.DataSeed
           PhoneNumber = "375291234567"
         },
         userPassword,
-        RoleNames.User),
+        ApplicationRole.User),
 
         ValueTuple.Create(new ApplicationUser
         {
           Email = "user2@mail.ru",
         },
         userPassword,
-        RoleNames.User),
+        ApplicationRole.User),
 
         ValueTuple.Create(new ApplicationUser
         {
           Email = "user3@mail.ru",
         },
         userPassword,
-        RoleNames.User)
+        ApplicationRole.User)
       };
 
       foreach (var model in userModels)

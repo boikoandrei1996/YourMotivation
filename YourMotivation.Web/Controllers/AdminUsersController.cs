@@ -102,7 +102,7 @@ namespace YourMotivation.Web.Controllers
         return NotFound();
       }
 
-      if (!RoleNames.GetAllRoles().Contains(newRole))
+      if (!ApplicationRole.GetAllRoles().Contains(newRole))
       {
         return RedirectToAction(nameof(Manage), new { id });
       }

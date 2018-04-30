@@ -5,6 +5,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20180422004557_InitialCreate.cs" />
+    <Compile Remove="Migrations\20180422154349_Add-CreatedDate-Column-To-ApplicationUser.cs" />
+    <Compile Remove="Migrations\20180429164934_AddBasicNeededTypes.cs" />
+    <Compile Remove="Migrations\20180429180701_AddBasicNeededTypes_2.cs" />
+    <Compile Remove="Migrations\20180429191130_AddBasicNeededTypes_3.cs" />
+    <Compile Remove="Migrations\20180430010436_AddBasicNeededTypes_5.cs" />
+    <Compile Remove="Migrations\20180430081550_AddBasicNeededTypes.cs" />
+    <Compile Remove="Migrations\20180430081818_AddBasicNeededTypes_2.cs" />
+    <Compile Remove="Migrations\20180430084737_AddBasicNeededTypes_2.cs" />
+    <Compile Remove="Migrations\20180430084940_AddBasicNeededTypes.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.5" />

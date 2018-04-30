@@ -10,7 +10,7 @@ namespace ORM
   {
     public static async Task SeedAsync(
       UserManager<ApplicationUser> userManager, 
-      RoleManager<IdentityRole> roleManager,
+      RoleManager<ApplicationRole> roleManager,
       ILogger logger)
     {
       await SeedRoles.SeedAsync(roleManager, logger);

@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -33,7 +34,7 @@ namespace YourMotivation.Web
           options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
       services
-        .AddIdentity<ApplicationUser, IdentityRole>(config =>
+        .AddIdentity<ApplicationUser, ApplicationRole>(config =>
         {
           config.SignIn.RequireConfirmedEmail = true;
         })
