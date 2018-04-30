@@ -22,19 +22,19 @@ namespace ORM
     protected override void OnModelCreating(ModelBuilder builder)
     {
       base.OnModelCreating(builder);
-      // Customize the ASP.NET Identity model and override the defaults if needed.
-      // For example, you can rename the ASP.NET Identity table names and more.
-      // Add your customizations after calling base.OnModelCreating(builder);
 
       builder
         .Entity<CartItem>()
         .HasKey(e => new { e.CartId, e.ItemId });
 
+      builder.Entity<Item>().ToTable("Items");
+      builder.Entity<ItemCharacteristics>().ToTable("Items");
+
       builder
-        .Entity<ApplicationUser>()
-        .HasOne(e => e.TempCart)
-        .WithOne(e => e.UserOwner)
-        .HasForeignKey<Cart>(e => e.UserOwnerId)
+        .Entity<Order>()
+        .HasOne(e => e.User)
+        .WithMany(e => e.Orders)
+        .HasForeignKey(e => e.UserId)
         .OnDelete(DeleteBehavior.Restrict);
 
       builder
@@ -49,20 +49,6 @@ namespace ORM
         .HasOne(e => e.UserReceiver)
         .WithMany(e => e.TransfersAsReceiver)
         .HasForeignKey(e => e.UserReceiverId)
-        .OnDelete(DeleteBehavior.Restrict);
-
-      builder
-        .Entity<Order>()
-        .HasOne(e => e.User)
-        .WithMany(e => e.Orders)
-        .HasForeignKey(e => e.UserId)
-        .OnDelete(DeleteBehavior.Restrict);
-
-      builder
-        .Entity<Order>()
-        .HasOne(e => e.Cart)
-        .WithOne(e => e.Order)
-        .HasForeignKey<Cart>(e => e.OrderId)
         .OnDelete(DeleteBehavior.Restrict);
     }
   }

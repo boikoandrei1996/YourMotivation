@@ -11,9 +11,10 @@ using System;
 namespace ORM.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180430091812_AddBasicNeededTypes_2")]
+    partial class AddBasicNeededTypes_2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -232,12 +233,15 @@ namespace ORM.Migrations
 
             modelBuilder.Entity("ORM.Models.ItemCharacteristics", b =>
                 {
-                    b.Property<Guid>("Id");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Color")
                         .HasMaxLength(25);
 
                     b.Property<string>("Description");
+
+                    b.Property<Guid>("ItemId");
 
                     b.Property<string>("Model")
                         .HasMaxLength(25);
@@ -247,7 +251,10 @@ namespace ORM.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Items");
+                    b.HasIndex("ItemId")
+                        .IsUnique();
+
+                    b.ToTable("ItemCharacteristics");
                 });
 
             modelBuilder.Entity("ORM.Models.Order", b =>
@@ -367,7 +374,7 @@ namespace ORM.Migrations
                 {
                     b.HasOne("ORM.Models.Item", "Item")
                         .WithOne("Characteristics")
-                        .HasForeignKey("ORM.Models.ItemCharacteristics", "Id")
+                        .HasForeignKey("ORM.Models.ItemCharacteristics", "ItemId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

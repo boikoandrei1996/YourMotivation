@@ -125,6 +125,9 @@ namespace ORM.DataSeed
         model.User.UserName = model.User.Email;
         model.User.EmailConfirmed = true;
         model.User.CreatedDate = DateTime.UtcNow;
+        model.User.TotalPoints = 20;
+        model.User.PointsPerMonth = 5;
+        model.User.Cart = new Cart();
       }
 
       return userModels;

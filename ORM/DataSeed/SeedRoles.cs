@@ -54,12 +54,14 @@ namespace ORM.DataSeed
 
     private static IList<ApplicationRole> GetRoles()
     {
-      return new List<ApplicationRole>
+      var roles = new List<ApplicationRole>();
+
+      foreach (var roleName in ApplicationRole.GetAllRoles())
       {
-        new ApplicationRole { Name = ApplicationRole.Admin },
-        new ApplicationRole { Name = ApplicationRole.Moderator },
-        new ApplicationRole { Name = ApplicationRole.User }
-      };
+        roles.Add(new ApplicationRole { Name = roleName });
+      }
+
+      return roles;
     }
   }
 }

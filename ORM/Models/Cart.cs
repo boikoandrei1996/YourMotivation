@@ -7,12 +7,6 @@ namespace ORM.Models
   {
     public Guid Id { get; set; }
 
-    public Guid UserOwnerId { get; set; }
-    public ApplicationUser UserOwner { get; set; }
-
-    public Guid OrderId { get; set; }
-    public Order Order { get; set; }
-
-    public List<CartItem> CartItem { get; set; } = new List<CartItem>();
+    public List<CartItem> CartItems { get; set; } = new List<CartItem>();
   }
 }

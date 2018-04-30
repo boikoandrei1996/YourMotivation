@@ -1,12 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ORM.Models
 {
   public class ItemCharacteristics
   {
-    public Guid Id { get; set; }
-
     [DataType(DataType.Text)]
     public string Description { get; set; }
 
@@ -19,7 +18,8 @@ namespace ORM.Models
     [MaxLength(25)]
     public string Model { get; set; }
 
-    public Guid ItemId { get; set; }
+    [Key, ForeignKey("Item")]
+    public Guid Id { get; set; }
     public Item Item { get; set; }
   }
 }

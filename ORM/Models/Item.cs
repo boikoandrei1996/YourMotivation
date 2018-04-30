@@ -21,6 +21,6 @@ namespace ORM.Models
 
     public ItemCharacteristics Characteristics { get; set; }
 
-    public List<CartItem> CartItem { get; set; } = new List<CartItem>();
+    public List<CartItem> CartItems { get; set; } = new List<CartItem>();
   }
 }

@@ -11,10 +11,15 @@ namespace ORM
     public static async Task SeedAsync(
       UserManager<ApplicationUser> userManager, 
       RoleManager<ApplicationRole> roleManager,
+      ApplicationDbContext context,
       ILogger logger)
     {
       await SeedRoles.SeedAsync(roleManager, logger);
       await SeedUsers.SeedAsync(userManager, logger);
+      await SeedItems.SeedAsync(context, logger);
+      await SeedOrders.SeedAsync(context, logger);
+      await SeedCartItems.SeedAsync(context, logger);
+      await SeedTransfers.SeedAsync(context, logger);
     }
   }
 }

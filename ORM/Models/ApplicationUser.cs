@@ -15,14 +15,11 @@ namespace ORM.Models
 
     public int PointsPerMonth { get; set; }
 
-    public Cart TempCart { get; set; }
+    public Guid CartId { get; set; }
+    public Cart Cart { get; set; }
 
     public List<Order> Orders { get; set; } = new List<Order>();
-    
-    [InverseProperty("UserSender")]
     public List<Transfer> TransfersAsSender { get; set; } = new List<Transfer>();
-    
-    [InverseProperty("UserReceiver")]
     public List<Transfer> TransfersAsReceiver { get; set; } = new List<Transfer>();
   }
 }

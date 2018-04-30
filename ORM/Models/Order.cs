@@ -15,7 +15,7 @@ namespace ORM.Models
     [DataType(DataType.DateTime)]
     public DateTime? DateOfClosing { get; set; }
 
-    // public Guid CartId { get; set; }
+    public Guid CartId { get; set; }
     public Cart Cart { get; set; }
 
     public Guid UserId { get; set; }
