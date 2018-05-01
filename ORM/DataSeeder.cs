@@ -19,7 +19,7 @@ namespace ORM
       await SeedItems.SeedAsync(context, logger);
       await SeedCartItems.SeedAsync(context, logger);
       await SeedOrders.SeedAsync(context, logger);
-      // await SeedTransfers.SeedAsync(context, logger);
+      await SeedTransfers.SeedAsync(context, logger);
     }
   }
 }

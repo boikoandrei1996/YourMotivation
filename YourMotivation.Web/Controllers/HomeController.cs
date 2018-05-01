@@ -29,13 +29,17 @@ namespace YourMotivation.Web.Controllers
       var users = _context.Users.AsNoTracking().ToList();
       var users2 = _context.Users.Include(e => e.Cart).AsNoTracking().ToList();
       var users3 = _context.Users.Include(e => e.Orders).AsNoTracking().ToList();
+      var users4 = _context.Users
+        .Include(e => e.TransferAsSender)
+        .Include(e => e.TransfersAsReceiver)
+        .AsNoTracking().ToList();
       var roles = _context.Roles.AsNoTracking().ToList();
       var carts = _context.Carts.AsNoTracking().ToList();
       var items = _context.Items.AsNoTracking().ToList();
       var orders = _context.Orders.AsNoTracking().ToList();
       var orders2 = _context.Orders.Include(e => e.User).AsNoTracking().ToList();
       var orders3 = _context.Orders.Include(e => e.Cart).AsNoTracking().ToList();
-      // var transfers = _context.Transfers.AsNoTracking().ToList();
+      var transfers = _context.Transfers.AsNoTracking().ToList();
 
       return View();
     }

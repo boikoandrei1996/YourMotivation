@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="DataSeed\SeedTransfers.cs" />
     <Compile Remove="Migrations\20180422004557_InitialCreate.cs" />
     <Compile Remove="Migrations\20180422154349_Add-CreatedDate-Column-To-ApplicationUser.cs" />
     <Compile Remove="Migrations\20180429164934_AddBasicNeededTypes.cs" />
@@ -37,7 +36,7 @@
     <Compile Remove="Migrations\20180501205808_AddBasicNeededTypes_5.cs" />
     <Compile Remove="Migrations\20180501223941_AddBasicNeededTypes_5.cs" />
     <Compile Remove="Migrations\20180501224133_AddBasicNeededTypes_5.cs" />
-    <Compile Remove="Models\Transfer.cs" />
+    <Compile Remove="Migrations\20180501231514_AddBasicNeededTypes_6.cs" />
   </ItemGroup>
 
   <ItemGroup>

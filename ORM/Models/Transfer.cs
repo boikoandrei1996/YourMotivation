@@ -14,7 +14,9 @@ namespace ORM.Models
     public int Points { get; set; }
 
     public Guid UserSenderId { get; set; }
+    public ApplicationUser UserSender { get; set; }
     
     public Guid UserReceiverId { get; set; }
+    public ApplicationUser UserReceiver { get; set; }
   }
 }

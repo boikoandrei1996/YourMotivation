@@ -25,5 +25,7 @@ namespace ORM.Models
     public Cart Cart { get; set; }
 
     public List<Order> Orders { get; set; } = new List<Order>();
+    public List<Transfer> TransferAsSender { get; set; } = new List<Transfer>();
+    public List<Transfer> TransfersAsReceiver { get; set; } = new List<Transfer>();
   }
 }
