@@ -6,6 +6,10 @@ namespace ORM.Models
 {
   public class ItemCharacteristics
   {
+    [Key, ForeignKey("Item")]
+    public Guid Id { get; set; }
+    public Item Item { get; set; }
+
     [DataType(DataType.Text)]
     public string Description { get; set; }
 
@@ -17,9 +21,5 @@ namespace ORM.Models
 
     [MaxLength(25)]
     public string Model { get; set; }
-
-    [Key, ForeignKey("Item")]
-    public Guid Id { get; set; }
-    public Item Item { get; set; }
   }
 }

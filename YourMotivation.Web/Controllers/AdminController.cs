@@ -12,7 +12,7 @@ using YourMotivation.Web.Models.Pagination;
 namespace YourMotivation.Web.Controllers
 {
   [Route("[controller]/[action]")]
-  // [Authorize(Roles = RoleNames.Admin)]
+  // [Authorize(Roles = ApplicationRole.Admin)]
   public class AdminController : Controller
   {
     private readonly UserManager<ApplicationUser> _userManager;
@@ -44,9 +44,9 @@ namespace YourMotivation.Web.Controllers
     }
 
     [HttpGet]
-    public async Task<IActionResult> Manage(string id)
+    public async Task<IActionResult> Manage(string username)
     {
-      var applicationUser = await this.FindByIdAsync(id);
+      var applicationUser = await _userManager.FindByNameAsync(username);
       if (applicationUser == null)
       {
         return NotFound();
@@ -64,7 +64,7 @@ namespace YourMotivation.Web.Controllers
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(string id)
     {
-      var applicationUser = await this.FindByIdAsync(id);
+      var applicationUser = await _userManager.FindByIdAsync(id);
       if (applicationUser == null)
       {
         return NotFound();
@@ -96,7 +96,7 @@ namespace YourMotivation.Web.Controllers
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> SetRole(string id, string newRole)
     {
-      var applicationUser = await this.FindByIdAsync(id);
+      var applicationUser = await _userManager.FindByIdAsync(id);
       if (applicationUser == null)
       {
         return NotFound();
@@ -104,7 +104,7 @@ namespace YourMotivation.Web.Controllers
 
       if (!ApplicationRole.GetAllRoles().Contains(newRole))
       {
-        return RedirectToAction(nameof(Manage), new { id });
+        return RedirectToAction(nameof(Manage), new { applicationUser.UserName });
       }
 
       var oldRole = await _userManager.GetUserRoleAsync(applicationUser);
@@ -112,7 +112,7 @@ namespace YourMotivation.Web.Controllers
       {
         this.StatusMessage = 
           _localizer["Warning: User '{0}' has already role '{1}'.", applicationUser.UserName, newRole];
-        return RedirectToAction(nameof(Manage), new { id });
+        return RedirectToAction(nameof(Manage), new { applicationUser.UserName });
       }
 
       var result = await _userManager.AddToRoleAsync(applicationUser, newRole);
@@ -122,7 +122,7 @@ namespace YourMotivation.Web.Controllers
         if (result.Succeeded)
         {
           this.StatusMessage = _localizer["Success: Role has been updated."];
-          return RedirectToAction(nameof(Manage), new { id });
+          return RedirectToAction(nameof(Manage), new { applicationUser.UserName });
         }
         else
         {
@@ -137,17 +137,7 @@ namespace YourMotivation.Web.Controllers
       this.StatusMessage = 
         _localizer["Error: Can not add role '{0}' for user '{1}'.", newRole, applicationUser.UserName];
 
-      return RedirectToAction(nameof(Manage), new { id });
-    }
-
-    private async Task<ApplicationUser> FindByIdAsync(string id)
-    {
-      if (string.IsNullOrEmpty(id))
-      {
-        return null;
-      }
-
-      return await _userManager.FindByIdAsync(id);
+      return RedirectToAction(nameof(Manage), new { applicationUser.UserName });
     }
   }
 }

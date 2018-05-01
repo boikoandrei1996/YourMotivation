@@ -159,6 +159,9 @@
   <data name="PhoneNumber" xml:space="preserve">
     <value>Phone number</value>
   </data>
+  <data name="PointsPerMonth" xml:space="preserve">
+    <value>Balance for the month</value>
+  </data>
   <data name="Remember me?" xml:space="preserve">
     <value>Remember me?</value>
   </data>
@@ -167,6 +170,9 @@
   </data>
   <data name="StringLengthRestriction" xml:space="preserve">
     <value>The {0} must be at least {2} and at max {1} characters long.</value>
+  </data>
+  <data name="TotalPoints" xml:space="preserve">
+    <value>Total points</value>
   </data>
   <data name="Username" xml:space="preserve">
     <value>Username</value>

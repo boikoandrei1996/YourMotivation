@@ -29,6 +29,7 @@ namespace ORM.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
+                    CartId = table.Column<Guid>(nullable: false),
                     ConcurrencyStamp = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     Email = table.Column<string>(maxLength: 256, nullable: true),
@@ -59,7 +60,11 @@ namespace ORM.Migrations
                     CountsInStock = table.Column<int>(nullable: false),
                     Image = table.Column<byte[]>(nullable: false),
                     Price = table.Column<int>(nullable: false),
-                    Title = table.Column<string>(maxLength: 255, nullable: false)
+                    Title = table.Column<string>(maxLength: 255, nullable: false),
+                    Color = table.Column<string>(maxLength: 25, nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    Model = table.Column<string>(maxLength: 25, nullable: true),
+                    Size = table.Column<string>(maxLength: 25, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -173,95 +178,18 @@ namespace ORM.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Orders",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    DateOfClosing = table.Column<DateTime>(nullable: true),
-                    DateOfCreation = table.Column<DateTime>(nullable: false),
-                    IsClosed = table.Column<bool>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Orders", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Orders_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Transfers",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    Points = table.Column<int>(nullable: false),
-                    Text = table.Column<string>(nullable: false),
-                    UserReceiverId = table.Column<Guid>(nullable: false),
-                    UserSenderId = table.Column<Guid>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Transfers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Transfers_AspNetUsers_UserReceiverId",
-                        column: x => x.UserReceiverId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Transfers_AspNetUsers_UserSenderId",
-                        column: x => x.UserSenderId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ItemCharacteristics",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    Color = table.Column<string>(maxLength: 25, nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    ItemId = table.Column<Guid>(nullable: false),
-                    Model = table.Column<string>(maxLength: 25, nullable: true),
-                    Size = table.Column<string>(maxLength: 25, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ItemCharacteristics", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ItemCharacteristics_Items_ItemId",
-                        column: x => x.ItemId,
-                        principalTable: "Items",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Carts",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    OrderId = table.Column<Guid>(nullable: false),
-                    UserOwnerId = table.Column<Guid>(nullable: false)
+                    UserId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Carts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Carts_Orders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Orders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Carts_AspNetUsers_UserOwnerId",
-                        column: x => x.UserOwnerId,
+                        name: "FK_Carts_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -336,37 +264,11 @@ namespace ORM.Migrations
                 column: "ItemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Carts_OrderId",
+                name: "IX_Carts_UserId",
                 table: "Carts",
-                column: "OrderId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Carts_UserOwnerId",
-                table: "Carts",
-                column: "UserOwnerId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ItemCharacteristics_ItemId",
-                table: "ItemCharacteristics",
-                column: "ItemId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Orders_UserId",
-                table: "Orders",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Transfers_UserReceiverId",
-                table: "Transfers",
-                column: "UserReceiverId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Transfers_UserSenderId",
-                table: "Transfers",
-                column: "UserSenderId");
+                column: "UserId",
+                unique: true,
+                filter: "[UserId] IS NOT NULL");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -390,12 +292,6 @@ namespace ORM.Migrations
                 name: "CartItems");
 
             migrationBuilder.DropTable(
-                name: "ItemCharacteristics");
-
-            migrationBuilder.DropTable(
-                name: "Transfers");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -403,9 +299,6 @@ namespace ORM.Migrations
 
             migrationBuilder.DropTable(
                 name: "Items");
-
-            migrationBuilder.DropTable(
-                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

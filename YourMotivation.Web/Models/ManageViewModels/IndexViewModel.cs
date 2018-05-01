@@ -17,6 +17,12 @@ namespace YourMotivation.Web.Models.ManageViewModels
     [Display(Name = "PhoneNumber")]
     public string PhoneNumber { get; set; }
 
+    [Display(Name = "TotalPoints")]
+    public int TotalPoints { get; set; }
+
+    [Display(Name = "PointsPerMonth")]
+    public int PointsPerMonth { get; set; }
+
     public string StatusMessage { get; set; }
 
     public static IndexViewModel Map(ApplicationUser user, string statusMessage)
@@ -27,6 +33,8 @@ namespace YourMotivation.Web.Models.ManageViewModels
         Email = user.Email,
         PhoneNumber = user.PhoneNumber,
         IsEmailConfirmed = user.EmailConfirmed,
+        TotalPoints = user.TotalPoints,
+        PointsPerMonth = user.PointsPerMonth,
         StatusMessage = statusMessage
       };
     }

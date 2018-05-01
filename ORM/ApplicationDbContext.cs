@@ -14,10 +14,10 @@ namespace ORM
 
     public DbSet<Item> Items { get; set; }
     public DbSet<ItemCharacteristics> ItemCharacteristics { get; set; }
-    public DbSet<Cart> Carts { get; set; }
     public DbSet<CartItem> CartItems { get; set; }
-    public DbSet<Transfer> Transfers { get; set; }
-    public DbSet<Order> Orders { get; set; }
+    public DbSet<Cart> Carts { get; set; }
+    // public DbSet<Order> Orders { get; set; }
+    // public DbSet<Transfer> Transfers { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -31,25 +31,11 @@ namespace ORM
       builder.Entity<ItemCharacteristics>().ToTable("Items");
 
       builder
-        .Entity<Order>()
-        .HasOne(e => e.User)
-        .WithMany(e => e.Orders)
-        .HasForeignKey(e => e.UserId)
-        .OnDelete(DeleteBehavior.Restrict);
-
-      builder
-        .Entity<Transfer>()
-        .HasOne(e => e.UserSender)
-        .WithMany(e => e.TransfersAsSender)
-        .HasForeignKey(e => e.UserSenderId)
-        .OnDelete(DeleteBehavior.Restrict);
-
-      builder
-        .Entity<Transfer>()
-        .HasOne(e => e.UserReceiver)
-        .WithMany(e => e.TransfersAsReceiver)
-        .HasForeignKey(e => e.UserReceiverId)
-        .OnDelete(DeleteBehavior.Restrict);
+        .Entity<ApplicationUser>()
+        .HasOne(e => e.Cart)
+        .WithOne(e => e.User)
+        .HasForeignKey<Cart>(e => e.UserId)
+        .OnDelete(DeleteBehavior.Cascade);
     }
   }
 }

@@ -75,14 +75,14 @@ namespace YourMotivation.Web.Controllers
       }
 
       var result = await _signInManager.PasswordSignInAsync(
-        model.Email, model.Password, model.RememberMe, false);
+        model.Email.GetUsernameFromEmail(), model.Password, model.RememberMe, false);
       if (!result.Succeeded)
       {
         ModelState.AddModelError(string.Empty, _localizer.GetString("Invalid login attempt."));
         return View(model);
       }
 
-      _logger.LogInformation($"User '{User.Identity.Name}' logged in.");
+      _logger.LogInformation($"User '{model.Email}' logged in.");
 
       return RedirectToLocal(returnUrl);
     }
@@ -108,7 +108,7 @@ namespace YourMotivation.Web.Controllers
 
       var user = RegisterViewModel.Map(model);
 
-      var result = await _userManager.CreateUserAsync(user, model.Password);
+      var result = await _userManager.CreateUserWithRoleAsync(user, model.Password);
       if (result.Succeeded)
       {
         _logger.LogInformation($"User '{user.UserName}' created a new account with password.");
@@ -137,8 +137,14 @@ namespace YourMotivation.Web.Controllers
       var user = await _userManager.FindByIdAsync(userId);
       if (user == null)
       {
+        // return NotFound();
         throw new ApplicationException(
           _localizer["Unable to load user with ID '{0}'.", userId]);
+      }
+
+      if (user.EmailConfirmed)
+      {
+        return RedirectToAction(nameof(AccountController.Login), "Account");
       }
 
       var result = await _userManager.ConfirmEmailAsync(user, code);
@@ -162,7 +168,7 @@ namespace YourMotivation.Web.Controllers
       }
 
       var user = await _userManager.FindByEmailAsync(model.Email);
-      if (user == null || (await _userManager.IsEmailConfirmedAsync(user)) == false)
+      if (user == null || !user.EmailConfirmed)
       {
         return RedirectToAction(nameof(ForgotPassword));
       }

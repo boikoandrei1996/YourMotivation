@@ -5,7 +5,7 @@
 @{
   ViewBag.Title = Localizer["Manage"];
 
-  var roleItems = RoleNames.GetAllRoles()
+  var roleItems = ApplicationRole.GetAllRoles()
     .Select(role => new SelectListItem { Value = role, Text = role })
     .ToList();
 }

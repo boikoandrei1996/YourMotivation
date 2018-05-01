@@ -11,8 +11,8 @@ using System;
 namespace ORM.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180430091812_AddBasicNeededTypes_2")]
-    partial class AddBasicNeededTypes_2
+    [Migration("20180501215122_AddBasicNeededTypes_3")]
+    partial class AddBasicNeededTypes_3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -133,8 +133,6 @@ namespace ORM.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
-                    b.Property<Guid>("CartId");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
@@ -174,8 +172,6 @@ namespace ORM.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CartId");
-
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
 
@@ -192,7 +188,13 @@ namespace ORM.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<Guid?>("UserId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("Carts");
                 });
@@ -233,15 +235,12 @@ namespace ORM.Migrations
 
             modelBuilder.Entity("ORM.Models.ItemCharacteristics", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<Guid>("Id");
 
                     b.Property<string>("Color")
                         .HasMaxLength(25);
 
                     b.Property<string>("Description");
-
-                    b.Property<Guid>("ItemId");
 
                     b.Property<string>("Model")
                         .HasMaxLength(25);
@@ -251,57 +250,7 @@ namespace ORM.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ItemId")
-                        .IsUnique();
-
-                    b.ToTable("ItemCharacteristics");
-                });
-
-            modelBuilder.Entity("ORM.Models.Order", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<Guid>("CartId");
-
-                    b.Property<DateTime?>("DateOfClosing");
-
-                    b.Property<DateTime>("DateOfCreation");
-
-                    b.Property<bool>("IsClosed");
-
-                    b.Property<Guid>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CartId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("ORM.Models.Transfer", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("Points");
-
-                    b.Property<string>("Text")
-                        .IsRequired();
-
-                    b.Property<Guid>("UserReceiverId");
-
-                    b.Property<Guid>("UserSenderId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserReceiverId");
-
-                    b.HasIndex("UserSenderId");
-
-                    b.ToTable("Transfers");
+                    b.ToTable("Items");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -349,11 +298,11 @@ namespace ORM.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("ORM.Models.ApplicationUser", b =>
+            modelBuilder.Entity("ORM.Models.Cart", b =>
                 {
-                    b.HasOne("ORM.Models.Cart", "Cart")
-                        .WithMany()
-                        .HasForeignKey("CartId")
+                    b.HasOne("ORM.Models.ApplicationUser", "User")
+                        .WithOne("Cart")
+                        .HasForeignKey("ORM.Models.Cart", "UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -374,34 +323,8 @@ namespace ORM.Migrations
                 {
                     b.HasOne("ORM.Models.Item", "Item")
                         .WithOne("Characteristics")
-                        .HasForeignKey("ORM.Models.ItemCharacteristics", "ItemId")
+                        .HasForeignKey("ORM.Models.ItemCharacteristics", "Id")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("ORM.Models.Order", b =>
-                {
-                    b.HasOne("ORM.Models.Cart", "Cart")
-                        .WithMany()
-                        .HasForeignKey("CartId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("ORM.Models.ApplicationUser", "User")
-                        .WithMany("Orders")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("ORM.Models.Transfer", b =>
-                {
-                    b.HasOne("ORM.Models.ApplicationUser", "UserReceiver")
-                        .WithMany("TransfersAsReceiver")
-                        .HasForeignKey("UserReceiverId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("ORM.Models.ApplicationUser", "UserSender")
-                        .WithMany("TransfersAsSender")
-                        .HasForeignKey("UserSenderId")
-                        .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
         }

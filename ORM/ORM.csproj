@@ -5,6 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="DataSeed\SeedOrders.cs" />
+    <Compile Remove="DataSeed\SeedTransfers.cs" />
     <Compile Remove="Migrations\20180422004557_InitialCreate.cs" />
     <Compile Remove="Migrations\20180422154349_Add-CreatedDate-Column-To-ApplicationUser.cs" />
     <Compile Remove="Migrations\20180429164934_AddBasicNeededTypes.cs" />
@@ -15,6 +17,27 @@
     <Compile Remove="Migrations\20180430081818_AddBasicNeededTypes_2.cs" />
     <Compile Remove="Migrations\20180430084737_AddBasicNeededTypes_2.cs" />
     <Compile Remove="Migrations\20180430084940_AddBasicNeededTypes.cs" />
+    <Compile Remove="Migrations\20180430085544_AddBasicNeededTypes.cs" />
+    <Compile Remove="Migrations\20180430091812_AddBasicNeededTypes_2.cs" />
+    <Compile Remove="Migrations\20180430124107_AddBasicNeededTypes_3.cs" />
+    <Compile Remove="Migrations\20180501170653_AddBasicNeededTypes_4.cs" />
+    <Compile Remove="Migrations\20180501171022_AddBasicNeededTypes_1.cs" />
+    <Compile Remove="Migrations\20180501171400_AddBasicNeededTypes_2.cs" />
+    <Compile Remove="Migrations\20180501171823_AddBasicNeededTypes_3.cs" />
+    <Compile Remove="Migrations\20180501173959_AddBasicNeededTypes_1.cs" />
+    <Compile Remove="Migrations\20180501174820_AddBasicNeededTypes_2.cs" />
+    <Compile Remove="Migrations\20180501175311_AddBasicNeededTypes_3.cs" />
+    <Compile Remove="Migrations\20180501175819_AddBasicNeededTypes_3.cs" />
+    <Compile Remove="Migrations\20180501180647_AddBasicNeededTypes.cs" />
+    <Compile Remove="Migrations\20180501181300_AddBasicNeededTypes.cs" />
+    <Compile Remove="Migrations\20180501190849_AddBasicNeededTypes.cs" />
+    <Compile Remove="Migrations\20180501193909_AddBasicNeededTypes.cs" />
+    <Compile Remove="Migrations\20180501194506_AddBasicNeededTypes_2.cs" />
+    <Compile Remove="Migrations\20180501195232_AddBasicNeededTypes_3.cs" />
+    <Compile Remove="Migrations\20180501195355_AddBasicNeededTypes_4.cs" />
+    <Compile Remove="Migrations\20180501205808_AddBasicNeededTypes_5.cs" />
+    <Compile Remove="Models\Order.cs" />
+    <Compile Remove="Models\Transfer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -36,7 +36,7 @@
           <li><a asp-area="" asp-controller="Home" asp-action="About">@Localizer["About"]</a></li>
           <li><a asp-area="" asp-controller="Home" asp-action="Contact">@Localizer["Contact"]</a></li>
           <li><a asp-area="" asp-controller="Admin" asp-action="Users">@Localizer["Admin"]</a></li>
-          @*@if (User.IsInRole(RoleNames.Admin))
+          @*@if (User.IsInRole(ApplicationRole.Admin))
           {
             <li><a asp-area="" asp-controller="Admin" asp-action="Users">@Localizer["Admin"]</a></li>
           }*@

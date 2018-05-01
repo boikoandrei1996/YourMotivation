@@ -24,7 +24,6 @@ namespace YourMotivation.Web.Models.Pagination.AdminUsers
     }
 
     public SortViewModel SortViewModel { get; set; }
-
     public string UsernameFilter { get; set; }
 
     public string StatusMessage { get; set; }

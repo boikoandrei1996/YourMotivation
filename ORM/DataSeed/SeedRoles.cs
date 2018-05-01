@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -25,7 +23,8 @@ namespace ORM.DataSeed
         logger.LogInformation("Create roles in database.");
       }
 
-      foreach (var role in GetRoles())
+      var roles = ApplicationRole.GetAllRoles().Select(roleName => new ApplicationRole { Name = roleName });
+      foreach (var role in roles)
       {
         await CreateRoleAsync(role, roleManager, logger);
       }
@@ -36,32 +35,12 @@ namespace ORM.DataSeed
       RoleManager<ApplicationRole> roleManager,
       ILogger logger)
     {
-      try
-      {
-        IdentityResult result = await roleManager.CreateAsync(role);
-        if (result.Succeeded == false)
-        {
-          logger.LogError($"Can not create role: '{role.Name}'.");
-          logger.LogError(nameof(IdentityResult.Errors), result.Errors);
-        }
-      }
-      catch (DbUpdateException ex)
+      IdentityResult result = await roleManager.CreateAsync(role);
+      if (!result.Succeeded)
       {
         logger.LogError($"Can not create role: '{role.Name}'.");
-        logger.LogError(ex.InnerException.InnerException, nameof(SeedUsers.SeedAsync));
+        logger.LogError(nameof(IdentityResult.Errors), result.Errors);
       }
-    }
-
-    private static IList<ApplicationRole> GetRoles()
-    {
-      var roles = new List<ApplicationRole>();
-
-      foreach (var roleName in ApplicationRole.GetAllRoles())
-      {
-        roles.Add(new ApplicationRole { Name = roleName });
-      }
-
-      return roles;
     }
   }
 }

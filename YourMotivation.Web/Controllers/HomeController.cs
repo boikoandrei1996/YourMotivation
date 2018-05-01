@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
+using ORM;
 using YourMotivation.Web.Models;
 
 namespace YourMotivation.Web.Controllers
@@ -11,14 +14,26 @@ namespace YourMotivation.Web.Controllers
   public class HomeController : Controller
   {
     private readonly IStringLocalizer<HomeController> _localizer;
+    private readonly ApplicationDbContext _context;
 
-    public HomeController(IStringLocalizer<HomeController> localizer)
+    public HomeController(
+      IStringLocalizer<HomeController> localizer,
+      ApplicationDbContext context)
     {
       _localizer = localizer;
+      _context = context;
     }
 
     public IActionResult Index()
     {
+      var users = _context.Users.AsNoTracking().ToList();
+      var users2 = _context.Users.Include(e => e.Cart).AsNoTracking().ToList();
+      var roles = _context.Roles.AsNoTracking().ToList();
+      var carts = _context.Carts.AsNoTracking().ToList();
+      var items = _context.Items.AsNoTracking().ToList();
+      // var orders = _context.Orders.AsNoTracking().ToList();
+      // var transfers = _context.Transfers.AsNoTracking().ToList();
+
       return View();
     }
 

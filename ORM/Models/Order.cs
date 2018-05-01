@@ -16,7 +16,6 @@ namespace ORM.Models
     public DateTime? DateOfClosing { get; set; }
 
     public Guid CartId { get; set; }
-    public Cart Cart { get; set; }
 
     public Guid UserId { get; set; }
     public ApplicationUser User { get; set; }

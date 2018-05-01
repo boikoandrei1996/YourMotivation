@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using ORM.Models;
+using YourMotivation.Web.Extensions;
 
 namespace YourMotivation.Web.Models.AccountViewModels
 {
@@ -26,9 +27,8 @@ namespace YourMotivation.Web.Models.AccountViewModels
     {
       return new ApplicationUser
       {
-        UserName = model.Email,
         Email = model.Email,
-        CreatedDate = DateTime.UtcNow
+        UserName = model.Email.GetUsernameFromEmail()
       };
     }
   }

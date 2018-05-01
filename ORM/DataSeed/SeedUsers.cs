@@ -11,6 +11,7 @@ namespace ORM.DataSeed
   public static class SeedUsers
   {
     public static async Task SeedAsync(
+      ApplicationDbContext context,
       UserManager<ApplicationUser> userManager,
       ILogger logger)
     {
@@ -24,7 +25,7 @@ namespace ORM.DataSeed
         logger.LogInformation("Create users in database.");
       }
 
-      foreach (var model in GetUserModels())
+      foreach (var model in await GetUserModelsAsync(context))
       {
         await CreateUserAsync(model.User, model.Password, userManager, logger);
         await AddToRoleAsync(model.User, model.Role, userManager, logger);
@@ -32,49 +33,34 @@ namespace ORM.DataSeed
     }
 
     private static async Task CreateUserAsync(
-      ApplicationUser user, string password, 
-      UserManager<ApplicationUser> userManager, ILogger logger)
+      ApplicationUser user, 
+      string password,
+      UserManager<ApplicationUser> userManager, 
+      ILogger logger)
     {
-      string errorMessage = $"Can not create user: '{user.Email}'.";
-      try
+      IdentityResult result = await userManager.CreateAsync(user, password);
+      if (!result.Succeeded)
       {
-        IdentityResult result = await userManager.CreateAsync(user, password);
-        if (result.Succeeded == false)
-        {
-          logger.LogError(errorMessage);
-          logger.LogError(nameof(IdentityResult.Errors), result.Errors);
-        }
-      }
-      catch (DbUpdateException ex)
-      {
-        logger.LogError(errorMessage);
-        logger.LogError(ex.InnerException.InnerException, nameof(SeedUsers.SeedAsync));
+        logger.LogError($"Can not create user: '{user.Email}'.");
+        logger.LogError(nameof(IdentityResult.Errors), result.Errors);
       }
     }
 
     private static async Task AddToRoleAsync(
-      ApplicationUser user, string role,
-      UserManager<ApplicationUser> userManager, ILogger logger
-    )
+      ApplicationUser user, 
+      string role,
+      UserManager<ApplicationUser> userManager, 
+      ILogger logger)
     {
-      string errorMessage = $"Can not add role '{role}' to user: '{user.Email}'.";
-      try
+      IdentityResult result = await userManager.AddToRoleAsync(user, role);
+      if (!result.Succeeded)
       {
-        IdentityResult result = await userManager.AddToRoleAsync(user, role);
-        if (result.Succeeded == false)
-        {
-          logger.LogError(errorMessage);
-          logger.LogError(nameof(IdentityResult.Errors), result.Errors);
-        }
-      }
-      catch (DbUpdateException ex)
-      {
-        logger.LogError(errorMessage);
-        logger.LogError(ex.InnerException.InnerException, nameof(SeedUsers.SeedAsync));
+        logger.LogError($"Can not add role '{role}' to user: '{user.Email}'.");
+        logger.LogError(nameof(IdentityResult.Errors), result.Errors);
       }
     }
 
-    private static IList<(ApplicationUser User, string Password, string Role)> GetUserModels()
+    private static async Task<IList<(ApplicationUser User, string Password, string Role)>> GetUserModelsAsync(ApplicationDbContext context)
     {
       var userPassword = "User123!";
       var adminPassword = "Admin123!";
@@ -84,7 +70,8 @@ namespace ORM.DataSeed
         ValueTuple.Create(new ApplicationUser
         {
           Email = "admin@mail.ru",
-          PhoneNumber = "375291234567"
+          PhoneNumber = "375291234567",
+          CreatedDate = DateTime.UtcNow.AddDays(-3)
         },
         adminPassword,
         ApplicationRole.Admin),
@@ -92,7 +79,8 @@ namespace ORM.DataSeed
         ValueTuple.Create(new ApplicationUser
         {
           Email = "moderator@mail.ru",
-          PhoneNumber = "375291234567"
+          PhoneNumber = "375291234567",
+          CreatedDate = DateTime.UtcNow.AddDays(-3)
         },
         userPassword,
         ApplicationRole.Moderator),
@@ -100,7 +88,8 @@ namespace ORM.DataSeed
         ValueTuple.Create(new ApplicationUser
         {
           Email = "user1@mail.ru",
-          PhoneNumber = "375291234567"
+          PhoneNumber = "375291234567",
+          CreatedDate = DateTime.UtcNow.AddHours(-5)
         },
         userPassword,
         ApplicationRole.User),
@@ -108,6 +97,7 @@ namespace ORM.DataSeed
         ValueTuple.Create(new ApplicationUser
         {
           Email = "user2@mail.ru",
+          CreatedDate = DateTime.UtcNow.AddDays(-1)
         },
         userPassword,
         ApplicationRole.User),
@@ -115,6 +105,7 @@ namespace ORM.DataSeed
         ValueTuple.Create(new ApplicationUser
         {
           Email = "user3@mail.ru",
+          CreatedDate = DateTime.UtcNow.AddDays(-2)
         },
         userPassword,
         ApplicationRole.User)
@@ -122,12 +113,9 @@ namespace ORM.DataSeed
 
       foreach (var model in userModels)
       {
-        model.User.UserName = model.User.Email;
+        model.User.UserName = model.User.Email.Split('@')[0];
         model.User.EmailConfirmed = true;
-        model.User.CreatedDate = DateTime.UtcNow;
         model.User.TotalPoints = 20;
-        model.User.PointsPerMonth = 5;
-        model.User.Cart = new Cart();
       }
 
       return userModels;

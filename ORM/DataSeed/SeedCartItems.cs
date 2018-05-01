@@ -43,44 +43,44 @@ namespace ORM.DataSeed
 
     private static async Task<IList<CartItem>> GetCartItemsAsync(ApplicationDbContext context)
     {
-      var users = await context.Users.ToArrayAsync();
+      var carts = await context.Carts.ToArrayAsync();
       var items = await context.Items.ToArrayAsync();
 
       return new List<CartItem>
       {
         new CartItem
         {
-          CartId = users[0].CartId,
+          CartId = carts[0].Id,
           ItemId = items[0].Id
         },
         new CartItem
         {
-          CartId = users[0].CartId,
+          CartId = carts[0].Id,
           ItemId = items[3].Id
         },
         new CartItem
         {
-          CartId = users[0].CartId,
+          CartId = carts[0].Id,
           ItemId = items[2].Id
         },
         new CartItem
         {
-          CartId = users[1].CartId,
+          CartId = carts[1].Id,
           ItemId = items[0].Id
         },
         new CartItem
         {
-          CartId = users[1].CartId,
+          CartId = carts[1].Id,
           ItemId = items[1].Id
         },
         new CartItem
         {
-          CartId = users[2].CartId,
+          CartId = carts[2].Id,
           ItemId = items[3].Id
         },
         new CartItem
         {
-          CartId = users[3].CartId,
+          CartId = carts[3].Id,
           ItemId = items[4].Id
         }
       };

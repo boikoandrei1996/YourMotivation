@@ -16,7 +16,8 @@ namespace YourMotivation.Web.Extensions
     public static async Task<IdentityResult> DeleteUserAsync<T>(this UserManager<T> userManager, T user)
       where T : class
     {
-      try
+      return await userManager.DeleteAsync(user);
+      /*try
       {
         return await userManager.DeleteAsync(user);
       }
@@ -31,10 +32,10 @@ namespace YourMotivation.Web.Extensions
       catch (Exception)
       {
         return null;
-      }
+      }*/
     }
 
-    public static async Task<IdentityResult> CreateUserAsync<T>(
+    public static async Task<IdentityResult> CreateUserWithRoleAsync<T>(
       this UserManager<T> userManager, T user, string password)
       where T : class
     {
@@ -47,7 +48,7 @@ namespace YourMotivation.Web.Extensions
       result = await userManager.AddToRoleAsync(user, ApplicationRole.User);
       if (!result.Succeeded)
       {
-        await userManager.DeleteAsync(user);
+        await userManager.DeleteUserAsync(user);
       }
 
       return result;
