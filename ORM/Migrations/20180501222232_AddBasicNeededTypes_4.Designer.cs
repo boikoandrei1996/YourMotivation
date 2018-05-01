@@ -11,9 +11,10 @@ using System;
 namespace ORM.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180501222232_AddBasicNeededTypes_4")]
+    partial class AddBasicNeededTypes_4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -257,8 +258,6 @@ namespace ORM.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid>("CartId");
-
                     b.Property<DateTime?>("DateOfClosing");
 
                     b.Property<DateTime>("DateOfCreation");
@@ -266,9 +265,6 @@ namespace ORM.Migrations
                     b.Property<Guid>("UserId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CartId")
-                        .IsUnique();
 
                     b.HasIndex("UserId");
 
@@ -351,11 +347,6 @@ namespace ORM.Migrations
 
             modelBuilder.Entity("ORM.Models.Order", b =>
                 {
-                    b.HasOne("ORM.Models.Cart", "Cart")
-                        .WithOne("Order")
-                        .HasForeignKey("ORM.Models.Order", "CartId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("ORM.Models.ApplicationUser", "User")
                         .WithMany("Orders")
                         .HasForeignKey("UserId")

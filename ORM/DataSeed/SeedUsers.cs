@@ -11,7 +11,6 @@ namespace ORM.DataSeed
   public static class SeedUsers
   {
     public static async Task SeedAsync(
-      ApplicationDbContext context,
       UserManager<ApplicationUser> userManager,
       ILogger logger)
     {
@@ -25,7 +24,7 @@ namespace ORM.DataSeed
         logger.LogInformation("Create users in database.");
       }
 
-      foreach (var model in await GetUserModelsAsync(context))
+      foreach (var model in GetUserModels())
       {
         await CreateUserAsync(model.User, model.Password, userManager, logger);
         await AddToRoleAsync(model.User, model.Role, userManager, logger);
@@ -60,7 +59,7 @@ namespace ORM.DataSeed
       }
     }
 
-    private static async Task<IList<(ApplicationUser User, string Password, string Role)>> GetUserModelsAsync(ApplicationDbContext context)
+    private static IList<(ApplicationUser User, string Password, string Role)> GetUserModels()
     {
       var userPassword = "User123!";
       var adminPassword = "Admin123!";

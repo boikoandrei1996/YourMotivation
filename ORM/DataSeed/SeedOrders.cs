@@ -52,7 +52,6 @@ namespace ORM.DataSeed
         {
           DateOfCreation = DateTime.UtcNow.AddDays(-3),
           DateOfClosing = DateTime.UtcNow.AddDays(-1),
-          IsClosed = true,
           UserId = users[0].Id,
           CartId = users[0].Cart.Id
         },
@@ -60,21 +59,18 @@ namespace ORM.DataSeed
         {
           DateOfCreation = DateTime.UtcNow.AddDays(-2),
           DateOfClosing = DateTime.UtcNow.AddDays(-1),
-          IsClosed = true,
           UserId = users[1].Id,
           CartId = users[1].Cart.Id
         },
         new Order
         {
           DateOfCreation = DateTime.UtcNow.AddDays(-3),
-          IsClosed = false,
           UserId = users[2].Id,
           CartId = users[2].Cart.Id
         },
         new Order
         {
           DateOfCreation = DateTime.UtcNow.AddDays(-1),
-          IsClosed = false,
           UserId = users[3].Id,
           CartId = users[3].Cart.Id
         },
@@ -82,7 +78,6 @@ namespace ORM.DataSeed
         {
           DateOfCreation = DateTime.UtcNow.AddDays(-1),
           DateOfClosing = DateTime.UtcNow,
-          IsClosed = true,
           UserId = users[4].Id,
           CartId = users[4].Cart.Id
         }

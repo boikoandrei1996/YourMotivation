@@ -15,10 +15,10 @@ namespace ORM
       ILogger logger)
     {
       await SeedRoles.SeedAsync(roleManager, logger);
-      await SeedUsers.SeedAsync(context, userManager, logger);
+      await SeedUsers.SeedAsync(userManager, logger);
       await SeedItems.SeedAsync(context, logger);
       await SeedCartItems.SeedAsync(context, logger);
-      // await SeedOrders.SeedAsync(context, logger);
+      await SeedOrders.SeedAsync(context, logger);
       // await SeedTransfers.SeedAsync(context, logger);
     }
   }
