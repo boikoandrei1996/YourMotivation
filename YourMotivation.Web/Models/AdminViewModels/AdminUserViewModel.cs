@@ -6,7 +6,7 @@ namespace YourMotivation.Web.Models.AdminViewModels
 {
   public class AdminUserViewModel
   {
-    public string Id { get; set; }
+    public Guid Id { get; set; }
 
     [Display(Name = "Username")]
     public string Username { get; set; }
@@ -29,7 +29,7 @@ namespace YourMotivation.Web.Models.AdminViewModels
     {
       return new AdminUserViewModel
       {
-        Id = user.Id.ToString(),
+        Id = user.Id,
         Username = user.UserName,
         Email = user.Email,
         PhoneNumber = user.PhoneNumber,

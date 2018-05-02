@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -67,14 +68,9 @@ namespace YourMotivation.Web.Controllers
     [HttpPost]
     [ActionName("Delete")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(string id)
+    public async Task<IActionResult> DeleteConfirmed(Guid id)
     {
-      var applicationUser = _context.Users
-        .Include(e => e.TransfersAsSender)
-        .Include(e => e.TransfersAsReceiver)
-        .AsNoTracking()
-        .FirstOrDefault(u => u.Id.ToString() == id);
-
+      var applicationUser = await _context.FindUserByIdAsync(id);
       if (applicationUser == null)
       {
         return NotFound();
@@ -104,9 +100,9 @@ namespace YourMotivation.Web.Controllers
     [HttpPost]
     [ActionName("SetRole")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> SetRole(string id, string newRole)
+    public async Task<IActionResult> SetRole(Guid id, string newRole)
     {
-      var applicationUser = await _userManager.FindByIdAsync(id);
+      var applicationUser = await _context.FindUserByIdAsync(id);
       if (applicationUser == null)
       {
         return NotFound();
@@ -118,7 +114,7 @@ namespace YourMotivation.Web.Controllers
       }
 
       var oldRole = await _userManager.GetUserRoleAsync(applicationUser);
-      if (string.Equals(oldRole, newRole, System.StringComparison.OrdinalIgnoreCase))
+      if (string.Equals(oldRole, newRole, StringComparison.OrdinalIgnoreCase))
       {
         this.StatusMessage = 
           _localizer["Warning: User '{0}' has already role '{1}'.", applicationUser.UserName, newRole];
