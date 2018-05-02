@@ -45,15 +45,8 @@ namespace ORM
         .OnDelete(DeleteBehavior.Cascade);
 
       builder
-        .Entity<Cart>()
-        .HasOne(e => e.Order)
-        .WithOne(e => e.Cart)
-        .HasForeignKey<Order>(e => e.CartId)
-        .OnDelete(DeleteBehavior.Restrict);
-
-      builder
         .Entity<ApplicationUser>()
-        .HasMany(e => e.TransferAsSender)
+        .HasMany(e => e.TransfersAsSender)
         .WithOne(e => e.UserSender)
         .HasForeignKey(e => e.UserSenderId)
         .OnDelete(DeleteBehavior.Restrict);
@@ -63,6 +56,13 @@ namespace ORM
         .HasMany(e => e.TransfersAsReceiver)
         .WithOne(e => e.UserReceiver)
         .HasForeignKey(e => e.UserReceiverId)
+        .OnDelete(DeleteBehavior.Restrict);
+
+      builder
+        .Entity<Cart>()
+        .HasOne(e => e.Order)
+        .WithOne(e => e.Cart)
+        .HasForeignKey<Order>(e => e.CartId)
         .OnDelete(DeleteBehavior.Restrict);
     }
   }

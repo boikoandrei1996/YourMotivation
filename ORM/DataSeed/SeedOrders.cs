@@ -38,7 +38,7 @@ namespace ORM.DataSeed
       catch (DbUpdateException ex)
       {
         logger.LogError($"Can not create orders.");
-        logger.LogError(ex.InnerException.InnerException, nameof(SeedOrders.SeedAsync));
+        logger.LogError(ex.InnerException, nameof(SeedOrders.SeedAsync));
       }
     }
 

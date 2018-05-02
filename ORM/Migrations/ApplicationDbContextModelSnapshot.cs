@@ -393,7 +393,7 @@ namespace ORM.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("ORM.Models.ApplicationUser", "UserSender")
-                        .WithMany("TransferAsSender")
+                        .WithMany("TransfersAsSender")
                         .HasForeignKey("UserSenderId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });

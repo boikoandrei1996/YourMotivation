@@ -30,7 +30,7 @@ namespace YourMotivation.Web.Controllers
       var users2 = _context.Users.Include(e => e.Cart).AsNoTracking().ToList();
       var users3 = _context.Users.Include(e => e.Orders).AsNoTracking().ToList();
       var users4 = _context.Users
-        .Include(e => e.TransferAsSender)
+        .Include(e => e.TransfersAsSender)
         .Include(e => e.TransfersAsReceiver)
         .AsNoTracking().ToList();
       var roles = _context.Roles.AsNoTracking().ToList();

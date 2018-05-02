@@ -2,8 +2,10 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using ORM;
 using ORM.Models;
 using YourMotivation.Web.Extensions;
 using YourMotivation.Web.Models.AdminViewModels;
@@ -18,15 +20,18 @@ namespace YourMotivation.Web.Controllers
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly ILogger _logger;
     private readonly IStringLocalizer<AdminController> _localizer;
+    private readonly ApplicationDbContext _context;
 
     public AdminController(
       UserManager<ApplicationUser> userManager,
       ILogger<AdminController> logger,
-      IStringLocalizer<AdminController> localizer)
+      IStringLocalizer<AdminController> localizer,
+      ApplicationDbContext context)
     {
       _userManager = userManager;
       _logger = logger;
       _localizer = localizer;
+      _context = context;
     }
 
     [TempData]
@@ -64,13 +69,18 @@ namespace YourMotivation.Web.Controllers
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(string id)
     {
-      var applicationUser = await _userManager.FindByIdAsync(id);
+      var applicationUser = _context.Users
+        .Include(e => e.TransfersAsSender)
+        .Include(e => e.TransfersAsReceiver)
+        .AsNoTracking()
+        .FirstOrDefault(u => u.Id.ToString() == id);
+
       if (applicationUser == null)
       {
         return NotFound();
       }
 
-      var result = await _userManager.DeleteUserAsync(applicationUser);
+      var result = await _userManager.DeleteUserAsync(_context, applicationUser);
       if (result == null)
       {
         _logger.LogError(nameof(DeleteConfirmed), applicationUser.Email);

@@ -11,7 +11,7 @@ using System;
 namespace ORM.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180501231652_AddBasicNeededTypes_6")]
+    [Migration("20180502002639_AddBasicNeededTypes_6")]
     partial class AddBasicNeededTypes_6
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -394,7 +394,7 @@ namespace ORM.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("ORM.Models.ApplicationUser", "UserSender")
-                        .WithMany("TransferAsSender")
+                        .WithMany("TransfersAsSender")
                         .HasForeignKey("UserSenderId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });

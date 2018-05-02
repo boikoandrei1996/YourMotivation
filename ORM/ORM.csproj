@@ -37,6 +37,7 @@
     <Compile Remove="Migrations\20180501223941_AddBasicNeededTypes_5.cs" />
     <Compile Remove="Migrations\20180501224133_AddBasicNeededTypes_5.cs" />
     <Compile Remove="Migrations\20180501231514_AddBasicNeededTypes_6.cs" />
+    <Compile Remove="Migrations\20180501231652_AddBasicNeededTypes_6.cs" />
   </ItemGroup>
 
   <ItemGroup>

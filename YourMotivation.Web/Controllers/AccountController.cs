@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using ORM;
 using ORM.Models;
 using YourMotivation.Web.Extensions;
 using YourMotivation.Web.Models.AccountViewModels;
@@ -23,6 +24,7 @@ namespace YourMotivation.Web.Controllers
     private readonly ILogger _logger;
     private readonly IStringLocalizer<AccountController> _localizer;
     private readonly IHtmlLocalizer<EmailSender> _emailLocalizer;
+    private readonly ApplicationDbContext _context;
 
     public AccountController(
         UserManager<ApplicationUser> userManager,
@@ -30,7 +32,8 @@ namespace YourMotivation.Web.Controllers
         IEmailSender emailSender,
         ILogger<AccountController> logger,
         IStringLocalizer<AccountController> localizer,
-        IHtmlLocalizer<EmailSender> emailLocalizer)
+        IHtmlLocalizer<EmailSender> emailLocalizer,
+        ApplicationDbContext context)
     {
       _userManager = userManager;
       _signInManager = signInManager;
@@ -38,6 +41,7 @@ namespace YourMotivation.Web.Controllers
       _logger = logger;
       _localizer = localizer;
       _emailLocalizer = emailLocalizer;
+      _context = context;
     }
 
     [Authorize]
@@ -108,7 +112,7 @@ namespace YourMotivation.Web.Controllers
 
       var user = RegisterViewModel.Map(model);
 
-      var result = await _userManager.CreateUserWithRoleAsync(user, model.Password);
+      var result = await _userManager.CreateUserWithRoleAsync(_context, user, model.Password);
       if (result.Succeeded)
       {
         _logger.LogInformation($"User '{user.UserName}' created a new account with password.");

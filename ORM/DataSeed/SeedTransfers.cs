@@ -37,7 +37,7 @@ namespace ORM.DataSeed
       catch (DbUpdateException ex)
       {
         logger.LogError($"Can not create transfers.");
-        logger.LogError(ex.InnerException.InnerException, nameof(SeedTransfers.SeedAsync));
+        logger.LogError(ex.InnerException, nameof(SeedTransfers.SeedAsync));
       }
     }
 

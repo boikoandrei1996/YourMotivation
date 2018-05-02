@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using ORM;
 using ORM.Models;
 using YourMotivation.Web.Models.AdminViewModels;
 using YourMotivation.Web.Models.Pagination;
@@ -13,12 +14,17 @@ namespace YourMotivation.Web.Extensions
 {
   public static class UserManagerExtensions
   {
-    public static async Task<IdentityResult> DeleteUserAsync<T>(this UserManager<T> userManager, T user)
-      where T : class
+    public static async Task<IdentityResult> DeleteUserAsync(
+      this UserManager<ApplicationUser> userManager,
+      ApplicationDbContext context,
+      ApplicationUser user)
     {
-      return await userManager.DeleteAsync(user);
-      /*try
+      try
       {
+        context.Transfers.RemoveRange(user.TransfersAsSender);
+        context.Transfers.RemoveRange(user.TransfersAsReceiver);
+        await context.SaveChangesAsync();
+
         return await userManager.DeleteAsync(user);
       }
       catch (DbUpdateException ex)
@@ -26,18 +32,20 @@ namespace YourMotivation.Web.Extensions
         return IdentityResult.Failed(new IdentityError
         {
           Code = nameof(userManager.DeleteAsync),
-          Description = ex.InnerException.InnerException.Message
+          Description = ex.InnerException.Message
         });
       }
       catch (Exception)
       {
         return null;
-      }*/
+      }
     }
 
-    public static async Task<IdentityResult> CreateUserWithRoleAsync<T>(
-      this UserManager<T> userManager, T user, string password)
-      where T : class
+    public static async Task<IdentityResult> CreateUserWithRoleAsync(
+      this UserManager<ApplicationUser> userManager,
+      ApplicationDbContext context,
+      ApplicationUser user, 
+      string password)
     {
       var result = await userManager.CreateAsync(user, password);
       if (!result.Succeeded)
@@ -48,7 +56,7 @@ namespace YourMotivation.Web.Extensions
       result = await userManager.AddToRoleAsync(user, ApplicationRole.User);
       if (!result.Succeeded)
       {
-        await userManager.DeleteUserAsync(user);
+        await userManager.DeleteUserAsync(context, user);
       }
 
       return result;

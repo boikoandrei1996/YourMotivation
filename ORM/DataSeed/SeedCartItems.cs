@@ -37,7 +37,7 @@ namespace ORM.DataSeed
       catch (DbUpdateException ex)
       {
         logger.LogError($"Can not create cart-items.");
-        logger.LogError(ex.InnerException.InnerException, nameof(SeedCartItems.SeedAsync));
+        logger.LogError(ex.InnerException, nameof(SeedCartItems.SeedAsync));
       }
     }
 
