@@ -8,7 +8,7 @@ using ORM;
 using ORM.Models;
 using YourMotivation.Web.Models.AdminViewModels;
 using YourMotivation.Web.Models.Pagination;
-using YourMotivation.Web.Models.Pagination.AdminUsers;
+using YourMotivation.Web.Models.Pagination.Pages;
 
 namespace YourMotivation.Web.Extensions
 {
@@ -71,8 +71,11 @@ namespace YourMotivation.Web.Extensions
     }
 
     public static async Task<AdminUsersPageViewModel> GetUserPageAsync(
-      this UserManager<ApplicationUser> userManager, int index,
-      int pageSize, string usernameFilter, SortState sortState)
+      this UserManager<ApplicationUser> userManager, 
+      int index,
+      int pageSize, 
+      string usernameFilter, 
+      SortState sortState)
     {
       var query = userManager.Users.AsNoTracking();
 

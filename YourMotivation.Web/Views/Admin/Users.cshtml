@@ -1,29 +1,17 @@
 ﻿@using YourMotivation.Web.Models.Pagination;
-@using YourMotivation.Web.Models.Pagination.AdminUsers;
+@using YourMotivation.Web.Models.Pagination.Pages;
 
 @addTagHelper "*, YourMotivation.Web"
 
 @model AdminUsersPageViewModel
 @{
   ViewBag.Title = Localizer["All users"];
+  ViewData["Title"] = Localizer["All users"];
 }
 
 @Html.Partial("_StatusMessage", Model.StatusMessage)
 
-<form asp-action="Users" method="get">
-  <div class="pull-left"><h2>@ViewBag.Title</h2></div>
-  <div class="form-inline pull-right username-filter-form">
-    <input type="text" placeholder="@Localizer["Find by username"]" class="form-control" name="usernameFilter" value="@Model.UsernameFilter" />
-    <button type="submit" class="btn btn-info">
-      <i class="glyphicon glyphicon-search"></i>
-      @Localizer["Search"]
-    </button>
-    @if (!string.IsNullOrEmpty(Model.UsernameFilter))
-    {
-      <a asp-action="Users">@Localizer["Back to full list"]</a>
-    }
-  </div>
-</form>
+@Html.Partial("_FilterForm", Model.UsernameFilter, ViewData)
 
 <table class="table">
   <thead>

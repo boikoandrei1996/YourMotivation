@@ -54,6 +54,7 @@ namespace ORM.DataSeed
           Price = 20,
           CountsInStock = 10,
           Image = await File.ReadAllBytesAsync(Path.Combine(path, "noimage.jpeg")),
+          ImageContentType = "image/jpeg",
           Characteristics = new ItemCharacteristics
           {
             Description = "item1 desc",
@@ -66,6 +67,7 @@ namespace ORM.DataSeed
           Price = 10,
           CountsInStock = 20,
           Image = await File.ReadAllBytesAsync(Path.Combine(path, "noimage.jpeg")),
+          ImageContentType = "image/jpeg",
           Characteristics = new ItemCharacteristics
           {
             Description = "item2 desc",
@@ -78,6 +80,7 @@ namespace ORM.DataSeed
           Price = 5,
           CountsInStock = 50,
           Image = await File.ReadAllBytesAsync(Path.Combine(path, "noimage.jpeg")),
+          ImageContentType = "image/jpeg",
           Characteristics = new ItemCharacteristics
           {
             Description = "item3 desc",
@@ -90,6 +93,7 @@ namespace ORM.DataSeed
           Price = 35,
           CountsInStock = 8,
           Image = await File.ReadAllBytesAsync(Path.Combine(path, "noimage.jpeg")),
+          ImageContentType = "image/jpeg",
           Characteristics = new ItemCharacteristics
           {
             Description = "item4 desc",
@@ -102,6 +106,7 @@ namespace ORM.DataSeed
           Price = 35,
           CountsInStock = 8,
           Image = await File.ReadAllBytesAsync(Path.Combine(path, "noimage.jpeg")),
+          ImageContentType = "image/jpeg",
           Characteristics = new ItemCharacteristics
           {
             Description = "item5 desc",

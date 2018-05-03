@@ -56,6 +56,7 @@ namespace YourMotivation.Web
 
       // Add application services.
       services.AddTransient<IEmailSender, EmailSender>();
+      services.AddTransient<ShopItemManager>();
 
       // Configure supported cultures and localization options
       services.Configure<RequestLocalizationOptions>(options =>

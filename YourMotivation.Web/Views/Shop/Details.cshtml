@@ -1,0 +1,60 @@
+﻿@using YourMotivation.Web.Models.ShopViewModels;
+
+@model ShopItemViewModel
+@{
+  ViewBag.Title = Localizer["Details"];
+}
+
+<div>
+  <div class="row horizontal-center">
+    <img src="@Url.Action("Image", "Shop", new { itemId = Model.Id })"
+         width="300" height="300" class="img-rounded" />
+  </div>
+  <dl class="row dl-horizontal">
+    <dt>
+      @Html.DisplayNameFor(model => model.Title)
+    </dt>
+    <dd>
+      @Html.DisplayFor(model => model.Title)
+    </dd>
+    <dt>
+      @Html.DisplayNameFor(model => model.Description)
+    </dt>
+    <dd>
+      @Html.DisplayFor(model => model.Description)
+    </dd>
+    <dt>
+      @Html.DisplayNameFor(model => model.Price)
+    </dt>
+    <dd>
+      @Html.DisplayFor(model => model.Price)
+    </dd>
+    <dt>
+      @Html.DisplayNameFor(model => model.IsInStock)
+    </dt>
+    <dd>
+      @Html.DisplayFor(model => model.IsInStock)
+    </dd>
+    <dt>
+      @Html.DisplayNameFor(model => model.Size)
+    </dt>
+    <dd>
+      @Html.DisplayFor(model => model.Size)
+    </dd>
+    <dt>
+      @Html.DisplayNameFor(model => model.Color)
+    </dt>
+    <dd>
+      @Html.DisplayFor(model => model.Color)
+    </dd>
+    <dt>
+      @Html.DisplayNameFor(model => model.Model)
+    </dt>
+    <dd>
+      @Html.DisplayFor(model => model.Model)
+    </dd>
+  </dl>
+</div>
+<div>
+  <a asp-action="All">@Localizer["Back to list"]</a>
+</div>

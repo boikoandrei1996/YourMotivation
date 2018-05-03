@@ -15,6 +15,9 @@ namespace ORM.Models
     [Required]
     public byte[] Image { get; set; }
 
+    [MaxLength(20)]
+    public string ImageContentType { get; set; }
+
     public int Price { get; set; }
 
     public int CountsInStock { get; set; }

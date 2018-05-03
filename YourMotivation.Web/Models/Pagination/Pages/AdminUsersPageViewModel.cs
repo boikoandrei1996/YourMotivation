@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using YourMotivation.Web.Models.AdminViewModels;
 
-namespace YourMotivation.Web.Models.Pagination.AdminUsers
+namespace YourMotivation.Web.Models.Pagination.Pages
 {
-  public class AdminUsersPageViewModel : IBasePage<AdminUserViewModel>, ISortablePage<SortViewModel>, IFilterablePage
+  public class AdminUsersPageViewModel : IBasePage<AdminUserViewModel>, ISortablePage<SortViewModel>
   {
     public AdminUsersPageViewModel()
     {
@@ -16,11 +16,11 @@ namespace YourMotivation.Web.Models.Pagination.AdminUsers
     public int TotalPages { get; set; }
     public bool HasPreviousPage
     {
-      get { return (CurrentPage > 1); }
+      get { return CurrentPage > 1; }
     }
     public bool HasNextPage
     {
-      get { return (CurrentPage < TotalPages); }
+      get { return CurrentPage < TotalPages; }
     }
 
     public SortViewModel SortViewModel { get; set; }

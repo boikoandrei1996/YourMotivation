@@ -27,6 +27,11 @@ namespace YourMotivation.Web.Models.ManageViewModels
 
     public static IndexViewModel Map(ApplicationUser user, string statusMessage)
     {
+      if (user == null)
+      {
+        return null;
+      }
+
       return new IndexViewModel
       {
         Username = user.UserName,

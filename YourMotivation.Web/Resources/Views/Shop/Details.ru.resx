@@ -117,16 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="All users" xml:space="preserve">
-    <value>Все пользователи</value>
+  <data name="Back to list" xml:space="preserve">
+    <value>Назад к списку</value>
   </data>
-  <data name="Change role" xml:space="preserve">
-    <value>Изменить роль</value>
-  </data>
-  <data name="Delete" xml:space="preserve">
-    <value>Удалить</value>
-  </data>
-  <data name="Manage" xml:space="preserve">
-    <value>Управление</value>
+  <data name="Details" xml:space="preserve">
+    <value>Подробнее</value>
   </data>
 </root>

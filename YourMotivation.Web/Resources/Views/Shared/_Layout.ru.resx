@@ -129,6 +129,9 @@
   <data name="Home" xml:space="preserve">
     <value>Домашняя страница</value>
   </data>
+  <data name="Shop" xml:space="preserve">
+    <value>Магазин</value>
+  </data>
   <data name="Toggle navigation" xml:space="preserve">
     <value>Переключить навигацию</value>
   </data>

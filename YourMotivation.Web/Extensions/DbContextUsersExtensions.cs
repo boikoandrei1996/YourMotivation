@@ -6,7 +6,7 @@ using ORM.Models;
 
 namespace YourMotivation.Web.Extensions
 {
-  public static class ContextUsersExtensions
+  public static class DbContextUsersExtensions
   {
     public async static Task<ApplicationUser> FindUserByIdAsync(
       this ApplicationDbContext context,

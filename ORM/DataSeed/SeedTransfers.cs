@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -51,6 +52,7 @@ namespace ORM.DataSeed
         {
           Points = 1,
           Text = "Thanks 1",
+          DateOfCreation = DateTime.UtcNow.AddDays(-2),
           UserSenderId = users[0].Id,
           UserReceiverId = users[1].Id
         },
@@ -58,6 +60,7 @@ namespace ORM.DataSeed
         {
           Points = 2,
           Text = "Thanks 2",
+          DateOfCreation = DateTime.UtcNow.AddDays(-1),
           UserSenderId = users[2].Id,
           UserReceiverId = users[1].Id
         },
@@ -65,6 +68,7 @@ namespace ORM.DataSeed
         {
           Points = 3,
           Text = "Thanks 3",
+          DateOfCreation = DateTime.UtcNow.AddDays(-1),
           UserSenderId = users[3].Id,
           UserReceiverId = users[2].Id
         },
@@ -72,6 +76,7 @@ namespace ORM.DataSeed
         {
           Points = 1,
           Text = "Thanks 4",
+          DateOfCreation = DateTime.UtcNow.AddHours(-10),
           UserSenderId = users[0].Id,
           UserReceiverId = users[3].Id
         },
@@ -79,6 +84,7 @@ namespace ORM.DataSeed
         {
           Points = 2,
           Text = "Thanks 5",
+          DateOfCreation = DateTime.UtcNow.AddHours(-4),
           UserSenderId = users[4].Id,
           UserReceiverId = users[0].Id
         }

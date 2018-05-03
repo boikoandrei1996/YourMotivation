@@ -11,6 +11,9 @@ namespace ORM.Models
     [DataType(DataType.Text)]
     public string Text { get; set; }
 
+    [DataType(DataType.DateTime)]
+    public DateTime DateOfCreation { get; set; }
+
     public int Points { get; set; }
 
     public Guid UserSenderId { get; set; }

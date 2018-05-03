@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using YourMotivation.Web.Models.Pagination;
-using YourMotivation.Web.Models.Pagination.AdminUsers;
+using YourMotivation.Web.Models.Pagination.Pages;
 
 namespace YourMotivation.Web.TagHelpers
 {

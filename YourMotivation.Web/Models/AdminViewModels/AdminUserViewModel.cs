@@ -27,6 +27,11 @@ namespace YourMotivation.Web.Models.AdminViewModels
 
     public static AdminUserViewModel Map(ApplicationUser user, string role)
     {
+      if (user == null)
+      {
+        return null;
+      }
+
       return new AdminUserViewModel
       {
         Id = user.Id,

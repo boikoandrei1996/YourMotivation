@@ -25,6 +25,11 @@ namespace YourMotivation.Web.Models.AccountViewModels
 
     public static ApplicationUser Map(RegisterViewModel model)
     {
+      if (model == null)
+      {
+        return null;
+      }
+
       return new ApplicationUser
       {
         Email = model.Email,
