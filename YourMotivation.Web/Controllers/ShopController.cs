@@ -62,17 +62,17 @@ namespace YourMotivation.Web.Controllers
 
     // GET: Shop/Item/Image
     [ActionName("Image")]
-    public async Task<FileResult> GetImage(Guid? itemId)
+    public async Task<ActionResult> GetImage(Guid? itemId)
     {
       if (!itemId.HasValue)
       {
-        return null;
+        return NotFound();
       }
 
       var tuple = await _itemManager.GetItemImageAsync(itemId.Value);
       if (tuple.Content == null)
       {
-        return null;
+        return NotFound();
       }
 
       return File(tuple.Content, tuple.ContentMimeType);
