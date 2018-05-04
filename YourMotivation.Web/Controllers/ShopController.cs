@@ -43,23 +43,6 @@ namespace YourMotivation.Web.Controllers
       return View(page);
     }
 
-    // GET: Shop/Item/Details/id
-    public async Task<IActionResult> Details(Guid? id)
-    {
-      if (!id.HasValue)
-      {
-        return NotFound();
-      }
-
-      var item = await _itemManager.FindByIdAsync(id.Value);
-      if (item == null)
-      {
-        return NotFound();
-      }
-
-      return View(item);
-    }
-
     // GET: Shop/Item/Image
     [ActionName("Image")]
     public async Task<ActionResult> GetImage(Guid? itemId)

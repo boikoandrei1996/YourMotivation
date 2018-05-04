@@ -1,0 +1,71 @@
+﻿@using YourMotivation.Web.Models.ShopViewModels;
+
+@model ShopItemViewModel
+@{
+  var addToCartDisabled = Model.IsInStock ? string.Empty : "disabled";
+  var divId = "itemDetails" + Model.Id;
+}
+
+<div class="modal fade item-details" id="@divId">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="#" data-dismiss="modal" class="class pull-right">
+          <span class="glyphicon glyphicon-remove"></span>
+        </a>
+        <h3 class="modal-title">@Localizer["Item details"]</h3>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-12 col-md-6">
+            <img src="@Url.Action("Image", "Shop", new { itemId = Model.Id })" alt="@Model.Title" class="img-responsive">
+          </div>
+          <div class="col-sm-12 col-md-6">
+            <h4 class="text-center">
+              <strong>@Localizer["Item Id"]:&nbsp;</strong>
+              <span><small>@Model.Id</small></span>
+            </h4>
+            <div class="space-ten"></div>
+            <p class="text-center">@Model.Description</p>
+            <h3 class="text-center">
+              <span class="glyphicon glyphicon-star"></span>
+              &nbsp;@Model.Price&nbsp;
+              <span class="glyphicon glyphicon-star"></span>
+            </h3>
+            <div class="row">
+              <div class="col-sm-6 col-md-6 text-right item-characteristic-name">
+                <strong>@Html.DisplayNameFor(Model => Model.Size):</strong>
+              </div>
+              <div class="col-sm-6 col-md-6 text-left item-characteristic-value">
+                @Html.DisplayFor(Model => Model.Size)
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6 col-md-6 text-right item-characteristic-name">
+                <strong>@Html.DisplayNameFor(Model => Model.Color):</strong>
+              </div>
+              <div class="col-sm-6 col-md-6 text-left item-characteristic-value">
+                @Html.DisplayFor(Model => Model.Color)
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6 col-md-6 text-right item-characteristic-name">
+                <strong>@Html.DisplayNameFor(Model => Model.Model):</strong>
+              </div>
+              <div class="col-sm-6 col-md-6 text-left item-characteristic-value">
+                @Html.DisplayFor(Model => Model.Model)
+              </div>
+            </div>
+            <div class="space-ten"></div>
+            <div class="btn-ground text-center">
+              <a href="@Url.Action()" class="btn btn-primary @addToCartDisabled">
+                @Localizer["Add to cart"]&nbsp;
+                <span class="glyphicon glyphicon-shopping-cart"></span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -10,18 +10,18 @@
 
 @Html.Partial("_FilterForm", Model.TitleFilter, ViewData)
 
+<div class="container">
+  <div class="row">
+    @foreach (var item in Model.Records)
+    {
+      @Html.Partial("_ItemPreview", item)
+    }
+  </div>
+</div>
+
 @foreach (var item in Model.Records)
 {
-  <div class="row">
-    <div class="row horizontal-center">
-      <img src="@Url.Action("Image", "Shop", new { itemId = item.Id })"
-           width="300" height="300" class="img-rounded" />
-    </div>
-    <div class="row">
-      @Html.DisplayFor(modelItem => item.Title)
-      <a asp-action="Details" asp-route-id="@item.Id">@Localizer["Details"]</a>
-    </div>
-  </div>
+  @Html.Partial("_ItemDetailModal", item)
 }
 
 @Html.Partial("_Pagination", Model)

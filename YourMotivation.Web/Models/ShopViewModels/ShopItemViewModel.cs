@@ -39,13 +39,13 @@ namespace YourMotivation.Web.Models.ShopViewModels
       return new ShopItemViewModel
       {
         Id = model.Id,
-        Title = model.Title,
-        Description = model.Characteristics.Description,
+        Title = model.Title ?? string.Empty,
+        Description = model.Characteristics.Description ?? string.Empty,
         Price = model.Price,
         IsInStock = model.CountsInStock > 0,
-        Size = model.Characteristics.Size,
-        Color = model.Characteristics.Color,
-        Model = model.Characteristics.Model
+        Size = string.IsNullOrEmpty(model.Characteristics.Size) ? "None" : model.Characteristics.Size,
+        Color = string.IsNullOrEmpty(model.Characteristics.Color) ? "None" : model.Characteristics.Color,
+        Model = string.IsNullOrEmpty(model.Characteristics.Model) ? "None" : model.Characteristics.Model
       };
     }
   }

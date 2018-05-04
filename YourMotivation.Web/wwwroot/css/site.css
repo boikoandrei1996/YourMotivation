@@ -44,3 +44,22 @@
   margin-top: 20px;
   margin-bottom: 10px;
 }
+
+/*Shop Items Preview*/
+.item-details .modal-dialog {
+  max-width: 800px;
+  width: 100%;
+}
+
+.item-characteristic-name {
+  padding-right: 2px;
+}
+
+.item-characteristic-value {
+  padding-left: 2px;
+}
+
+
+.space-ten {
+  padding: 10px 0;
+}
