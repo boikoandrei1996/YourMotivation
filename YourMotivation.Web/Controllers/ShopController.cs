@@ -14,16 +14,16 @@ namespace YourMotivation.Web.Controllers
   [Route("[controller]/item/[action]")]
   public class ShopController : Controller
   {
-    private readonly ShopManager _itemManager;
+    private readonly ShopManager _shopManager;
     private readonly ILogger _logger;
     private readonly IStringLocalizer<ShopController> _localizer;
 
     public ShopController(
-      ShopManager itemManager,
+      ShopManager shopManager,
       ILogger<ShopController> logger,
       IStringLocalizer<ShopController> localizer)
     {
-      _itemManager = itemManager;
+      _shopManager = shopManager;
       _logger = logger;
       _localizer = localizer;
     }
@@ -36,7 +36,7 @@ namespace YourMotivation.Web.Controllers
     public async Task<IActionResult> All(int? pageIndex, string titleFilter)
     {
       var page =
-        await _itemManager.GetShopItemPageAsync(pageIndex ?? 1, 2, titleFilter);
+        await _shopManager.GetShopItemPageAsync(pageIndex ?? 1, 2, titleFilter);
 
       page.StatusMessage = this.StatusMessage;
 
@@ -52,13 +52,31 @@ namespace YourMotivation.Web.Controllers
         return NotFound();
       }
 
-      var imageTuple = await _itemManager.GetItemImageAsync(itemId.Value);
+      var imageTuple = await _shopManager.GetItemImageAsync(itemId.Value);
       if (imageTuple.Content == null)
       {
         return NotFound();
       }
 
       return File(imageTuple.Content, imageTuple.ContentMimeType);
+    }
+
+    // GET: Shop/Item/Cart/id
+    [ActionName("Cart")]
+    public async Task<IActionResult> ShowCart(Guid? id)
+    {
+      if (!id.HasValue)
+      {
+        return NotFound();
+      }
+
+      var cart = await _shopManager.FindCartByIdAsync(id.Value);
+      if (cart == null)
+      {
+        return NotFound();
+      }
+
+      return View(nameof(ShowCart), cart);
     }
 
     /*// GET: Shop/Item/Create

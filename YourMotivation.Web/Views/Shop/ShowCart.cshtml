@@ -1,0 +1,106 @@
+﻿@using YourMotivation.Web.Models.CartViewModels;
+
+@model CartViewModel
+@{
+  ViewBag.Title = Localizer["Cart items"];
+}
+
+<div class="row text-center">
+  <h1>@ViewBag.Title</h1>
+</div>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th></th>
+      <th>
+        @Html.DisplayNameFor(model => model.DefaultItem.Title)
+      </th>
+      <th>
+        @Html.DisplayNameFor(model => model.DefaultItem.Description)
+      </th>
+      <th class="text-center">
+        @Html.DisplayNameFor(model => model.DefaultItem.Price)
+      </th>
+      <th class="text-center">
+        @Html.DisplayNameFor(model => model.DefaultItem.IsInStock)
+      </th>
+      <th class="text-center">
+        @Html.DisplayNameFor(model => model.DefaultItem.Size)
+      </th>
+      <th class="text-center">
+        @Html.DisplayNameFor(model => model.DefaultItem.Color)
+      </th>
+      <th class="text-center">
+        @Html.DisplayNameFor(model => model.DefaultItem.Model)
+      </th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (var index = 1; index <= Model.Items.Count; index++)
+    {
+      var item = Model.Items[index - 1];
+      <tr>
+        <td class="text-center">
+          @index
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td class="text-center">
+          @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td class="text-center" style="font-size: 1.5em">
+          @if (item.IsInStock)
+          {
+            <span class="glyphicon glyphicon-ok-sign text-success"></span>
+          }
+          else
+          {
+            <span class="glyphicon glyphicon-minus-sign text-danger"></span>
+          }
+        </td>
+        <td class="text-center">
+          @Html.DisplayFor(modelItem => item.Size)
+        </td>
+        <td class="text-center">
+          @Html.DisplayFor(modelItem => item.Color)
+        </td>
+        <td class="text-center">
+          @Html.DisplayFor(modelItem => item.Model)
+        </td>
+        <td class="text-right">
+          <a class="btn btn-sm btn-warning" asp-controller="" asp-action="" asp-route-id="@item.Id">
+            <span class="glyphicon glyphicon-remove"></span>
+            &nbsp;@Localizer["Remove from cart"]
+          </a>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+<div class="row">
+  <div>
+    <div class="pull-right col-sm-3 col-md-2 text-center">
+      <a class="btn btn-primary" asp-controller="" asp-action="" asp-route-id="@Model.Id">
+        &nbsp;@Localizer["Order"]&nbsp;
+        <span class="glyphicon glyphicon-ok"></span>&nbsp;
+      </a>
+    </div>
+    <div class="cart-footer-row pull-right col-sm-6 col-md-4">
+      <span class="pull-left">
+        &nbsp;<b>@Html.DisplayNameFor(model => model.ItemsSumPrice)</b>:&nbsp;
+        @Html.DisplayFor(model => model.ItemsSumPrice)&nbsp;
+      </span>
+      <span class="pull-right">
+        <b>@Html.DisplayNameFor(model => model.ItemsCount)</b>:&nbsp;
+        @Html.DisplayFor(model => model.ItemsCount)&nbsp;
+      </span>
+    </div>
+  </div>
+</div>

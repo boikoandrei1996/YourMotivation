@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ORM;
+using YourMotivation.Web.Models.CartViewModels;
 using YourMotivation.Web.Models.Pagination.Pages;
 using YourMotivation.Web.Models.ShopViewModels;
 
@@ -46,14 +47,17 @@ namespace YourMotivation.Web.Services
       return result;
     }
 
-    public async Task<ShopItemViewModel> FindByIdAsync(Guid id)
+    public async Task<CartViewModel> FindCartByIdAsync(Guid id)
     {
-      var item = await _context.Items
+      var cart = await _context.Carts
         .AsNoTracking()
-        .Include(i => i.Characteristics)
-        .FirstOrDefaultAsync(i => i.Id == id);
+        .Include(c => c.User)
+        .Include(c => c.CartItems)
+          .ThenInclude(ci => ci.Item)
+            .ThenInclude(i => i.Characteristics)
+        .FirstOrDefaultAsync(c => c.Id == id);
 
-      return ShopItemViewModel.Map(item);
+      return CartViewModel.Map(cart);
     }
 
     public async Task<(byte[] Content, string ContentMimeType)> GetItemImageAsync(Guid id)

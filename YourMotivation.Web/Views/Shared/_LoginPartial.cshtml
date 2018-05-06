@@ -13,7 +13,7 @@
         asp-area="" asp-controller="Account" asp-action="Logout">
     <ul class="nav navbar-nav navbar-right">
       <li class="cart-link">
-        <a asp-area="" asp-controller="" asp-action="" asp-route-id="@cartPreview.Id" title="Cart">
+        <a asp-area="" asp-controller="Shop" asp-action="Cart" asp-route-id="@cartPreview.Id" title="Cart">
           &nbsp;
           <span class="glyphicon glyphicon-shopping-cart"></span>
           <span class="badge">@cartPreview.ItemCount</span>

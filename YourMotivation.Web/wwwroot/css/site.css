@@ -63,3 +63,11 @@
 .space-ten {
   padding: 10px 0;
 }
+
+.cart-footer-row {
+  border: dashed 2px blue;
+  border-radius: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background-color: darkgrey;
+}
