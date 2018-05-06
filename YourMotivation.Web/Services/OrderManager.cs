@@ -94,5 +94,27 @@ namespace YourMotivation.Web.Services
         return false;
       }
     }
+
+    public async Task<bool?> RemoveOrderAsync(Guid orderId)
+    {
+      var order = await _context.Orders.Include(o => o.Cart).FirstOrDefaultAsync(o => o.Id == orderId);
+      if (order == null)
+      {
+        return null;
+      }
+
+      try
+      {
+        _context.Carts.Remove(order.Cart);
+        _context.Orders.Remove(order);
+        await _context.SaveChangesAsync();
+
+        return true;
+      }
+      catch (Exception)
+      {
+        return false;
+      }
+    }
   }
 }

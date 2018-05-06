@@ -65,7 +65,7 @@ namespace YourMotivation.Web.Controllers
       return View(page);
     }
 
-    // POST Order/Close/id
+    // POST Order/Close
     [Authorize(ApplicationRole.Moderator)]
     [HttpPost]
     public async Task<IActionResult> Close(Guid? orderId)
@@ -87,6 +87,32 @@ namespace YourMotivation.Web.Controllers
       else
       {
         this.StatusMessage = _localizer["Error: something has gone wrong while closing order."];
+      }
+
+      return RedirectToAction(nameof(OrderController.All));
+    }
+
+    // POST Order/Remove
+    [HttpPost]
+    public async Task<IActionResult> Remove(Guid? orderId)
+    {
+      if (!orderId.HasValue)
+      {
+        return NotFound();
+      }
+
+      var isSuccess = await _orderManager.RemoveOrderAsync(orderId.Value);
+      if (!isSuccess.HasValue)
+      {
+        return NotFound();
+      }
+      else if (isSuccess.Value)
+      {
+        this.StatusMessage = _localizer["Success: order has beed remove."];
+      }
+      else
+      {
+        this.StatusMessage = _localizer["Error: something has gone wrong while removing order."];
       }
 
       return RedirectToAction(nameof(OrderController.All));

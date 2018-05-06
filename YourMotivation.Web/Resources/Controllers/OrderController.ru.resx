@@ -126,4 +126,10 @@
   <data name="Success: order has beed closed." xml:space="preserve">
     <value>Заказ был успешно закрыт.</value>
   </data>
+  <data name="Error: something has gone wrong while removing order." xml:space="preserve">
+    <value>Ошибка: что-то пошло не так во время удаления заказаю</value>
+  </data>
+  <data name="Success: order has beed remove." xml:space="preserve">
+    <value>Заказ был успешно удалён.</value>
+  </data>
 </root>

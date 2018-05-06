@@ -83,19 +83,16 @@
               <button type="submit" class="btn btn-sm btn-warning" @closeOrderDisabled>
                 &nbsp;@Localizer["Close order"]&nbsp;
                 <span class="glyphicon glyphicon-check"></span>
-              </button>
+              </button> | 
             </form>
           }
-          else
-          {
-            <form asp-controller="Order" asp-action="Delete" method="post">
-              <input type="hidden" value="@order.Id" name="orderId" />
-              <button type="submit" class="btn btn-sm btn-danger">
-                &nbsp;@Localizer["Delete order"]
-                <span class="glyphicon glyphicon-remove-sign"></span>
-              </button>
-            </form>
-          }
+          <form asp-controller="Order" asp-action="Remove" method="post">
+            <input type="hidden" value="@order.Id" name="orderId" />
+            <button type="submit" class="btn btn-sm btn-danger">
+              &nbsp;@Localizer["Delete order"]
+              <span class="glyphicon glyphicon-remove-sign"></span>
+            </button>
+          </form>
         </td>
       </tr>
     }
