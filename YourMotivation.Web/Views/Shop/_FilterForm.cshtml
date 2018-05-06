@@ -1,6 +1,6 @@
 ﻿@model string
 
-<form asp-action="All" method="get">
+<form asp-action="Items" method="get">
   <div class="row">
     <div class="pull-left"><h2>@ViewData["Title"]</h2></div>
     <div class="form-inline pull-right title-filter-form">
@@ -11,7 +11,7 @@
       </button>
       @if (!string.IsNullOrEmpty(Model))
       {
-        <a asp-action="All">@Localizer["Back to list"]</a>
+        <a asp-action="Items">@Localizer["Back to list"]</a>
       }
     </div>
   </div>

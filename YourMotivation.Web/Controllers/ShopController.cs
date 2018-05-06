@@ -10,7 +10,7 @@ using YourMotivation.Web.Services;
 namespace YourMotivation.Web.Controllers
 {
   [Authorize]
-  [Route("[controller]/item/[action]")]
+  // [Route("[controller]/item/[action]")]
   public class ShopController : Controller
   {
     private readonly ShopManager _shopManager;
@@ -30,21 +30,22 @@ namespace YourMotivation.Web.Controllers
     [TempData]
     public string StatusMessage { get; set; }
 
-    // GET: Shop/Item/All
+    // GET: Shop/Items
     [HttpGet]
-    public async Task<IActionResult> All(int? pageIndex, string titleFilter)
+    [ActionName("Items")]
+    public async Task<IActionResult> ShowItems(int? pageIndex, string titleFilter)
     {
       var page =
         await _shopManager.GetShopItemPageAsync(pageIndex ?? 1, 2, titleFilter);
 
       page.StatusMessage = this.StatusMessage;
 
-      return View(page);
+      return View(nameof(ShowItems), page);
     }
 
-    // GET: Shop/Item/Image
+    // GET: Shop/ItemImage
     [HttpGet]
-    [ActionName("Image")]
+    [ActionName("ItemImage")]
     public async Task<IActionResult> GetImage(Guid? itemId)
     {
       if (!itemId.HasValue)
@@ -61,7 +62,7 @@ namespace YourMotivation.Web.Controllers
       return File(imageTuple.Content, imageTuple.ContentMimeType);
     }
 
-    // GET: Shop/Item/Cart/id
+    // GET: Shop/Cart/id
     [HttpGet]
     [ActionName("Cart")]
     public async Task<IActionResult> ShowCart(Guid? id)
@@ -82,7 +83,7 @@ namespace YourMotivation.Web.Controllers
       return View(nameof(ShowCart), cart);
     }
 
-    // POST: Shop/Item/AddItemToCart
+    // POST: Shop/AddItemToCart
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> AddItemToCart(Guid? cartId, Guid? itemId)
@@ -105,10 +106,10 @@ namespace YourMotivation.Web.Controllers
           error.Description;
       }
 
-      return RedirectToAction(nameof(ShopController.All), "Shop");
+      return RedirectToAction("Items", "Shop");
     }
 
-    // DELETE: Shop/Item/RemoveItemFromCart
+    // DELETE: Shop/RemoveItemFromCart
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> RemoveItemFromCart(Guid? cartId, Guid? itemId)
