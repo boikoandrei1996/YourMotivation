@@ -1,12 +1,19 @@
 ﻿@using YourMotivation.Web.Models.Pagination.Pages;
+@using ORM.Models;
+@using YourMotivation.Web.Extensions;
+
+@inject UserManager<ApplicationUser> UserManager
 
 @model ShopItemsPageViewModel
 @{
   ViewBag.Title = Localizer["All items"];
   ViewData["Title"] = Localizer["All items"];
+  ViewData["CartId"] = await UserManager.GetUserCartIdAsync(User);
 }
 
-@Html.Partial("_StatusMessage", Model.StatusMessage)
+<div style="margin-top: 40px;">
+  @Html.Partial("_StatusMessage", Model.StatusMessage)
+</div>
 
 @Html.Partial("_FilterForm", Model.TitleFilter, ViewData)
 
@@ -14,14 +21,14 @@
   <div class="row">
     @foreach (var item in Model.Records)
     {
-      @Html.Partial("_ItemPreview", item)
+      @Html.Partial("_ItemPreview", item, ViewData)
     }
   </div>
 </div>
 
 @foreach (var item in Model.Records)
 {
-  @Html.Partial("_ItemDetailModal", item)
+  @Html.Partial("_ItemDetailModal", item, ViewData)
 }
 
 @Html.Partial("_Pagination", Model)

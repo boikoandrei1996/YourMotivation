@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -144,6 +145,20 @@ namespace YourMotivation.Web.Extensions
       }
 
       return CartPreviewViewModel.Map(user.Cart);
+    }
+
+    public static async Task<Guid> GetUserCartIdAsync(
+      this UserManager<ApplicationUser> userManager,
+      ClaimsPrincipal principal)
+    {
+      var username = userManager.GetUserName(principal);
+
+      var user = await userManager.Users
+        .AsNoTracking()
+        .Include(u => u.Cart)
+        .FirstAsync(u => u.UserName == username);
+
+      return user.Cart.Id;
     }
   }
 }

@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using ORM;
+using ORM.Models;
 using YourMotivation.Web.Models.CartViewModels;
 using YourMotivation.Web.Models.Pagination.Pages;
 using YourMotivation.Web.Models.ShopViewModels;
@@ -12,11 +15,14 @@ namespace YourMotivation.Web.Services
   public class ShopManager
   {
     private readonly ApplicationDbContext _context;
+    private readonly IStringLocalizer<ShopManager> _localizer;
 
     public ShopManager(
-      ApplicationDbContext context)
+      ApplicationDbContext context,
+      IStringLocalizer<ShopManager> localizer)
     {
       _context = context;
+      _localizer = localizer;
     }
 
     public async Task<ShopItemsPageViewModel> GetShopItemPageAsync(int index, int pageSize, string titleFilter)
@@ -67,6 +73,70 @@ namespace YourMotivation.Web.Services
         .FirstOrDefaultAsync(i => i.Id == id);
 
       return (item?.Image, item?.ImageContentType);
+    }
+
+    public async Task<(IdentityResult Result, string Title)> AddItemToCartAsync(Guid cartId, Guid itemId)
+    {
+      var cart = await _context.Carts.FirstOrDefaultAsync(c => c.Id == cartId);
+      var item = await _context.Items.FirstOrDefaultAsync(i => i.Id == itemId);
+
+      if (cart == null)
+      {
+        return
+        (Result: IdentityResult.Failed(new IdentityError
+        {
+          Code = nameof(ShopManager.AddItemToCartAsync),
+          Description = _localizer["Error: not found cart by id: '{0}'.", cartId]
+        }),
+        Title: null);
+      }
+
+      if (item == null)
+      {
+        return 
+        (Result: IdentityResult.Failed(new IdentityError
+        {
+          Code = nameof(ShopManager.AddItemToCartAsync),
+          Description = _localizer["Error: not found item by id: '{0}'.", itemId]
+        }),
+        Title: null);
+      }
+
+      try
+      {
+        var cartItem = 
+          await _context.CartItems.FirstOrDefaultAsync(ci => ci.CartId == cartId && ci.ItemId == itemId);
+        if (cartItem == null)
+        {
+          await _context.CartItems.AddAsync(new CartItem
+          {
+            Cart = cart,
+            Item = item
+          });
+        }
+        else
+        {
+          cartItem.Count += 1;
+          _context.CartItems.Update(cartItem);
+        }
+
+        await _context.SaveChangesAsync();
+        return (Result: IdentityResult.Success, Title: item.Title);
+      }
+      catch(DbUpdateException ex)
+      {
+        return 
+        (Result: IdentityResult.Failed(new IdentityError
+        {
+          Code = nameof(ShopManager.AddItemToCartAsync),
+          Description = ex.InnerException.Message
+        }),
+        Title: null);
+      }
+      catch(Exception)
+      {
+        return (Result: null, Title: null);
+      }
     }
   }
 }

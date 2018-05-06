@@ -20,6 +20,9 @@
         @Html.DisplayNameFor(model => model.DefaultItem.Description)
       </th>
       <th class="text-center">
+        @Html.DisplayNameFor(model => model.DefaultItem.Count)
+      </th>
+      <th class="text-center">
         @Html.DisplayNameFor(model => model.DefaultItem.Price)
       </th>
       <th class="text-center">
@@ -50,6 +53,9 @@
         </td>
         <td>
           @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td class="text-center">
+          @Html.DisplayFor(modelItem => item.Count)
         </td>
         <td class="text-center">
           @Html.DisplayFor(modelItem => item.Price)

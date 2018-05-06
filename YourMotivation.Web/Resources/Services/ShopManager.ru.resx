@@ -117,97 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Color" xml:space="preserve">
-    <value>Color</value>
+  <data name="Error: not found cart by id: '{0}'." xml:space="preserve">
+    <value>Ошибка: не удалось найти корзину с идентификатором: '{0}'.</value>
   </data>
-  <data name="Confirm new password" xml:space="preserve">
-    <value>Confirm new password</value>
-  </data>
-  <data name="Confirm password" xml:space="preserve">
-    <value>Confirm password</value>
-  </data>
-  <data name="ConfirmPasswordRestriction" xml:space="preserve">
-    <value>The password and confirmation password do not match.</value>
-  </data>
-  <data name="Count" xml:space="preserve">
-    <value>Count</value>
-  </data>
-  <data name="CountInCart" xml:space="preserve">
-    <value>Count</value>
-  </data>
-  <data name="CreatedDate" xml:space="preserve">
-    <value>Created date</value>
-  </data>
-  <data name="Current password" xml:space="preserve">
-    <value>Current password</value>
-  </data>
-  <data name="Description" xml:space="preserve">
-    <value>Description</value>
-  </data>
-  <data name="Email" xml:space="preserve">
-    <value>Email</value>
-  </data>
-  <data name="EmailConfirmed" xml:space="preserve">
-    <value>Email confirmed</value>
-  </data>
-  <data name="EmailRequired" xml:space="preserve">
-    <value>The Email field is required.</value>
-  </data>
-  <data name="InvalidEmailAddress" xml:space="preserve">
-    <value>The Email field is not a valid email address.</value>
-  </data>
-  <data name="IsInStock" xml:space="preserve">
-    <value>In stock</value>
-  </data>
-  <data name="Model" xml:space="preserve">
-    <value>Model</value>
-  </data>
-  <data name="New password" xml:space="preserve">
-    <value>New password</value>
-  </data>
-  <data name="Password" xml:space="preserve">
-    <value>Password</value>
-  </data>
-  <data name="PasswordRequired" xml:space="preserve">
-    <value>The Password field is required.</value>
-  </data>
-  <data name="PhoneInvalid" xml:space="preserve">
-    <value>The phone field is not a valid phone number.</value>
-  </data>
-  <data name="PhoneNumber" xml:space="preserve">
-    <value>Phone number</value>
-  </data>
-  <data name="Points" xml:space="preserve">
-    <value>Points</value>
-  </data>
-  <data name="PointsPerMonth" xml:space="preserve">
-    <value>Balance for the month</value>
-  </data>
-  <data name="Price" xml:space="preserve">
-    <value>Price</value>
-  </data>
-  <data name="Remember me?" xml:space="preserve">
-    <value>Remember me?</value>
-  </data>
-  <data name="Role" xml:space="preserve">
-    <value>Role</value>
-  </data>
-  <data name="Size" xml:space="preserve">
-    <value>Size</value>
-  </data>
-  <data name="StringLengthRestriction" xml:space="preserve">
-    <value>The {0} must be at least {2} and at max {1} characters long.</value>
-  </data>
-  <data name="SumPrice" xml:space="preserve">
-    <value>Sum price</value>
-  </data>
-  <data name="Title" xml:space="preserve">
-    <value>Title</value>
-  </data>
-  <data name="TotalPoints" xml:space="preserve">
-    <value>Total points</value>
-  </data>
-  <data name="Username" xml:space="preserve">
-    <value>Username</value>
+  <data name="Error: not found item by id: '{0}'." xml:space="preserve">
+    <value>Ошибка: не удалось найти товар с идентификатором: '{0}'.</value>
   </data>
 </root>

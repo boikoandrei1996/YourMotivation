@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using ORM.Models;
 using YourMotivation.Web.Services;
 
 namespace YourMotivation.Web.Controllers
 {
+  [Authorize]
   [Route("[controller]/item/[action]")]
   public class ShopController : Controller
   {
@@ -77,6 +76,31 @@ namespace YourMotivation.Web.Controllers
       }
 
       return View(nameof(ShowCart), cart);
+    }
+
+    // POST: Shop/Item/AddItemToCart
+    [HttpPost]
+    public async Task<IActionResult> AddItemToCart(Guid? cartId, Guid? itemId)
+    {
+      if (!cartId.HasValue || !itemId.HasValue)
+      {
+        return NotFound();
+      }
+
+      var tuple = await _shopManager.AddItemToCartAsync(cartId.Value, itemId.Value);
+      if (tuple.Result.Succeeded)
+      {
+        this.StatusMessage = _localizer["Item '{0}' has been added to the cart.", tuple.Title];
+      }
+      else
+      {
+        var error = tuple.Result.Errors.FirstOrDefault();
+        this.StatusMessage = error == null ?
+          _localizer["Error: can not add item to the cart."] :
+          error.Description;
+      }
+
+      return RedirectToAction(nameof(ShopController.All), "Shop");
     }
 
     /*// GET: Shop/Item/Create

@@ -51,37 +51,44 @@ namespace ORM.DataSeed
         new CartItem
         {
           CartId = carts[0].Id,
-          ItemId = items[0].Id
+          ItemId = items[0].Id,
+          Count = 1
         },
         new CartItem
         {
           CartId = carts[0].Id,
-          ItemId = items[3].Id
+          ItemId = items[3].Id,
+          Count = 2
         },
         new CartItem
         {
           CartId = carts[0].Id,
-          ItemId = items[2].Id
+          ItemId = items[2].Id,
+          Count = 1
         },
         new CartItem
         {
           CartId = carts[1].Id,
-          ItemId = items[0].Id
+          ItemId = items[0].Id,
+          Count = 2
         },
         new CartItem
         {
           CartId = carts[1].Id,
-          ItemId = items[1].Id
+          ItemId = items[1].Id,
+          Count = 2
         },
         new CartItem
         {
           CartId = carts[2].Id,
-          ItemId = items[3].Id
+          ItemId = items[3].Id,
+          Count = 1
         },
         new CartItem
         {
           CartId = carts[3].Id,
-          ItemId = items[4].Id
+          ItemId = items[4].Id,
+          Count = 1
         }
       };
     }

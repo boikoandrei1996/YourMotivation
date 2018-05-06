@@ -58,10 +58,14 @@
             </div>
             <div class="space-ten"></div>
             <div class="btn-ground text-center">
-              <a href="@Url.Action()" class="btn btn-primary @addToCartDisabled">
-                @Localizer["Add to cart"]&nbsp;
-                <span class="glyphicon glyphicon-shopping-cart"></span>
-              </a>
+              <form asp-controller="Shop" asp-action="AddItemToCart" method="post">
+                <input type="hidden" value="@ViewData["CartId"]" name="cartId" />
+                <input type="hidden" value="@Model.Id" name="itemId" />
+                <button type="submit" class="btn btn-primary @addToCartDisabled">
+                  @Localizer["Add to cart"]&nbsp;
+                  <span class="glyphicon glyphicon-shopping-cart"></span>
+                </button>
+              </form>
             </div>
           </div>
         </div>

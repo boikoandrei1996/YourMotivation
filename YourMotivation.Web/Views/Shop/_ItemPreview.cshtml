@@ -2,7 +2,7 @@
 @using YourMotivation.Web.Extensions;
 
 @model ShopItemViewModel
-@{ 
+@{
   var modalDivId = "#itemDetails" + Model.Id;
   var addToCartDisabled = Model.IsInStock ? string.Empty : "disabled";
 }
@@ -21,13 +21,17 @@
     </div>
     <div class="space-ten"></div>
     <div class="btn-ground text-center">
-      <a href="@Url.Action()" class="btn btn-primary @addToCartDisabled">
-        @Localizer["Add to cart"]&nbsp;
-        <span class="glyphicon glyphicon-shopping-cart"></span>
-      </a>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="@modalDivId">
-        @Localizer["Details"]
-      </button>
+      <form asp-controller="Shop" asp-action="AddItemToCart" method="post">
+        <input type="hidden" value="@ViewData["CartId"]" name="cartId" />
+        <input type="hidden" value="@Model.Id" name="itemId" />
+        <button type="submit" class="btn btn-primary @addToCartDisabled">
+          @Localizer["Add to cart"]&nbsp;
+          <span class="glyphicon glyphicon-shopping-cart"></span>
+        </button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="@modalDivId">
+          @Localizer["Details"]
+        </button>
+      </form>
     </div>
     <div class="space-ten"></div>
   </div>

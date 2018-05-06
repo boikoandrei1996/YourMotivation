@@ -132,6 +132,9 @@
   <data name="Count" xml:space="preserve">
     <value>Всего</value>
   </data>
+  <data name="CountInCart" xml:space="preserve">
+    <value>Количество</value>
+  </data>
   <data name="CreatedDate" xml:space="preserve">
     <value>Дата создания</value>
   </data>

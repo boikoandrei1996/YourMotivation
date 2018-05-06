@@ -5,3 +5,7 @@
 $("a.disabled").on("click", function (e) {
   e.preventDefault();
 });
+
+$("button.disabled").on("click", function (e) {
+  e.preventDefault();
+});

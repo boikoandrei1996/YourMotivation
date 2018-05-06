@@ -30,7 +30,10 @@ namespace YourMotivation.Web.Models.CartViewModels
     [Display(Name = "Model")]
     public string Model { get; set; }
 
-    public static CartItemViewModel Map(Item item)
+    [Display(Name = "CountInCart")]
+    public int Count { get; set; }
+
+    public static CartItemViewModel Map(Item item, int count)
     {
       if (item == null)
       {
@@ -43,10 +46,11 @@ namespace YourMotivation.Web.Models.CartViewModels
         Title = item.Title,
         Description = item.Characteristics.Description.Truncate(Constants.ItemPreviewDescriptionMaxLength),
         Price = item.Price,
-        IsInStock = item.CountsInStock > 0,
+        IsInStock = item.CountsInStock - count >= 0,
         Color = item.Characteristics.Color,
         Size = item.Characteristics.Size,
-        Model = item.Characteristics.Model
+        Model = item.Characteristics.Model,
+        Count = count
       };
     }
   }

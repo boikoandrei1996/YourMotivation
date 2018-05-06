@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using ORM.Models;
 
 namespace YourMotivation.Web.Models.CartViewModels
@@ -21,7 +22,7 @@ namespace YourMotivation.Web.Models.CartViewModels
       return new CartPreviewViewModel
       {
         Id = cart.Id,
-        ItemCount = cart.CartItems.Count
+        ItemCount = cart.CartItems.Sum(ci => ci.Count)
       };
     }
   }
