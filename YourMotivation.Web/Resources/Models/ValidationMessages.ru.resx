@@ -129,6 +129,9 @@
   <data name="ConfirmPasswordRestriction" xml:space="preserve">
     <value>Поле пароль и повторите пароль не совпадают.</value>
   </data>
+  <data name="Count" xml:space="preserve">
+    <value>Всего</value>
+  </data>
   <data name="CreatedDate" xml:space="preserve">
     <value>Дата создания</value>
   </data>
@@ -170,6 +173,9 @@
   </data>
   <data name="PhoneNumber" xml:space="preserve">
     <value>Номер телефона</value>
+  </data>
+  <data name="Points" xml:space="preserve">
+    <value>Очков</value>
   </data>
   <data name="PointsPerMonth" xml:space="preserve">
     <value>Остаток на месяц</value>

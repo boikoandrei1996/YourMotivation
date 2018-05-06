@@ -14,12 +14,12 @@ namespace YourMotivation.Web.Controllers
   [Route("[controller]/item/[action]")]
   public class ShopController : Controller
   {
-    private readonly ShopItemManager _itemManager;
+    private readonly ShopManager _itemManager;
     private readonly ILogger _logger;
     private readonly IStringLocalizer<ShopController> _localizer;
 
     public ShopController(
-      ShopItemManager itemManager,
+      ShopManager itemManager,
       ILogger<ShopController> logger,
       IStringLocalizer<ShopController> localizer)
     {
@@ -45,20 +45,20 @@ namespace YourMotivation.Web.Controllers
 
     // GET: Shop/Item/Image
     [ActionName("Image")]
-    public async Task<ActionResult> GetImage(Guid? itemId)
+    public async Task<IActionResult> GetImage(Guid? itemId)
     {
       if (!itemId.HasValue)
       {
         return NotFound();
       }
 
-      var tuple = await _itemManager.GetItemImageAsync(itemId.Value);
-      if (tuple.Content == null)
+      var imageTuple = await _itemManager.GetItemImageAsync(itemId.Value);
+      if (imageTuple.Content == null)
       {
         return NotFound();
       }
 
-      return File(tuple.Content, tuple.ContentMimeType);
+      return File(imageTuple.Content, imageTuple.ContentMimeType);
     }
 
     /*// GET: Shop/Item/Create

@@ -8,11 +8,12 @@ using YourMotivation.Web.Models.ShopViewModels;
 
 namespace YourMotivation.Web.Services
 {
-  public class ShopItemManager
+  public class ShopManager
   {
     private readonly ApplicationDbContext _context;
 
-    public ShopItemManager(ApplicationDbContext context)
+    public ShopManager(
+      ApplicationDbContext context)
     {
       _context = context;
     }
@@ -61,12 +62,7 @@ namespace YourMotivation.Web.Services
         .AsNoTracking()
         .FirstOrDefaultAsync(i => i.Id == id);
 
-      if (item == null)
-      {
-        return (null, null);
-      }
-
-      return (item.Image, item.ImageContentType);
+      return (item?.Image, item?.ImageContentType);
     }
   }
 }

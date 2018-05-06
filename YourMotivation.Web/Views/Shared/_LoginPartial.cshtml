@@ -1,15 +1,27 @@
-@using ORM.Models
+@using ORM.Models;
+@using YourMotivation.Web.Extensions;
 
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
 @if (SignInManager.IsSignedIn(User))
 {
+  var username = UserManager.GetUserName(User);
+  var cartPreview = await UserManager.GetShopCartPreviewAsync(username);
+
   <form method="post" id="logoutForm" class="navbar-right"
-    asp-area="" asp-controller="Account" asp-action="Logout" >
+        asp-area="" asp-controller="Account" asp-action="Logout">
     <ul class="nav navbar-nav navbar-right">
+      <li class="cart-link">
+        <a asp-area="" asp-controller="" asp-action="" asp-route-id="@cartPreview.Id" title="Cart">
+          &nbsp;
+          <span class="glyphicon glyphicon-shopping-cart"></span>
+          <span class="badge">@cartPreview.ItemCount</span>
+          &nbsp;
+        </a>
+      </li>
       <li>
-        <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">@Localizer["Hello"] @UserManager.GetUserName(User)!</a>
+        <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">@Localizer["Hello"] @username!</a>
       </li>
       <li>
         <button type="submit" class="btn btn-link navbar-btn navbar-link">@Localizer["Log out"]</button>

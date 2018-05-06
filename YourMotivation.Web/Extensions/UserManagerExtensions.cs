@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using ORM;
 using ORM.Models;
 using YourMotivation.Web.Models.AdminViewModels;
+using YourMotivation.Web.Models.CartViewModels;
 using YourMotivation.Web.Models.Pagination;
 using YourMotivation.Web.Models.Pagination.Pages;
 
@@ -125,6 +126,24 @@ namespace YourMotivation.Web.Extensions
       result.Records = users;
 
       return result;
+    }
+
+    public static async Task<CartPreviewViewModel> GetShopCartPreviewAsync(
+      this UserManager<ApplicationUser> userManager, 
+      string username)
+    {
+      var user = await userManager.Users
+        .AsNoTracking()
+        .Include(u => u.Cart)
+          .ThenInclude(c => c.CartItems)
+        .FirstOrDefaultAsync(u => u.UserName == username);
+
+      if (user == null)
+      {
+        return null;
+      }
+
+      return CartPreviewViewModel.Map(user.Cart);
     }
   }
 }
