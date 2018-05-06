@@ -120,7 +120,13 @@
   <data name="Error: can not add item to the cart." xml:space="preserve">
     <value>Ошибка: не удалось добавить товар в корзину.</value>
   </data>
+  <data name="Error: can not remove item from the cart." xml:space="preserve">
+    <value>Ошибка: не удалось удалить товар из корзины.</value>
+  </data>
   <data name="Item '{0}' has been added to the cart." xml:space="preserve">
-    <value>Товар '{0}' бы успешно добавлен.</value>
+    <value>Товар '{0}' был успешно добавлен.</value>
+  </data>
+  <data name="Item '{0}' has been removed from the cart." xml:space="preserve">
+    <value>Товар '{0}' был успешно удалён из корзины.</value>
   </data>
 </root>

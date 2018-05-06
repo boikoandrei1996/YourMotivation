@@ -102,10 +102,11 @@ namespace YourMotivation.Web.Services
         Title: null);
       }
 
+      var cartItem =
+        await _context.CartItems.FirstOrDefaultAsync(ci => ci.CartId == cartId && ci.ItemId == itemId);
+
       try
       {
-        var cartItem = 
-          await _context.CartItems.FirstOrDefaultAsync(ci => ci.CartId == cartId && ci.ItemId == itemId);
         if (cartItem == null)
         {
           await _context.CartItems.AddAsync(new CartItem
@@ -137,6 +138,75 @@ namespace YourMotivation.Web.Services
       {
         return (Result: null, Title: null);
       }
+    }
+
+    public async Task<(IdentityResult Result, string Title)> RemoveOneItemFromCartAsync(Guid cartId, Guid itemId)
+    {
+      var cart = await _context.Carts.FirstOrDefaultAsync(c => c.Id == cartId);
+      var item = await _context.Items.FirstOrDefaultAsync(i => i.Id == itemId);
+
+      if (cart == null)
+      {
+        return 
+        (IdentityResult.Failed(new IdentityError
+        {
+          Code = nameof(ShopManager.RemoveOneItemFromCartAsync),
+          Description = _localizer["Error: not found cart by id: '{0}'.", cartId]
+        }), null);
+      }
+
+      if (item == null)
+      {
+        return 
+        (IdentityResult.Failed(new IdentityError
+        {
+          Code = nameof(ShopManager.RemoveOneItemFromCartAsync),
+          Description = _localizer["Error: not found item by id: '{0}'.", itemId]
+        }), null);
+      }
+
+      var cartItem =
+        await _context.CartItems.FirstOrDefaultAsync(ci => ci.CartId == cartId && ci.ItemId == itemId);
+
+      if (cartItem == null)
+      {
+        return 
+        (IdentityResult.Failed(new IdentityError
+        {
+          Code = nameof(ShopManager.RemoveOneItemFromCartAsync),
+          Description = _localizer["Error: not found reference between cart and item."]
+        }), null);
+      }
+
+      try
+      {
+        if (cartItem.Count > 1)
+        {
+          cartItem.Count -= 1;
+          _context.CartItems.Update(cartItem);
+        }
+        else
+        {
+          _context.CartItems.Remove(cartItem);
+        }
+
+        await _context.SaveChangesAsync();
+        return (IdentityResult.Success, cartItem.Item.Title);
+      }
+      catch (DbUpdateException ex)
+      {
+        return 
+        (IdentityResult.Failed(new IdentityError
+        {
+          Code = nameof(ShopManager.RemoveOneItemFromCartAsync),
+          Description = ex.InnerException.Message
+        }), null);
+      }
+      catch (Exception)
+      {
+        return (null, null);
+      }
+
     }
   }
 }

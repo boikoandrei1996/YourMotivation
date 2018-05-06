@@ -20,6 +20,8 @@ namespace YourMotivation.Web.Models.CartViewModels
     [Display(Name = "SumPrice")]
     public int ItemsSumPrice { get; set; }
 
+    public string StatusMessage { get; set; }
+
     public CartItemViewModel DefaultItem { get { return new CartItemViewModel(); } }
 
     public static CartViewModel Map(Cart cart)

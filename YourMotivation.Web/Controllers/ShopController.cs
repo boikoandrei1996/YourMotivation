@@ -43,6 +43,7 @@ namespace YourMotivation.Web.Controllers
     }
 
     // GET: Shop/Item/Image
+    [HttpGet]
     [ActionName("Image")]
     public async Task<IActionResult> GetImage(Guid? itemId)
     {
@@ -61,6 +62,7 @@ namespace YourMotivation.Web.Controllers
     }
 
     // GET: Shop/Item/Cart/id
+    [HttpGet]
     [ActionName("Cart")]
     public async Task<IActionResult> ShowCart(Guid? id)
     {
@@ -75,11 +77,14 @@ namespace YourMotivation.Web.Controllers
         return NotFound();
       }
 
+      cart.StatusMessage = this.StatusMessage;
+
       return View(nameof(ShowCart), cart);
     }
 
     // POST: Shop/Item/AddItemToCart
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> AddItemToCart(Guid? cartId, Guid? itemId)
     {
       if (!cartId.HasValue || !itemId.HasValue)
@@ -101,6 +106,32 @@ namespace YourMotivation.Web.Controllers
       }
 
       return RedirectToAction(nameof(ShopController.All), "Shop");
+    }
+
+    // DELETE: Shop/Item/RemoveItemFromCart
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> RemoveItemFromCart(Guid? cartId, Guid? itemId)
+    {
+      if (!cartId.HasValue || !itemId.HasValue)
+      {
+        return NotFound();
+      }
+
+      var tuple = await _shopManager.RemoveOneItemFromCartAsync(cartId.Value, itemId.Value);
+      if (tuple.Result.Succeeded)
+      {
+        this.StatusMessage = _localizer["Item '{0}' has been removed from the cart.", tuple.Title];
+      }
+      else
+      {
+        var error = tuple.Result.Errors.FirstOrDefault();
+        this.StatusMessage = error == null ?
+          _localizer["Error: can not remove item from the cart."] :
+          error.Description;
+      }
+
+      return RedirectToAction("Cart", "Shop", new { id = cartId });
     }
 
     /*// GET: Shop/Item/Create
