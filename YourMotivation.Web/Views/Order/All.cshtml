@@ -1,0 +1,106 @@
+﻿@using ORM.Models;
+@using YourMotivation.Web.Models.Pagination;
+@using YourMotivation.Web.Models.Pagination.Pages;
+
+@addTagHelper "*, YourMotivation.Web"
+
+@model OrdersPageViewModel
+@{
+  ViewBag.Title = Localizer["All orders"].Value + ViewBag.OwnerUsername;
+  var isModerator = User.IsInRole(ApplicationRole.Moderator);
+}
+
+<div class="row text-center">
+  <h1>@ViewBag.Title</h1>
+</div>
+
+@Html.Partial("_StatusMessage", Model.StatusMessage)
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th></th>
+      <th class="text-center">
+        @Html.DisplayNameFor(model => model.Default.OwnerUsername)
+      </th>
+      <th class="text-center">
+        <sort-order-header action="All" page-model=@Model column=@SortColumnName.CreatedDate>
+          @Html.DisplayNameFor(model => model.Default.DateOfCreation)
+        </sort-order-header>
+      </th>
+      <th class="text-center">
+        <sort-order-header action="All" page-model=@Model column=@SortColumnName.DateOfClosing>
+          @Html.DisplayNameFor(model => model.Default.DateOfClosing)
+        </sort-order-header>
+      </th>
+      <th class="text-center">
+        @Html.DisplayNameFor(model => model.Default.IsClosed)
+      </th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (var index = 1; index <= Model.Records.Count; index++)
+    {
+      var order = Model.Records[index - 1];
+      var closeOrderDisabled = order.IsClosed ? "disabled" : string.Empty;
+
+      <tr>
+        <td class="text-center">
+          <b>@index</b>
+        </td>
+        <td class="text-center">
+          @Html.DisplayFor(model => order.OwnerUsername)
+        </td>
+        <td class="text-center">
+          @Html.DisplayFor(model => order.DateOfCreation)
+        </td>
+        <td class="text-center">
+          @Html.DisplayFor(model => order.DateOfClosing)
+        </td>
+        <td class="text-center" style="font-size: 1.5em">
+          @if (order.IsClosed)
+          {
+            <span class="glyphicon glyphicon-ok-sign text-success"></span>
+          }
+          else
+          {
+            <span class="glyphicon glyphicon-minus-sign text-warning"></span>
+          }
+        </td>
+        <td class="text-right">
+          <a class="btn btn-sm btn-info" asp-action="" asp-route-id="">
+            @Localizer["Go to cart"]&nbsp;
+            <span class="glyphicon glyphicon-list"></span>
+          </a>
+        </td>
+        <td class="text-left">
+          @if (isModerator)
+          {
+            <form asp-controller="Order" asp-action="Close" method="post">
+              <input type="hidden" value="@order.Id" name="orderId" />
+              <button type="submit" class="btn btn-sm btn-warning" @closeOrderDisabled>
+                &nbsp;@Localizer["Close order"]&nbsp;
+                <span class="glyphicon glyphicon-check"></span>
+              </button>
+            </form>
+          }
+          else
+          {
+            <form asp-controller="Order" asp-action="Delete" method="post">
+              <input type="hidden" value="@order.Id" name="orderId" />
+              <button type="submit" class="btn btn-sm btn-danger">
+                &nbsp;@Localizer["Delete order"]
+                <span class="glyphicon glyphicon-remove-sign"></span>
+              </button>
+            </form>
+          }
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+@Html.Partial("_Pagination", Model)
+

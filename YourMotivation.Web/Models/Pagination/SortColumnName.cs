@@ -3,6 +3,7 @@
   public enum SortColumnName
   {
     Username,
-    CreatedDate
+    CreatedDate,
+    DateOfClosing
   }
 }

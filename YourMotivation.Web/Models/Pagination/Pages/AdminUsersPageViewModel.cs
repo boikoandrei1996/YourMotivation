@@ -3,7 +3,7 @@ using YourMotivation.Web.Models.AdminViewModels;
 
 namespace YourMotivation.Web.Models.Pagination.Pages
 {
-  public class AdminUsersPageViewModel : IBasePage<AdminUserViewModel>, ISortablePage<SortViewModel>
+  public class AdminUsersPageViewModel : IBasePage<AdminUserViewModel>, ISortablePage<SortAdminViewModel>
   {
     public AdminUsersPageViewModel()
     {
@@ -23,7 +23,7 @@ namespace YourMotivation.Web.Models.Pagination.Pages
       get { return CurrentPage < TotalPages; }
     }
 
-    public SortViewModel SortViewModel { get; set; }
+    public SortAdminViewModel SortViewModel { get; set; }
     public string UsernameFilter { get; set; }
 
     public string StatusMessage { get; set; }

@@ -107,7 +107,7 @@ namespace YourMotivation.Web.Extensions
         CurrentPage = index,
         PageSize = pageSize,
         UsernameFilter = usernameFilter,
-        SortViewModel = new SortViewModel(sortState)
+        SortViewModel = new SortAdminViewModel(sortState)
       };
 
       var totalCount = await query.CountAsync();

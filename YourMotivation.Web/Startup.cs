@@ -48,15 +48,22 @@ namespace YourMotivation.Web
         .AddMvc()
         .AddViewLocalization()
         .AddDataAnnotationsLocalization(options =>
-          options.DataAnnotationLocalizerProvider = (type, factory) => 
+          options.DataAnnotationLocalizerProvider = (type, factory) =>
           {
             return factory.Create(typeof(ValidationMessages));
           }
         );
 
+      services.AddAuthorization(options =>
+      {
+        options.AddPolicy(ApplicationRole.Admin, builder => builder.RequireRole(ApplicationRole.Admin));
+        options.AddPolicy(ApplicationRole.Moderator, builder => builder.RequireRole(ApplicationRole.Moderator));
+      });
+
       // Add application services.
       services.AddTransient<IEmailSender, EmailSender>();
       services.AddTransient<ShopManager>();
+      services.AddTransient<OrderManager>();
 
       // Configure supported cultures and localization options
       services.Configure<RequestLocalizationOptions>(options =>
@@ -83,7 +90,7 @@ namespace YourMotivation.Web
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(
-      IApplicationBuilder app, 
+      IApplicationBuilder app,
       IHostingEnvironment env)
     {
       if (env.IsDevelopment())

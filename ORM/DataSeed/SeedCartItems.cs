@@ -46,6 +46,8 @@ namespace ORM.DataSeed
       var carts = await context.Carts.ToArrayAsync();
       var items = await context.Items.ToArrayAsync();
 
+      const int DEFAULTCREATEDCARTCOUNT = 5;
+
       return new List<CartItem>
       {
         new CartItem
@@ -56,7 +58,19 @@ namespace ORM.DataSeed
         },
         new CartItem
         {
+          CartId = carts[0+DEFAULTCREATEDCARTCOUNT].Id,
+          ItemId = items[0].Id,
+          Count = 1
+        },
+        new CartItem
+        {
           CartId = carts[0].Id,
+          ItemId = items[3].Id,
+          Count = 2
+        },
+        new CartItem
+        {
+          CartId = carts[0+DEFAULTCREATEDCARTCOUNT].Id,
           ItemId = items[3].Id,
           Count = 2
         },
@@ -68,7 +82,19 @@ namespace ORM.DataSeed
         },
         new CartItem
         {
+          CartId = carts[0+DEFAULTCREATEDCARTCOUNT].Id,
+          ItemId = items[2].Id,
+          Count = 1
+        },
+        new CartItem
+        {
           CartId = carts[1].Id,
+          ItemId = items[0].Id,
+          Count = 2
+        },
+        new CartItem
+        {
+          CartId = carts[1+DEFAULTCREATEDCARTCOUNT].Id,
           ItemId = items[0].Id,
           Count = 2
         },
@@ -80,13 +106,31 @@ namespace ORM.DataSeed
         },
         new CartItem
         {
+          CartId = carts[1+DEFAULTCREATEDCARTCOUNT].Id,
+          ItemId = items[1].Id,
+          Count = 2
+        },
+        new CartItem
+        {
           CartId = carts[2].Id,
           ItemId = items[3].Id,
           Count = 1
         },
         new CartItem
         {
+          CartId = carts[2+DEFAULTCREATEDCARTCOUNT].Id,
+          ItemId = items[3].Id,
+          Count = 1
+        },
+        new CartItem
+        {
           CartId = carts[3].Id,
+          ItemId = items[4].Id,
+          Count = 1
+        },
+        new CartItem
+        {
+          CartId = carts[3+DEFAULTCREATEDCARTCOUNT].Id,
           ItemId = items[4].Id,
           Count = 1
         }

@@ -4,7 +4,11 @@
   {
     UsernameAsc,
     UsernameDesc,
+
     CreatedDateAsc,
-    CreatedDateDesc
+    CreatedDateDesc,
+
+    DateOfClosingAsc,
+    DateOfClosingDesc
   }
 }

@@ -15,6 +15,7 @@ namespace ORM
       ILogger logger)
     {
       await SeedRoles.SeedAsync(roleManager, logger);
+      await SeedCarts.SeedAsync(context, logger);
       await SeedUsers.SeedAsync(userManager, logger);
       await SeedItems.SeedAsync(context, logger);
       await SeedCartItems.SeedAsync(context, logger);

@@ -2,27 +2,27 @@
 
 namespace YourMotivation.Web.Models.Pagination
 {
-  public class SortViewModel
+  public class SortOrderViewModel
   {
     public SortState CurrentState { get; private set; }
 
-    public SortViewModel(SortState sortOrder)
+    public SortOrderViewModel(SortState sortOrder)
     {
       CurrentState = sortOrder;
     }
 
     public SortState NextState(SortColumnName columnName)
     {
-      if (columnName == SortColumnName.Username)
+      if (columnName == SortColumnName.DateOfClosing)
       {
         switch (CurrentState)
         {
-          case SortState.UsernameAsc:
-            return SortState.UsernameDesc;
-          case SortState.UsernameDesc:
-            return SortState.UsernameAsc;
+          case SortState.DateOfClosingAsc:
+            return SortState.DateOfClosingDesc;
+          case SortState.DateOfClosingDesc:
+            return SortState.DateOfClosingAsc;
           default:
-            return SortState.UsernameAsc;
+            return SortState.DateOfClosingDesc;
         }
       }
       else if (columnName == SortColumnName.CreatedDate)
@@ -43,10 +43,10 @@ namespace YourMotivation.Web.Models.Pagination
 
     public bool? IsUp(SortColumnName columnName)
     {
-      if (columnName == SortColumnName.Username &&
-        (CurrentState == SortState.UsernameAsc || CurrentState == SortState.UsernameDesc))
+      if (columnName == SortColumnName.DateOfClosing &&
+        (CurrentState == SortState.DateOfClosingAsc || CurrentState == SortState.DateOfClosingDesc))
       {
-        return CurrentState == SortState.UsernameAsc ? false : true;
+        return CurrentState == SortState.DateOfClosingAsc ? false : true;
       }
       else if (columnName == SortColumnName.CreatedDate &&
         (CurrentState == SortState.CreatedDateAsc || CurrentState == SortState.CreatedDateDesc))

@@ -17,9 +17,9 @@
   <thead>
     <tr>
       <th>
-        <sort-header action="Users" page-model=@Model column=@SortColumnName.Username>
+        <sort-admin-header action="Users" page-model=@Model column=@SortColumnName.Username>
           @Html.DisplayNameFor(model => model.Default.Username)
-        </sort-header>
+        </sort-admin-header>
       </th>
       <th>
         @Html.DisplayNameFor(model => model.Default.Email)
@@ -28,9 +28,9 @@
         @Html.DisplayNameFor(model => model.Default.Role)
       </th>
       <th>
-        <sort-header action="Users" page-model=@Model column=@SortColumnName.CreatedDate>
+        <sort-admin-header action="Users" page-model=@Model column=@SortColumnName.CreatedDate>
           @Html.DisplayNameFor(model => model.Default.CreatedDate)
-        </sort-header>
+        </sort-admin-header>
       </th>
       <th>
         @Html.DisplayNameFor(model => model.Default.PhoneNumber)

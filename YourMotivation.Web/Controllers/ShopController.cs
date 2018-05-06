@@ -10,7 +10,6 @@ using YourMotivation.Web.Services;
 namespace YourMotivation.Web.Controllers
 {
   [Authorize]
-  // [Route("[controller]/item/[action]")]
   public class ShopController : Controller
   {
     private readonly ShopManager _shopManager;

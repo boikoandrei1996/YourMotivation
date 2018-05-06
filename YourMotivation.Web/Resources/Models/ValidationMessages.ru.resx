@@ -141,6 +141,12 @@
   <data name="Current password" xml:space="preserve">
     <value>Текущий пароль</value>
   </data>
+  <data name="DateOfClosing" xml:space="preserve">
+    <value>Дата закрытия</value>
+  </data>
+  <data name="DateOfCreation" xml:space="preserve">
+    <value>Дата создания</value>
+  </data>
   <data name="Description" xml:space="preserve">
     <value>Описание</value>
   </data>
@@ -156,6 +162,9 @@
   <data name="InvalidEmailAddress" xml:space="preserve">
     <value>Поле емейл не является валидным емейл адресом.</value>
   </data>
+  <data name="IsClosed" xml:space="preserve">
+    <value>Закрыта</value>
+  </data>
   <data name="IsInStock" xml:space="preserve">
     <value>В наличие</value>
   </data>
@@ -164,6 +173,9 @@
   </data>
   <data name="New password" xml:space="preserve">
     <value>Новый пароль</value>
+  </data>
+  <data name="OwnerUsername" xml:space="preserve">
+    <value>Владелец</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Пароль</value>
