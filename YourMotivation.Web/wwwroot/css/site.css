@@ -59,7 +59,6 @@
   padding-left: 2px;
 }
 
-
 .space-ten {
   padding: 10px 0;
 }
@@ -70,4 +69,27 @@
   padding-top: 5px;
   padding-bottom: 5px;
   background-color: darkgrey;
+}
+
+.transfer-row {
+  border-bottom: solid 2px brown;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  font-size: 1.2em;
+}
+
+textarea {
+  resize: none;
+  width: 100% !important;
+  height: auto !important;
+}
+
+/*TODO: fix this shit*/
+.transfer-right-block {
+  height: 155px;
+}
+
+.transfer-points {
+  color: brown;
+  font-size: 1.6em;
 }

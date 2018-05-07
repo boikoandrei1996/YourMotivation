@@ -171,6 +171,9 @@
   <data name="IsInStock" xml:space="preserve">
     <value>In stock</value>
   </data>
+  <data name="Message" xml:space="preserve">
+    <value>Message</value>
+  </data>
   <data name="Model" xml:space="preserve">
     <value>Model</value>
   </data>
@@ -222,7 +225,16 @@
   <data name="TotalPoints" xml:space="preserve">
     <value>Total points</value>
   </data>
+  <data name="TransferDateTime" xml:space="preserve">
+    <value>Transfer date</value>
+  </data>
   <data name="Username" xml:space="preserve">
     <value>Username</value>
+  </data>
+  <data name="UserReceiverUsername" xml:space="preserve">
+    <value>Receiver</value>
+  </data>
+  <data name="UserSenderUsername" xml:space="preserve">
+    <value>Sender</value>
   </data>
 </root>

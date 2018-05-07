@@ -1,0 +1,65 @@
+﻿@using YourMotivation.Web.Models.Pagination.Pages;
+
+@model TransfersPageViewModel
+@{
+  ViewBag.Title = Localizer["All transfers"];
+}
+
+<div class="row text-center">
+  <h1>@ViewBag.Title</h1>
+</div>
+
+<hr />
+
+@Html.Partial("_StatusMessage", Model.StatusMessage)
+
+@foreach (var transfer in Model.Records)
+{
+  <div class="row">
+    <div class="col-sm-1 col-md-2"></div>
+    <div class="col-sm-10 col-md-8 transfer-row">
+      <div class="row">
+        <div class="col-md-9">
+          <div class="row">
+            <div class="col-md-4 text-right">
+              <b>@Html.DisplayNameFor(model => model.Default.UserSenderUsername)</b>:&nbsp;
+            </div>
+            <div class="col-md-8">
+              <span>@transfer.UserSenderUsername</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 text-right">
+              <b>@Html.DisplayNameFor(model => model.Default.UserReceiverUsername)</b>:&nbsp;
+            </div>
+            <div class="col-md-8">
+              <span>@transfer.UserReceiverUsername</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 text-right">
+              <b>@Html.DisplayNameFor(model => model.Default.Message)</b>:&nbsp;
+            </div>
+            <div class="col-md-8">
+              <textarea class="form-control" rows="5" readonly>@transfer.Message</textarea>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 transfer-right-block">
+          <div class="text-right" style="font-size: 1em;">@transfer.TransferDateTime</div>
+          <div class="text-center" style="margin-top: 66px;">
+            <span class="transfer-points">
+              <span class="glyphicon glyphicon-star"></span>
+              <span><b>@transfer.Points</b></span>
+              <span class="glyphicon glyphicon-star"></span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-1 col-md-2"></div>
+  </div>
+}
+
+@Html.Partial("_Pagination", Model)
+

@@ -117,28 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="About" xml:space="preserve">
-    <value>О нас</value>
-  </data>
-  <data name="Admin" xml:space="preserve">
-    <value>Админ</value>
-  </data>
-  <data name="Contact" xml:space="preserve">
-    <value>Контакты</value>
-  </data>
-  <data name="Home" xml:space="preserve">
-    <value>Домашняя страница</value>
-  </data>
-  <data name="Orders" xml:space="preserve">
-    <value>Заказы</value>
-  </data>
-  <data name="Shop" xml:space="preserve">
-    <value>Магазин</value>
-  </data>
-  <data name="Toggle navigation" xml:space="preserve">
-    <value>Переключить навигацию</value>
-  </data>
-  <data name="Transfers" xml:space="preserve">
-    <value>Трансферы</value>
+  <data name="All transfers" xml:space="preserve">
+    <value>Все трансферы</value>
   </data>
 </root>

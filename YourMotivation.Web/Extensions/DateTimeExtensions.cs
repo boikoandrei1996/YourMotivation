@@ -1,14 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace YourMotivation.Web.Extensions
 {
   public static class DateTimeExtensions
   {
-    public static string FormatDateTime(this DateTime dateTime)
+    public static string FormatDateTime(this DateTime dateTime, bool timeFirst = false)
     {
-      return dateTime.ToShortDateString() + " || " + dateTime.ToShortTimeString();
+      if (timeFirst)
+      {
+        return dateTime.ToShortTimeString() + " || " + dateTime.ToShortDateString();
+      }
+      else
+      {
+        return dateTime.ToShortDateString() + " || " + dateTime.ToShortTimeString();
+      }
     }
   }
 }

@@ -171,6 +171,9 @@
   <data name="IsInStock" xml:space="preserve">
     <value>В наличие</value>
   </data>
+  <data name="Message" xml:space="preserve">
+    <value>Сообщение</value>
+  </data>
   <data name="Model" xml:space="preserve">
     <value>Модель</value>
   </data>
@@ -222,7 +225,16 @@
   <data name="TotalPoints" xml:space="preserve">
     <value>Всего очков</value>
   </data>
+  <data name="TransferDateTime" xml:space="preserve">
+    <value>Дата трансфера</value>
+  </data>
   <data name="Username" xml:space="preserve">
     <value>Пользователь</value>
+  </data>
+  <data name="UserReceiverUsername" xml:space="preserve">
+    <value>Получатель</value>
+  </data>
+  <data name="UserSenderUsername" xml:space="preserve">
+    <value>Отправитель</value>
   </data>
 </root>
