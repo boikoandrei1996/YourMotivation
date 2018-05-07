@@ -38,6 +38,7 @@
       </th>
       <th></th>
       <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -83,9 +84,11 @@
               <button type="submit" class="btn btn-sm btn-warning" @closeOrderDisabled>
                 &nbsp;@Localizer["Close order"]&nbsp;
                 <span class="glyphicon glyphicon-check"></span>
-              </button> | 
+              </button>
             </form>
           }
+        </td>
+        <td class="text-right">
           <form asp-controller="Order" asp-action="Remove" method="post">
             <input type="hidden" value="@order.Id" name="orderId" />
             <button type="submit" class="btn btn-sm btn-danger">

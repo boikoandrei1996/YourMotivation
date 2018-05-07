@@ -120,4 +120,13 @@
   <data name="About" xml:space="preserve">
     <value>О нас</value>
   </data>
+  <data name="Contact" xml:space="preserve">
+    <value>Контакты</value>
+  </data>
+  <data name="Marketing" xml:space="preserve">
+    <value>Рекламное сотрудничество</value>
+  </data>
+  <data name="Support" xml:space="preserve">
+    <value>Техническая поддержка</value>
+  </data>
 </root>

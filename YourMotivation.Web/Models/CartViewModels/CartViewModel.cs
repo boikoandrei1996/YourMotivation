@@ -36,7 +36,7 @@ namespace YourMotivation.Web.Models.CartViewModels
         Id = cart.Id,
         UserId = cart.UserId.Value,
         ItemsCount = cart.CartItems.Sum(ci => ci.Count),
-        ItemsSumPrice = cart.CartItems.Sum(ci => ci.Item.Price),
+        ItemsSumPrice = cart.CartItems.Sum(ci => ci.Item.Price * ci.Count),
         Items = cart.CartItems.Select(ci => CartItemViewModel.Map(ci.Item, ci.Count)).ToList()
       };
     }

@@ -120,7 +120,4 @@
   <data name="Your application description page." xml:space="preserve">
     <value>Страница с описанием вашего приложения.</value>
   </data>
-  <data name="Your contact page." xml:space="preserve">
-    <value>Страница с контактами.</value>
-  </data>
 </root>

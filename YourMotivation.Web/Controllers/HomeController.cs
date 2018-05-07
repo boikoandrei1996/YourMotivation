@@ -26,7 +26,7 @@ namespace YourMotivation.Web.Controllers
 
     public IActionResult Index()
     {
-      var users = _context.Users.AsNoTracking().ToList();
+      /*var users = _context.Users.AsNoTracking().ToList();
       var users2 = _context.Users.Include(e => e.Cart).AsNoTracking().ToList();
       var users3 = _context.Users.Include(e => e.Orders).AsNoTracking().ToList();
       var users4 = _context.Users
@@ -39,21 +39,14 @@ namespace YourMotivation.Web.Controllers
       var orders = _context.Orders.AsNoTracking().ToList();
       var orders2 = _context.Orders.Include(e => e.User).AsNoTracking().ToList();
       var orders3 = _context.Orders.Include(e => e.Cart).AsNoTracking().ToList();
-      var transfers = _context.Transfers.AsNoTracking().ToList();
+      var transfers = _context.Transfers.AsNoTracking().ToList();*/
 
       return View();
     }
 
     public IActionResult About()
     {
-      ViewBag.Message = _localizer.GetString("Your application description page.");
-
-      return View();
-    }
-
-    public IActionResult Contact()
-    {
-      ViewBag.Message = _localizer.GetString("Your contact page.");
+      ViewBag.Message = _localizer["Your application description page."];
 
       return View();
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -45,6 +46,7 @@ namespace ORM.DataSeed
     private static async Task<IList<Order>> GetOrdersAsync(ApplicationDbContext context)
     {
       var users = await context.Users.ToArrayAsync();
+      var carts = await context.Carts.Take(5).ToArrayAsync();
 
       return new List<Order>
       {
@@ -53,33 +55,33 @@ namespace ORM.DataSeed
           DateOfCreation = DateTime.UtcNow.AddDays(-3),
           DateOfClosing = DateTime.UtcNow.AddDays(-1),
           UserId = users[0].Id,
-          CartId = users[0].Cart.Id
+          CartId = carts[0].Id
         },
         new Order
         {
           DateOfCreation = DateTime.UtcNow.AddDays(-2),
           DateOfClosing = DateTime.UtcNow.AddDays(-1),
           UserId = users[1].Id,
-          CartId = users[1].Cart.Id
+          CartId = carts[1].Id
         },
         new Order
         {
           DateOfCreation = DateTime.UtcNow.AddDays(-3),
           UserId = users[2].Id,
-          CartId = users[2].Cart.Id
+          CartId = carts[2].Id
         },
         new Order
         {
           DateOfCreation = DateTime.UtcNow.AddDays(-1),
           UserId = users[3].Id,
-          CartId = users[3].Cart.Id
+          CartId = carts[3].Id
         },
         new Order
         {
           DateOfCreation = DateTime.UtcNow.AddDays(-1),
           DateOfClosing = DateTime.UtcNow,
           UserId = users[4].Id,
-          CartId = users[4].Cart.Id
+          CartId = carts[4].Id
         }
       };
     }
