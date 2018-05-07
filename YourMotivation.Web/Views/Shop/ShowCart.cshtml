@@ -3,6 +3,7 @@
 @model CartViewModel
 @{
   ViewBag.Title = Localizer["Cart items"];
+  var createNewOrderDisabled = Model.ItemsCount > 0 ? string.Empty : "disabled";
 }
 
 <div class="row text-center">
@@ -100,10 +101,13 @@
 <div class="row">
   <div>
     <div class="pull-right col-sm-3 col-md-2 text-center">
-      <a class="btn btn-primary" asp-controller="" asp-action="" asp-route-id="@Model.Id">
-        &nbsp;@Localizer["Order"]&nbsp;
-        <span class="glyphicon glyphicon-ok"></span>&nbsp;
-      </a>
+      <form asp-controller="Order" asp-action="Create" method="post">
+        <input type="hidden" value="@Model.UserId" name="userId" />
+        <button type="submit" class="btn btn-primary @createNewOrderDisabled">
+          &nbsp;@Localizer["Order"]&nbsp;
+          <span class="glyphicon glyphicon-ok"></span>&nbsp;
+        </button>
+      </form>
     </div>
     <div class="cart-footer-row pull-right col-sm-6 col-md-4">
       <span class="pull-left">

@@ -76,22 +76,22 @@
             <span class="glyphicon glyphicon-list"></span>
           </a>
         </td>
-        <td class="text-left">
+        <td class="text-center">
           @if (isModerator)
           {
             <form asp-controller="Order" asp-action="Close" method="post">
               <input type="hidden" value="@order.Id" name="orderId" />
-              <button type="submit" class="btn btn-sm btn-warning" @closeOrderDisabled>
+              <button type="submit" class="btn btn-sm btn-warning @closeOrderDisabled">
                 &nbsp;@Localizer["Close order"]&nbsp;
                 <span class="glyphicon glyphicon-check"></span>
               </button>
             </form>
           }
         </td>
-        <td class="text-right">
+        <td class="text-left">
           <form asp-controller="Order" asp-action="Remove" method="post">
             <input type="hidden" value="@order.Id" name="orderId" />
-            <button type="submit" class="btn btn-sm btn-danger">
+            <button type="submit" class="btn btn-sm btn-danger @closeOrderDisabled">
               &nbsp;@Localizer["Delete order"]
               <span class="glyphicon glyphicon-remove-sign"></span>
             </button>

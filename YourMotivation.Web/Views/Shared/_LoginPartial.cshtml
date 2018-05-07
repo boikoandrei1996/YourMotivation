@@ -6,8 +6,8 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-  var username = UserManager.GetUserName(User);
-  var cartPreview = await UserManager.GetShopCartPreviewAsync(username);
+  var user = await UserManager.GetUserAsync(User);
+  var cartPreview = await UserManager.GetShopCartPreviewAsync(user.UserName);
 
   <form method="post" id="logoutForm" class="navbar-right"
         asp-area="" asp-controller="Account" asp-action="Logout">
@@ -21,7 +21,12 @@
         </a>
       </li>
       <li>
-        <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">@Localizer["Hello"] @username!</a>
+        <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">
+          &nbsp;
+          @Localizer["Hello"] @user.UserName!
+          <span class="badge">@user.TotalPoints</span>
+          &nbsp;
+        </a>
       </li>
       <li>
         <button type="submit" class="btn btn-link navbar-btn navbar-link">@Localizer["Log out"]</button>
