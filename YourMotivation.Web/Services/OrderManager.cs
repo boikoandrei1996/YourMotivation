@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ORM;
@@ -115,6 +116,23 @@ namespace YourMotivation.Web.Services
       {
         return false;
       }
+    }
+
+    public async Task<IList<OrderItemViewModel>> GetOrderItemsAsync(Guid cartId)
+    {
+      var cart = await _context.Carts
+        .AsNoTracking()
+        .Include(c => c.CartItems)
+          .ThenInclude(ci => ci.Item)
+        .FirstOrDefaultAsync(c => c.Id == cartId);
+
+      var items = new List<OrderItemViewModel>();
+      foreach(var cartItem in cart.CartItems)
+      {
+        items.Add(OrderItemViewModel.Map(cartItem.Item, cartItem.Count));
+      }
+
+      return items;
     }
   }
 }

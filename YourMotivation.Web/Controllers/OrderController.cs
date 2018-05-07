@@ -117,5 +117,18 @@ namespace YourMotivation.Web.Controllers
 
       return RedirectToAction(nameof(OrderController.All));
     }
+
+    // GET Order/Details
+    public async Task<IActionResult> Details(Guid? cartId)
+    {
+      if (!cartId.HasValue)
+      {
+        return NotFound();
+      }
+
+      var orderItems = await _orderManager.GetOrderItemsAsync(cartId.Value);
+
+      return View(orderItems);
+    }
   }
 }

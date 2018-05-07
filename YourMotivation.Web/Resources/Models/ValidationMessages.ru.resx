@@ -159,6 +159,9 @@
   <data name="EmailRequired" xml:space="preserve">
     <value>Поле емейл является обязательным.</value>
   </data>
+  <data name="Id" xml:space="preserve">
+    <value>Идентификатор</value>
+  </data>
   <data name="InvalidEmailAddress" xml:space="preserve">
     <value>Поле емейл не является валидным емейл адресом.</value>
   </data>

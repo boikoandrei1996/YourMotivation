@@ -1,0 +1,59 @@
+﻿@using YourMotivation.Web.Models.OrderViewModels;
+
+@model IEnumerable<OrderItemViewModel>
+@{
+  ViewBag.Title = Localizer["Order items"];
+}
+
+<div class="row text-center" style="margin: 40px 0px 20px 0px;">
+  <span style="font-size: 36px;"><b>@ViewBag.Title</b></span>
+  <a class="btn btn-info pull-right" asp-controller="Order" asp-action="All">
+    <span class="glyphicon glyphicon-log-out"></span>&nbsp;
+    @Localizer["Back to orders"]
+  </a>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th class="text-center">
+        @Html.DisplayNameFor(model => model.Id)
+      </th>
+      <th class="text-center">
+        @Html.DisplayNameFor(model => model.Title)
+      </th>
+      <th class="text-center">
+        @Html.DisplayNameFor(model => model.IsInStock)
+      </th>
+      <th class="text-center">
+        @Html.DisplayNameFor(model => model.Count)
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var item in Model)
+    {
+      <tr>
+        <td class="text-center">
+          @Html.DisplayFor(modelItem => item.Id)
+        </td>
+        <td class="text-center">
+          @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td class="text-center" style="font-size: 1.5em">
+          @if (item.IsInStock)
+          {
+            <span class="glyphicon glyphicon-ok-sign text-success"></span>
+          }
+          else
+          {
+            <span class="glyphicon glyphicon-minus-sign text-warning"></span>
+          }
+        </td>
+        <td class="text-center">
+          @Html.DisplayFor(modelItem => item.Count)
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>
