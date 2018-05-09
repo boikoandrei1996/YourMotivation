@@ -35,7 +35,10 @@ new SelectListItem { Text = "8", Value = "8" }
       </div>
 
       <div class="row new-transfer-form">
-        @Html.Partial("_StatusMessage", Model.NewTransferModel.FormErrorMessage)
+        <div class="row new-transfer-form-error-message">
+          @Html.Partial("_StatusMessage", Model.NewTransferModel.FormErrorMessage)
+        </div>
+
         <form method="post" role="form"
               asp-controller="Transfer"
               asp-action="Add">
@@ -70,13 +73,13 @@ new SelectListItem { Text = "8", Value = "8" }
             </label>
             <div class="btn-group" data-toggle="buttons">
               @foreach (var value in Enumerable.Range(1, Constants.PointsRangeForNewTransfer))
-              {
-                <span class="btn btn-warning new-transfer-points">
-                  <input type="radio" value="@value" asp-for="@Model.NewTransferModel.Points" autocomplete="off">
-                  <span>@value</span>
-                  <span class="glyphicon glyphicon-ok"></span>
-                </span>
-              }
+        {
+          <span class="btn btn-warning new-transfer-points">
+            <input type="radio" value="@value" asp-for="@Model.NewTransferModel.Points" autocomplete="off">
+            <span>@value</span>
+            <span class="glyphicon glyphicon-ok"></span>
+          </span>
+  }
             </div>
           </div>
           <div class="space-ten"></div>

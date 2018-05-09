@@ -96,13 +96,11 @@ namespace YourMotivation.Web.Controllers
       }
       else if (result.Succeeded)
       {
-        this.StatusMessage = _localizer["Success: order has beed created."];
+        this.StatusMessage = _localizer["Success: order has been created."];
         return RedirectToAction(nameof(OrderController.All), "Order");
       }
-      else
-      {
-        this.StatusMessage = result.Errors.Single().Description;
-      }
+
+      this.StatusMessage = result.Errors.Single().Description;
 
       var user = await _userManager.Users
         .Include(u => u.Cart)
@@ -128,7 +126,7 @@ namespace YourMotivation.Web.Controllers
       }
       else if (result.Succeeded)
       {
-        this.StatusMessage = _localizer["Success: order has beed closed."];
+        this.StatusMessage = _localizer["Success: order has been closed."];
       }
       else
       {
@@ -154,7 +152,7 @@ namespace YourMotivation.Web.Controllers
       }
       else if (result.Succeeded)
       {
-        this.StatusMessage = _localizer["Success: order has beed remove."];
+        this.StatusMessage = _localizer["Success: order has been remove."];
       }
       else
       {

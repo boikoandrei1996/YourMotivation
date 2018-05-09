@@ -120,4 +120,7 @@
   <data name="Error:" xml:space="preserve">
     <value>Ошибка:</value>
   </data>
+  <data name="Success: transfer has been sended." xml:space="preserve">
+    <value>Трансфер был успешно отправлен.</value>
+  </data>
 </root>

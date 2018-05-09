@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using ORM;
+using ORM.Models;
+using YourMotivation.Web.Models.AccountViewModels;
 using YourMotivation.Web.Models.Pagination.Pages;
 using YourMotivation.Web.Models.TransferViewModels;
 
@@ -51,6 +54,84 @@ namespace YourMotivation.Web.Services
         .ToListAsync();
 
       return result;
+    }
+
+    public async Task<IdentityResult> CreateNewTransferAsync(Guid senderId, NewTransferViewModel model)
+    {
+      var sender = await _context.Users.FirstOrDefaultAsync(u => u.Id == senderId);
+      if (sender == null)
+      {
+        return null;
+      }
+
+      var receiver = await _context.Users.FirstOrDefaultAsync(u => u.UserName == model.ReceiverUsername);
+
+      var checkResult = this.CheckTransferIsPossible(sender, receiver, model);
+      if (!checkResult.Succeeded)
+      {
+        return checkResult;
+      }
+
+      var newTransfer = new Transfer
+      {
+        Text = model.Message,
+        Points = model.Points,
+        DateOfCreation = DateTime.UtcNow,
+        UserSenderId = sender.Id,
+        UserReceiverId = receiver.Id
+      };
+
+      try
+      {
+        sender.PointsPerMonth -= model.Points;
+        receiver.TotalPoints += model.Points;
+
+        await _context.Transfers.AddAsync(newTransfer);
+        await _context.SaveChangesAsync();
+        return IdentityResult.Success;
+      }
+      catch (DbUpdateException ex)
+      {
+        return IdentityResult.Failed(new IdentityError
+        {
+          Code = nameof(TransferManager.CreateNewTransferAsync),
+          Description = ex.InnerException.Message
+        });
+      }
+      catch (Exception)
+      {
+        return IdentityResult.Failed(new IdentityError
+        {
+          Code = nameof(TransferManager.CreateNewTransferAsync),
+          Description = _localizer["Error: something has gone wrong while creating transfer."]
+        });
+      }
+    }
+
+    private IdentityResult CheckTransferIsPossible(
+      ApplicationUser sender, 
+      ApplicationUser receiver,
+      NewTransferViewModel model)
+    {
+      if (receiver == null)
+      {
+        return IdentityResult.Failed(new IdentityError
+        {
+          Code = nameof(TransferManager.CreateNewTransferAsync),
+          Description = _localizer["Error: not found user '{0}'.", model.ReceiverUsername]
+        });
+      }
+
+      if (sender.PointsPerMonth < model.Points)
+      {
+        return IdentityResult.Failed(new IdentityError
+        {
+          Code = nameof(TransferManager.CreateNewTransferAsync),
+          Description = _localizer["Error: you have not enough points."]
+        });
+      }
+
+      return IdentityResult.Success;
     }
   }
 }

@@ -133,9 +133,15 @@ textarea {
   display: inline-block;
 }
 
+.new-transfer-form-error-message {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
 #NewTransferBlock {
   border: solid 2px brown;
   margin-top: 15px;
+  padding-left: 30px;
   padding-right: 30px;
   border-radius: 20px;
 }

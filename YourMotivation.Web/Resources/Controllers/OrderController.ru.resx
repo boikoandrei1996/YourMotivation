@@ -120,13 +120,13 @@
   <data name="by" xml:space="preserve">
     <value>от</value>
   </data>
-  <data name="Success: order has beed closed." xml:space="preserve">
+  <data name="Success: order has been closed." xml:space="preserve">
     <value>Заказ был успешно закрыт.</value>
   </data>
-  <data name="Success: order has beed remove." xml:space="preserve">
+  <data name="Success: order has been remove." xml:space="preserve">
     <value>Заказ был успешно удалён.</value>
   </data>
-  <data name="Success: order has beed created." xml:space="preserve">
+  <data name="Success: order has been created." xml:space="preserve">
     <value>Заказ был успешно создан.</value>
   </data>
 </root>
