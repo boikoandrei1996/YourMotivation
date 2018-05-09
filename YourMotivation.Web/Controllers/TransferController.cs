@@ -100,5 +100,16 @@ namespace YourMotivation.Web.Controllers
         return RedirectToAction(nameof(TransferController.All), routeData);
       }
     }
+
+    // GET: Transfer/Usernames
+    [ActionName("Usernames")]
+    public async Task<JsonResult> AutocompleteSearchUsernames(string term)
+    {
+      var usernames = await _transferManager.GetUsernamesAsync(term, 3, User.Identity.Name);
+
+      var result = usernames.Select(username => new { value = username });
+
+      return Json(result);
+    }
   }
 }

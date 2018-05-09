@@ -126,6 +126,9 @@
   <data name="Contact" xml:space="preserve">
     <value>Контакты</value>
   </data>
+  <data name="History" xml:space="preserve">
+    <value>История</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Домашняя страница</value>
   </data>

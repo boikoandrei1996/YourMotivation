@@ -56,6 +56,18 @@ namespace YourMotivation.Web.Services
       return result;
     }
 
+    public Task<List<string>> GetUsernamesAsync(string filter, int count, string currentUser)
+    {
+      return _context.Users
+        .AsNoTracking()
+        .Where(u => 
+          u.UserName.StartsWith(filter, StringComparison.OrdinalIgnoreCase) && 
+          !u.UserName.Equals(currentUser, StringComparison.OrdinalIgnoreCase))
+        .Take(count)
+        .Select(u => u.UserName)
+        .ToListAsync();
+    }
+
     public async Task<IdentityResult> CreateNewTransferAsync(Guid senderId, NewTransferViewModel model)
     {
       var sender = await _context.Users.FirstOrDefaultAsync(u => u.Id == senderId);
