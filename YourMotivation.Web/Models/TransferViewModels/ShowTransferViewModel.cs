@@ -32,7 +32,7 @@ namespace YourMotivation.Web.Models.TransferViewModels
       {
         Message = transfer.Text,
         Points = transfer.Points,
-        TransferDateTime =transfer.DateOfCreation.FormatDateTime(timeFirst: true),
+        TransferDateTime =transfer.DateOfCreation.FormatDateTime(" || ", timeFirst: true),
         UserSenderUsername = transfer.UserSender.UserName,
         UserReceiverUsername = transfer.UserReceiver.UserName
       };

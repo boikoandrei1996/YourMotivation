@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using ORM.Models;
+using YourMotivation.Web.Extensions;
 
 namespace YourMotivation.Web.Models.AdminViewModels
 {
@@ -21,7 +22,7 @@ namespace YourMotivation.Web.Models.AdminViewModels
     public string Role { get; set; }
 
     [Display(Name = "CreatedDate")]
-    public DateTime CreatedDate { get; set; }
+    public string CreatedDate { get; set; }
 
     public string StatusMessage { get; set; }
 
@@ -39,7 +40,7 @@ namespace YourMotivation.Web.Models.AdminViewModels
         Email = user.Email,
         PhoneNumber = user.PhoneNumber,
         Role = role,
-        CreatedDate = user.CreatedDate
+        CreatedDate = user.CreatedDate.FormatDateTime(" || ", timeFirst: true)
       };
     }
   }

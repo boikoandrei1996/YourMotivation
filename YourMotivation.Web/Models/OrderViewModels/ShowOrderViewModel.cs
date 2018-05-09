@@ -36,10 +36,10 @@ namespace YourMotivation.Web.Models.OrderViewModels
         UserId = order.UserId,
         CartId = order.CartId,
         OwnerUsername = order.User.UserName,
-        DateOfCreation = order.DateOfCreation.FormatDateTime(),
+        DateOfCreation = order.DateOfCreation.FormatDateTime(" || "),
         DateOfClosing =
           order.DateOfClosing.HasValue ?
-          order.DateOfClosing.Value.FormatDateTime() :
+          order.DateOfClosing.Value.FormatDateTime(" || ") :
           "None",
         IsClosed = order.DateOfClosing.HasValue
       };
