@@ -187,7 +187,7 @@
     <value>Password</value>
   </data>
   <data name="PasswordRequired" xml:space="preserve">
-    <value>The Password field is required.</value>
+    <value>The password field is required.</value>
   </data>
   <data name="PhoneInvalid" xml:space="preserve">
     <value>The phone field is not a valid phone number.</value>
@@ -236,5 +236,17 @@
   </data>
   <data name="UserSenderUsername" xml:space="preserve">
     <value>Sender</value>
+  </data>
+  <data name="MessageRequired" xml:space="preserve">
+    <value>The message field is required.</value>
+  </data>
+  <data name="PointsRequired" xml:space="preserve">
+    <value>The points field is required.</value>
+  </data>
+  <data name="ReceiverRequired" xml:space="preserve">
+    <value>The receiver field is required.</value>
+  </data>
+  <data name="RangeInvalid" xml:space="preserve">
+    <value>The field value is not in a range.</value>
   </data>
 </root>

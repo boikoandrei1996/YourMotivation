@@ -3,6 +3,15 @@
   padding-bottom: 20px;
 }
 
+/*input, textarea, select {
+  max-width: 350px;
+}*/
+
+textarea {
+  width: 100% !important;
+  resize: none;
+}
+
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
@@ -19,11 +28,6 @@
 /* Make .svg files in the carousel display properly in older browsers */
 .carousel-inner .item img[src$=".svg"] {
   width: 100%;
-}
-
-/* QR code generator */
-#qrCode {
-  margin: 15px;
 }
 
 /* Hide/rearrange for smaller screens */
@@ -75,21 +79,63 @@
   border-bottom: solid 2px brown;
   margin-bottom: 15px;
   padding-bottom: 15px;
+}
+
+.transfer-left-block {
   font-size: 1.2em;
 }
 
-textarea {
-  resize: none;
-  width: 100% !important;
-  height: auto !important;
-}
-
-/*TODO: fix this shit*/
 .transfer-right-block {
-  height: 155px;
+  font-size: 1.2em;
 }
 
 .transfer-points {
-  color: brown;
   font-size: 1.6em;
+  color: brown;
+  /*TODO: fix this shit*/
+  min-height: 140px;
+}
+
+.vertical-align {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.new-transfer-form {
+  margin-top: 20px;
+}
+
+.new-transfer-form input {
+  min-width: 400px;
+}
+
+.new-transfer-field-label {
+  width: 15% !important;
+}
+
+.new-transfer-form textarea {
+  max-width: none;
+  width: 84% !important;
+}
+
+/*Points radiobuttons*/
+.new-transfer-points input[type=radio] {
+  display: none;
+}
+
+.new-transfer-points span.glyphicon {
+  display: none;
+}
+
+.new-transfer-points.active span.glyphicon {
+  display: inline-block;
+}
+
+#NewTransferBlock {
+  border: solid 2px brown;
+  margin-top: 15px;
+  padding-right: 30px;
+  border-radius: 20px;
 }

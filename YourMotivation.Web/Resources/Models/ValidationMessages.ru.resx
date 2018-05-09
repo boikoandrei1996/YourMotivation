@@ -237,4 +237,16 @@
   <data name="UserSenderUsername" xml:space="preserve">
     <value>Отправитель</value>
   </data>
+  <data name="MessageRequired" xml:space="preserve">
+    <value>Поле сообщение является обязательным.</value>
+  </data>
+  <data name="PointsRequired" xml:space="preserve">
+    <value>Поле очки является обязательным.</value>
+  </data>
+  <data name="ReceiverRequired" xml:space="preserve">
+    <value>Поле получатель является обязательным.</value>
+  </data>
+  <data name="RangeInvalid" xml:space="preserve">
+    <value>Поле не удовлетворяет граничным значениям.</value>
+  </data>
 </root>

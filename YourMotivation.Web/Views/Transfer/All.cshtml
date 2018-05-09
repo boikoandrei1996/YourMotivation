@@ -3,63 +3,155 @@
 @model TransfersPageViewModel
 @{
   ViewBag.Title = Localizer["All transfers"];
+  var users = new List<SelectListItem>()
+{
+new SelectListItem { Text = string.Empty, Value = string.Empty },
+new SelectListItem { Text = "1", Value = "1" },
+new SelectListItem { Text = "2", Value = "2" },
+new SelectListItem { Text = "3", Value = "3" },
+new SelectListItem { Text = "4", Value = "4" },
+new SelectListItem { Text = "5", Value = "5" },
+new SelectListItem { Text = "6", Value = "6" },
+new SelectListItem { Text = "7", Value = "7" },
+new SelectListItem { Text = "8", Value = "8" }
+};
 }
 
-<div class="row text-center">
-  <h1>@ViewBag.Title</h1>
-</div>
+<div class="row">
+  <div class="col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8">
 
-<hr />
+    <div class="row text-center" style="margin-top: 40px;">
+      <button class="btn btn-lg btn-info" id="NewTransferBlockCollapseBtn" type="button"
+              data-toggle="collapse" data-target="#NewTransferBlock"
+              aria-expanded="false" aria-controls="NewTransferBlock">
+        @Localizer["New transfer"]
+        <span class="glyphicon glyphicon-minus"></span>
+      </button>
+    </div>
 
-@Html.Partial("_StatusMessage", Model.StatusMessage)
+    <div class="collapse in" id="NewTransferBlock">
+      <div class="row text-center">
+        <h2>@Localizer["New transfer"]</h2>
+      </div>
 
-@foreach (var transfer in Model.Records)
-{
-  <div class="row">
-    <div class="col-sm-1 col-md-2"></div>
-    <div class="col-sm-10 col-md-8 transfer-row">
+      <div class="row new-transfer-form">
+        @Html.Partial("_StatusMessage", Model.NewTransferModel.FormErrorMessage)
+        <form method="post" role="form"
+              asp-controller="Transfer"
+              asp-action="Add">
+
+          <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+          <input type="hidden" value="@Model.CurrentPage" name="pageIndex" />
+
+          <div class="form-group">
+            <button type="submit" class="btn btn-lg btn-primary pull-right">
+              <span>@Localizer["Send"]</span>&nbsp;
+              <span class="glyphicon glyphicon-send"></span>
+            </button>
+          </div>
+
+          <div class="form-inline">
+            <div>
+              <label asp-for="@Model.NewTransferModel.ReceiverUsername" class="new-transfer-field-label text-right">
+                @Html.DisplayNameFor(model => model.NewTransferModel.ReceiverUsername):&nbsp;
+              </label>
+              <input asp-for="@Model.NewTransferModel.ReceiverUsername" class="form-control">
+            </div>
+            <div>
+              <label class="new-transfer-field-label"></label>
+              <span asp-validation-for="@Model.NewTransferModel.ReceiverUsername" class="text-danger"></span>
+            </div>
+          </div>
+          <div class="space-ten"></div>
+
+          <div class="form-inline">
+            <label asp-for="@Model.NewTransferModel.Points" class="new-transfer-field-label text-right">
+              @Html.DisplayNameFor(model => model.NewTransferModel.Points):&nbsp;
+            </label>
+            <div class="btn-group" data-toggle="buttons">
+              @foreach (var value in Enumerable.Range(1, Constants.PointsRangeForNewTransfer))
+              {
+                <span class="btn btn-warning new-transfer-points">
+                  <input type="radio" value="@value" asp-for="@Model.NewTransferModel.Points" autocomplete="off">
+                  <span>@value</span>
+                  <span class="glyphicon glyphicon-ok"></span>
+                </span>
+              }
+            </div>
+          </div>
+          <div class="space-ten"></div>
+
+          <div class="form-inline">
+            <div>
+              <label asp-for="@Model.NewTransferModel.Message" class="new-transfer-field-label text-right">
+                @Html.DisplayNameFor(model => model.NewTransferModel.Message):&nbsp;
+              </label>
+              <textarea rows="5" class="form-control new-transfer-message"
+                        asp-for="@Model.NewTransferModel.Message"></textarea>
+            </div>
+            <div>
+              <label class="new-transfer-field-label"></label>
+              <span asp-validation-for="@Model.NewTransferModel.Message" class="text-danger"></span>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="row text-center">
+      <h2>@ViewBag.Title</h2>
+      <hr />
+    </div>
+
+    @Html.Partial("_StatusMessage", Model.StatusMessage)
+
+    @foreach (var transfer in Model.Records)
+    {
       <div class="row">
-        <div class="col-md-9">
-          <div class="row">
-            <div class="col-md-4 text-right">
-              <b>@Html.DisplayNameFor(model => model.Default.UserSenderUsername)</b>:&nbsp;
+        <div class="row transfer-row">
+          <div class="col-md-9 transfer-left-block">
+            <div class="row">
+              <div class="col-md-4 text-right">
+                <b>@Html.DisplayNameFor(model => model.Default.UserSenderUsername)</b>:&nbsp;
+              </div>
+              <div class="col-md-8">
+                <span>@transfer.UserSenderUsername</span>
+              </div>
             </div>
-            <div class="col-md-8">
-              <span>@transfer.UserSenderUsername</span>
+            <div class="row">
+              <div class="col-md-4 text-right">
+                <b>@Html.DisplayNameFor(model => model.Default.UserReceiverUsername)</b>:&nbsp;
+              </div>
+              <div class="col-md-8">
+                <span>@transfer.UserReceiverUsername</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 text-right">
+                <b>@Html.DisplayNameFor(model => model.Default.Message)</b>:&nbsp;
+              </div>
+              <div class="col-md-8">
+                <textarea class="form-control" rows="5" readonly>@transfer.Message</textarea>
+              </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-4 text-right">
-              <b>@Html.DisplayNameFor(model => model.Default.UserReceiverUsername)</b>:&nbsp;
-            </div>
-            <div class="col-md-8">
-              <span>@transfer.UserReceiverUsername</span>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-4 text-right">
-              <b>@Html.DisplayNameFor(model => model.Default.Message)</b>:&nbsp;
-            </div>
-            <div class="col-md-8">
-              <textarea class="form-control" rows="5" readonly>@transfer.Message</textarea>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3 transfer-right-block">
-          <div class="text-right" style="font-size: 1em;">@transfer.TransferDateTime</div>
-          <div class="text-center" style="margin-top: 66px;">
-            <span class="transfer-points">
+          <div class="col-md-3 transfer-right-block">
+            <div class="row text-right text-success"><small>@transfer.TransferDateTime</small></div>
+            <div class="row text-center transfer-points vertical-align">
               <span class="glyphicon glyphicon-star"></span>
               <span><b>@transfer.Points</b></span>
               <span class="glyphicon glyphicon-star"></span>
-            </span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="col-sm-1 col-md-2"></div>
+    }
+
+    @Html.Partial("_Pagination", Model)
+
   </div>
+</div>
+
+@section Scripts {
+  @await Html.PartialAsync("_ValidationScriptsPartial")
 }
-
-@Html.Partial("_Pagination", Model)
-

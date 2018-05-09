@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using YourMotivation.Web.Models.AccountViewModels;
 using YourMotivation.Web.Models.TransferViewModels;
 
 namespace YourMotivation.Web.Models.Pagination.Pages
@@ -24,6 +25,7 @@ namespace YourMotivation.Web.Models.Pagination.Pages
     }
 
     public string StatusMessage { get; set; }
+    public NewTransferViewModel NewTransferModel { get; set; }
     public ShowTransferViewModel Default { get { return new ShowTransferViewModel(); } }
   }
 }
