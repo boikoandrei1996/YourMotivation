@@ -41,15 +41,17 @@
           @if (SignInManager.IsSignedIn(User))
           {
             <li><a asp-area="" asp-controller="Transfer" asp-action="All">@Localizer["Transfers"]</a></li>
+            <li><a asp-area="" asp-controller="Transfer" asp-action="Top">@Localizer["Top"]</a></li>
             <li><a asp-area="" asp-controller="Shop" asp-action="Items">@Localizer["Shop"]</a></li>
-          }
-          @if (User.IsInRole(ApplicationRole.Moderator))
-          {
-            <li><a asp-area="" asp-controller="Order" asp-action="All">@Localizer["Orders"]</a></li>
-          }
-          else
-          {
-            <li><a asp-area="" asp-controller="Order" asp-action="All">@Localizer["History"]</a></li>
+
+            @if (User.IsInRole(ApplicationRole.Moderator))
+            {
+              <li><a asp-area="" asp-controller="Order" asp-action="All">@Localizer["Orders"]</a></li>
+            }
+            else
+            {
+              <li><a asp-area="" asp-controller="Order" asp-action="All">@Localizer["History"]</a></li>
+            }
           }
           @if (User.IsInRole(ApplicationRole.Admin))
           {

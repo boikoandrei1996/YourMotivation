@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using ORM.Models;
 using YourMotivation.Web.Models.AccountViewModels;
 using YourMotivation.Web.Models.Pagination.Pages;
+using YourMotivation.Web.Models.TransferViewModels;
 using YourMotivation.Web.Services;
 
 namespace YourMotivation.Web.Controllers
@@ -51,11 +52,42 @@ namespace YourMotivation.Web.Controllers
       return View(page);
     }
 
+    // GET: Transfer/Usernames
+    [ActionName("Usernames")]
+    public async Task<JsonResult> AutocompleteSearchUsernames(string term)
+    {
+      var usernames = await _transferManager.GetUsernamesAsync(term, 3, User.Identity.Name);
+
+      var result = usernames.Select(username => new { value = username });
+
+      return Json(result);
+    }
+
+    // GET: Transfer/Top
+    [ActionName("Top")]
+    public async Task<IActionResult> GetTopReceivers(FilterForTopUsers? filter)
+    {
+      var currentFilter = filter ?? FilterForTopUsers.AllTime;
+
+      var users = await _transferManager.GetTopReceivers(currentFilter, 3);
+
+      ViewBag.CurrentFilter = currentFilter;
+      ViewBag.Filters = new List<(FilterForTopUsers Value, string Text)>
+      {
+        (FilterForTopUsers.AllTime, _localizer["All time"]),
+        (FilterForTopUsers.ByYear,  _localizer["By year"]),
+        (FilterForTopUsers.ByMonth, _localizer["By month"]),
+        (FilterForTopUsers.ByDay, _localizer["By day"])
+      };
+
+      return View("Top", users);
+    }
+
     // POST: Transfer/Add
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Add(
-      int? pageIndex, 
+      int? pageIndex,
       [Bind(Prefix = "NewTransferModel")] NewTransferViewModel model)
     {
       var routeData = new
@@ -99,17 +131,6 @@ namespace YourMotivation.Web.Controllers
         this.FormErrorMessage = result.Errors.Single().Description;
         return RedirectToAction(nameof(TransferController.All), routeData);
       }
-    }
-
-    // GET: Transfer/Usernames
-    [ActionName("Usernames")]
-    public async Task<JsonResult> AutocompleteSearchUsernames(string term)
-    {
-      var usernames = await _transferManager.GetUsernamesAsync(term, 3, User.Identity.Name);
-
-      var result = usernames.Select(username => new { value = username });
-
-      return Json(result);
     }
   }
 }

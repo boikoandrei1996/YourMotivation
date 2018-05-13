@@ -1,0 +1,50 @@
+﻿@using YourMotivation.Web.Models.TransferViewModels;
+
+@model IList<TopUser>
+@{
+  ViewBag.Title = Localizer["Top receivers"];
+}
+
+<div class="row">
+  <div class="col-md-offset-3 col-md-6">
+    <h2 class="text-center">@ViewBag.Title</h2>
+    <div class="space-ten"></div>
+    <div class="text-center">
+      <div class="btn-group">
+        @foreach (var filter in ViewBag.Filters)
+        {
+          var value = filter.Item1;
+          var text = filter.Item2;
+          var isActive = value == ViewBag.CurrentFilter;
+          var isActiveClass = isActive ? "active" : string.Empty;
+
+          <a class="btn btn-primary @isActiveClass" asp-controller="Transfer" asp-action="Top" asp-route-filter="@value">
+            @text&nbsp;
+            @if (isActive)
+            {
+              <span class="glyphicon glyphicon-check"></span>
+            }
+            else
+            {
+              <span class="glyphicon glyphicon-unchecked"></span>
+            }
+          </a>
+        }
+      </div>
+    </div>
+    <div class="space-ten"></div>
+    <ul class="list-group">
+      @foreach (var index in Enumerable.Range(1, Model.Count))
+      {
+        var user = Model[index - 1];
+
+        <li class="list-group-item list-group-item-info">
+          <span class="badge">@user.Count</span>
+          <strong>@index.</strong>&nbsp;
+          <strong>@user.Username</strong>
+        </li>
+      }
+    </ul>
+  </div>
+</div>
+

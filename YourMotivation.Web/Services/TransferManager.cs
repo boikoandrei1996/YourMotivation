@@ -60,12 +60,47 @@ namespace YourMotivation.Web.Services
     {
       return _context.Users
         .AsNoTracking()
-        .Where(u => 
-          u.UserName.StartsWith(filter, StringComparison.OrdinalIgnoreCase) && 
+        .Where(u =>
+          u.UserName.StartsWith(filter, StringComparison.OrdinalIgnoreCase) &&
           !u.UserName.Equals(currentUser, StringComparison.OrdinalIgnoreCase))
         .Take(count)
         .Select(u => u.UserName)
         .ToListAsync();
+    }
+
+    public Task<List<TopUser>> GetTopReceivers(FilterForTopUsers filter, int count)
+    {
+      var query = _context.Transfers.AsNoTracking();
+
+      switch (filter)
+      {
+        case (FilterForTopUsers.AllTime):
+          break;
+        case (FilterForTopUsers.ByYear):
+          query = query.Where(t => t.DateOfCreation >= DateTime.UtcNow.AddYears(-1));
+          break;
+        case (FilterForTopUsers.ByMonth):
+          query = query.Where(t => t.DateOfCreation >= DateTime.UtcNow.AddMonths(-1));
+          break;
+        case (FilterForTopUsers.ByDay):
+          query = query.Where(t => t.DateOfCreation >= DateTime.UtcNow.AddDays(-1));
+          break;
+      }
+
+      var resultQuery = query
+        .GroupBy(
+          t => t.UserReceiverId,
+          (userId, transfers) => new { id = userId, count = transfers.Count() }
+        )
+        .OrderByDescending(x => x.count)
+        .Take(count)
+        .Join(
+          _context.Users.AsNoTracking(),
+          u1 => u1.id, u2 => u2.Id,
+          (u1, u2) => new TopUser { Id = u1.id, Count = u1.count, Username = u2.UserName }
+        );
+
+      return resultQuery.ToListAsync();
     }
 
     public async Task<IdentityResult> CreateNewTransferAsync(Guid senderId, NewTransferViewModel model)
@@ -121,7 +156,7 @@ namespace YourMotivation.Web.Services
     }
 
     private IdentityResult CheckTransferIsPossible(
-      ApplicationUser sender, 
+      ApplicationUser sender,
       ApplicationUser receiver,
       NewTransferViewModel model)
     {

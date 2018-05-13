@@ -141,6 +141,9 @@
   <data name="Toggle navigation" xml:space="preserve">
     <value>Переключить навигацию</value>
   </data>
+  <data name="Top" xml:space="preserve">
+    <value>Лучшие</value>
+  </data>
   <data name="Transfers" xml:space="preserve">
     <value>Трансферы</value>
   </data>

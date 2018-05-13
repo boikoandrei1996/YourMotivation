@@ -117,22 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="All time" xml:space="preserve">
-    <value>За всё время</value>
-  </data>
-  <data name="By day" xml:space="preserve">
-    <value>За день</value>
-  </data>
-  <data name="By month" xml:space="preserve">
-    <value>За месяц</value>
-  </data>
-  <data name="By year" xml:space="preserve">
-    <value>За год</value>
-  </data>
-  <data name="Error:" xml:space="preserve">
-    <value>Ошибка:</value>
-  </data>
-  <data name="Success: transfer has been sended." xml:space="preserve">
-    <value>Трансфер был успешно отправлен.</value>
+  <data name="Top receivers" xml:space="preserve">
+    <value>Лучшие пользователи</value>
   </data>
 </root>
